@@ -10,7 +10,7 @@ const Header = (prop: P) => {
 
   return (
     <div className=" flex gap-2 items-center justify-center ">
-      {/* <img src="/logo.jpg" width={100} /> */}
+      <img className="absolute left-1 " src="/logo.svg" width={50} />
       <button
         onClick={() => {
           prop.setLanguage("html");
