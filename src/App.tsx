@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./Header";
+import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
 import Shower from "./Shower";
 
@@ -14,13 +14,16 @@ function App() {
   const [jsCode, setJsCode] = useState(js);
   const [language, setLanguage] = useState<P>("html");
   const [reloadJs, setReloadJs] = useState(false);
+  
 
+
+  
   const reloadJsFunc = () => {
     setReloadJs(true);
   };
 
   const handleHtmlChange = (newValue: any) => {
-    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
+    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
       setReloadJs(false);
     }
 
@@ -29,7 +32,7 @@ function App() {
   };
 
   const handleCssChange = (newValue: any) => {
-    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
+    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
       setReloadJs(false);
     }
 
@@ -38,7 +41,7 @@ function App() {
   };
 
   const handleJsChange = (newValue: any) => {
-    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
+    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
       setReloadJs(false);
     }
     localStorage.setItem("js", newValue);
@@ -55,23 +58,23 @@ function App() {
           language={language}
           setLanguage={setLanguage}
         />
-        {language === "html"? (
+        {language === "html" ? (
           <Editor
             height="100vh"
             language="html"
             theme="vs-dark"
             onChange={handleHtmlChange}
             width="100%"
-            value={htmlCode as string}
+            value={htmlCode}
           />
-        ) : language === "css"? (
+        ) : language === "css" ? (
           <Editor
             height="100vh"
             language="css"
             theme="vs-dark"
             onChange={handleCssChange}
             width="100%"
-            value={cssCode as string}
+            value={cssCode}
           />
         ) : (
           <Editor
@@ -80,11 +83,12 @@ function App() {
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
-            value={jsCode as string}
+            value={jsCode}
           />
         )}
       </div>
       <div className="w-1/2 h-full bg-white">
+      
         <Shower
           reloadJs={reloadJs}
           jsCode={jsCode}
