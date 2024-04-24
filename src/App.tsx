@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./Headerr";
+import Header from "./Header";
 import { Editor } from "@monaco-editor/react";
 import Shower from "./Shower";
 
@@ -14,16 +14,13 @@ function App() {
   const [jsCode, setJsCode] = useState(js);
   const [language, setLanguage] = useState<P>("html");
   const [reloadJs, setReloadJs] = useState(false);
-  
 
-
-  
   const reloadJsFunc = () => {
     setReloadJs(true);
   };
 
-  const handleHtmlChange = (newValue: string) => {
-    if (reloadJs && jsCode.indexOf("prompt" || "confirm") !== -1) {
+  const handleHtmlChange = (newValue: any) => {
+    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
       setReloadJs(false);
     }
 
@@ -31,8 +28,8 @@ function App() {
     setHtmlCode(newValue);
   };
 
-  const handleCssChange = (newValue: string) => {
-    if (reloadJs && jsCode.indexOf("prompt" || "confirm") !== -1) {
+  const handleCssChange = (newValue: any) => {
+    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
       setReloadJs(false);
     }
 
@@ -40,8 +37,8 @@ function App() {
     setCssCode(newValue);
   };
 
-  const handleJsChange = (newValue: string) => {
-    if (reloadJs && jsCode.indexOf("prompt" || "confirm") !== -1) {
+  const handleJsChange = (newValue: any) => {
+    if (reloadJs && jsCode.indexOf("prompt")!== -1) {
       setReloadJs(false);
     }
     localStorage.setItem("js", newValue);
@@ -58,23 +55,23 @@ function App() {
           language={language}
           setLanguage={setLanguage}
         />
-        {language === "html" ? (
+        {language === "html"? (
           <Editor
             height="100vh"
             language="html"
             theme="vs-dark"
             onChange={handleHtmlChange}
             width="100%"
-            value={htmlCode}
+            value={htmlCode as string}
           />
-        ) : language === "css" ? (
+        ) : language === "css"? (
           <Editor
             height="100vh"
             language="css"
             theme="vs-dark"
             onChange={handleCssChange}
             width="100%"
-            value={cssCode}
+            value={cssCode as string}
           />
         ) : (
           <Editor
@@ -83,35 +80,11 @@ function App() {
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
-            value={jsCode}
+            value={jsCode as string}
           />
         )}
       </div>
       <div className="w-1/2 h-full bg-white">
-        {/* <iframe
-          // key={iframeKey}
-          title="output"
-          srcDoc={`
-            <html>
-              <head>
-                <style>${cssCode}</style>
-              </head>
-              <body>${htmlCode}
-              
-              <script>
-              
-              function root(){
-                ${oldJs}
-              }
-              root()
-              </script>
-              </body>
-            </html> 
-          `}
-          width="100%"
-          height="100%"
-          sandbox="allow-scripts allow-modals"
-        ></iframe> */}
         <Shower
           reloadJs={reloadJs}
           jsCode={jsCode}

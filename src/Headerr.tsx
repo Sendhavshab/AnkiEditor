@@ -5,7 +5,7 @@
   let clases = "bg-gray-800 hover:bg-gray-700 m-2  text-white font-bold py-2 px-4 rounded"
     return (
       <div className=" flex gap-2 items-center justify-center ">
-        <img src="/logo.jpg" width={100} />
+        {/* <img src="/logo.jpg" width={100} /> */}
         <button
           onClick={() => {
             prop.setLanguage("html");
@@ -38,7 +38,7 @@
         </button>
 
      {
-       prop.reloadJs && prop.jsCode.indexOf("prompt" || "confirm") !== -1 &&
+      prop.jsCode.indexOf("prompt") !== -1 &&
 
            <button
           disabled={prop.reloadJs}

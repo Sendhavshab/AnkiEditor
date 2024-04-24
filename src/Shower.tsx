@@ -14,7 +14,7 @@ class Shower extends Component<P> {
 
   shouldComponentUpdate(nextProps: Readonly<P>): boolean {
   
-       if (nextProps.reloadJs === true) {
+       if (nextProps.reloadJs === true || nextProps.jsCode.indexOf("props") === -1) {
          return true;
        }
     return false
