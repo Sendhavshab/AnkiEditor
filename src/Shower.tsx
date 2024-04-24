@@ -1,57 +1,42 @@
-import { Component } from "react";
+import { FaEye } from "react-icons/fa";
+import { S } from "./App";
 
-type P = {
-  jsCode: String;
-  cssCode: String;
-  htmlCode: String;
-  reloadJs:boolean;
+
+const Shower = (prop : P) => {
+
+const showCode = () => {
+  if (prop.Show?.editor === "block") {
+    prop.setShow({
+      editor: "hidden",
+      shower: "block",
+    });
+  } else {
+    prop.setShow({
+      editor: "block",
+      shower: "hidden",
+    });
+  }
 };
 
-class Shower extends Component<P> {
+  return (
+    <div className="inline-block lg:hidden fixed top-1 right-2">
+      {
+        <FaEye
+          onClick={showCode}
+          className="text-3xl text-blue-600 hover:text-blue-400 "
+        />
+      }
+    </div>
+  );
+};
 
+ type P = {
+   setShow: (obj: S) => void;
+   Show: S | undefined;
+ };
 
-  
+Shower.defaultProps = {
 
-  shouldComponentUpdate(nextProps: Readonly<P>): boolean {
-  
-       if (nextProps.reloadJs === true || nextProps.jsCode.indexOf("props") === -1) {
-         return true;
-       }
-    return false
-  }
-
-
-
-  render() {
-    console.log("render run");
-
-    return (
-      <div className="w-full h-full">
-        <iframe
-          title="output"
-          srcDoc={`
-            <html>
-              <head>
-                <style>${this.props.cssCode}</style>
-              </head>
-              <body>${this.props.htmlCode}
-              
-              <script>
-              function root(){
-                ${this.props.jsCode}
-              }
-              root()
-              </script>
-              </body>
-            </html> 
-          `}
-          width="100%"
-          height="100%"
-          sandbox="allow-scripts allow-modals"
-        ></iframe>
-      </div>
-    );
-  }
-}
+};
 
 export default Shower;

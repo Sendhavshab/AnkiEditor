@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
+import Output from "./Output";
 import Shower from "./Shower";
 
 type P = "html" | "js" | "css";
-
+export  type S = {
+  editor: "hidden" | "block";
+  shower: "hidden" | "block";
+};
 function App() {
   const html = localStorage.getItem("html") || "";
   const css = localStorage.getItem("css") || "";
@@ -14,10 +18,27 @@ function App() {
   const [jsCode, setJsCode] = useState(js);
   const [language, setLanguage] = useState<P>("html");
   const [reloadJs, setReloadJs] = useState(false);
-  
+const [ Show, setShow ] = useState<S>() 
 
 
-  
+  useEffect(() => {
+   
+    const deviceWidth = window.innerWidth;
+    
+    console.log("device width: " + deviceWidth);
+
+    if(deviceWidth < 1024 ){
+      setShow({
+        editor: "block",
+        shower: "hidden",
+      });
+    }
+
+
+  } , [])
+
+
+
   const reloadJsFunc = () => {
     setReloadJs(true);
   };
@@ -48,9 +69,12 @@ function App() {
     setJsCode(newValue);
   };
 
+    console.log("device outer: " + Show);
+
   return (
-    <div className="w-screen h-screen flex  overflow-hidden  bg-black  ">
-      <div className="w-1/2">
+    <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
+      <Shower Show={Show} setShow={setShow}></Shower>
+      <div className={` lg:w-1/2 w-full ${Show?.editor}`}>
         <Header
           reloadJsFunc={reloadJsFunc}
           reloadJs={reloadJs}
@@ -87,14 +111,13 @@ function App() {
           />
         )}
       </div>
-      <div className="w-1/2 h-full bg-white">
-      
-        <Shower
+      <div className={`lg:w-1/2 w-full h-full bg-white ${Show?.shower}`}>
+        <Output
           reloadJs={reloadJs}
           jsCode={jsCode}
           cssCode={cssCode}
           htmlCode={htmlCode}
-        ></Shower>
+        ></Output>
       </div>
     </div>
   );
