@@ -13,8 +13,12 @@ class Output extends Component<P> {
   
 
   shouldComponentUpdate(nextProps: Readonly<P>): boolean {
-  
-       if (nextProps.reloadJs === true || nextProps.jsCode.indexOf("props") === -1) {
+     console.log(
+       "shouldComponentUpdate",
+       nextProps.reloadJs,
+       nextProps.jsCode.indexOf("props")
+     );
+       if (nextProps.reloadJs === true || nextProps.jsCode.indexOf("prompt") === -1) {
          return true;
        }
     return false
@@ -34,8 +38,8 @@ class Output extends Component<P> {
               <head>
                 <style>${this.props.cssCode}</style>
               </head>
-              <body>${this.props.htmlCode}
-              
+              <body>
+              <div>${this.props.htmlCode}</div>
               <script>
               function root(){
                 ${this.props.jsCode}

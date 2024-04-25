@@ -9,8 +9,11 @@ const Header = (prop: P) => {
 
 
   return (
-    <div className=" flex gap-2 items-center justify-center ">
-      <img className="absolute left-1 " src="/logo.svg" width={50} />
+    <div className=" flex gap-2 items-center justify-center  ">
+      <div className="p-5 rounded-full absolute -left-5  bg-blue-600">
+        <img className=" " src="/logo.svg" width={50} />
+      </div>
+
       <button
         onClick={() => {
           prop.setLanguage("html");
@@ -51,7 +54,6 @@ const Header = (prop: P) => {
           Run
         </button>
       )}
-    
     </div>
   );
 };

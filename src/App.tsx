@@ -62,7 +62,9 @@ const [ Show, setShow ] = useState<S>()
   };
 
   const handleJsChange = (newValue: any) => {
+       console.log("promp  ", jsCode.indexOf("prompt")  , reloadJs);
     if (reloadJs && jsCode.indexOf("prompt") !== -1) {
+   
       setReloadJs(false);
     }
     localStorage.setItem("js", newValue);
