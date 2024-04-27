@@ -1,12 +1,9 @@
-
+import { FaWrench } from "react-icons/fa";
+import Infoalert from "./Infoalert";
 
 const Header = (prop: P) => {
-
-  
-
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2  text-white font-bold py-2 px-4 rounded";
-
 
   return (
     <div className=" flex gap-2 items-center justify-center  ">
@@ -44,7 +41,13 @@ const Header = (prop: P) => {
       >
         JS
       </button>
-
+      <div className="relative">
+        <FaWrench
+          onClick={() => prop.setShowConsole(!(prop.showConsole))}
+          className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
+        />
+        <Infoalert> Error console </Infoalert>
+      </div>
       {prop.jsCode.indexOf("prompt") !== -1 && (
         <button
           disabled={prop.reloadJs}
@@ -64,7 +67,8 @@ type P = {
   jsCode: String;
   reloadJsFunc: () => void;
   reloadJs: boolean;
-  
+  setShowConsole: (showConsole: boolean) => void;
+  showConsole: boolean;
 };
 
 Header.defaultProps = {

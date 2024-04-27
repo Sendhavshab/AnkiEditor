@@ -3,6 +3,7 @@ import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
 import Output from "./Output";
 import Shower from "./Shower";
+import CodeExecutor from "./Console";
 
 type P = "html" | "js" | "css";
 export  type S = {
@@ -18,7 +19,12 @@ function App() {
   const [jsCode, setJsCode] = useState(js);
   const [language, setLanguage] = useState<P>("html");
   const [reloadJs, setReloadJs] = useState(false);
+  const [ showConsole, setShowConsole ] = useState(false); 
 const [ Show, setShow ] = useState<S>() 
+
+
+
+
 
 
   useEffect(() => {
@@ -71,13 +77,15 @@ const [ Show, setShow ] = useState<S>()
     setJsCode(newValue);
   };
 
-    console.log("device outer: " + Show);
+    console.log("showConsole && " + showConsole);
 
   return (
     <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
       <Shower Show={Show} setShow={setShow}></Shower>
       <div className={` lg:w-1/2 w-full ${Show?.editor}`}>
         <Header
+          setShowConsole={setShowConsole}
+          showConsole={showConsole}
           reloadJsFunc={reloadJsFunc}
           reloadJs={reloadJs}
           jsCode={jsCode}
@@ -92,6 +100,7 @@ const [ Show, setShow ] = useState<S>()
             onChange={handleHtmlChange}
             width="100%"
             value={htmlCode}
+           
           />
         ) : language === "css" ? (
           <Editor
@@ -106,10 +115,22 @@ const [ Show, setShow ] = useState<S>()
           <Editor
             height="100vh"
             language="javascript"
+            
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
             value={jsCode}
+            options={{
+              renderValidationDecorations: "on",
+              acceptSuggestionOnCommitCharacter: true,
+              showUnused: true,
+              formatOnPaste:true,
+              glyphMargin:true, 
+              
+
+
+
+            }}
           />
         )}
       </div>
@@ -121,6 +142,11 @@ const [ Show, setShow ] = useState<S>()
           htmlCode={htmlCode}
         ></Output>
       </div>
+      <CodeExecutor
+        setShowConsole={setShowConsole}
+        showConsole={showConsole}
+        jsCode={jsCode}
+      ></CodeExecutor>
     </div>
   );
 }

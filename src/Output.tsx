@@ -41,10 +41,9 @@ class Output extends Component<P> {
               <body>
               <div>${this.props.htmlCode}</div>
               <script>
-              function root(){
                 ${this.props.jsCode}
-              }
-              root()
+              
+            
               </script>
               </body>
             </html> 
