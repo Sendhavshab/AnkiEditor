@@ -3,7 +3,11 @@ import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
 import Output from "./Output";
 import Shower from "./Shower";
-import CodeExecutor from "./Console";
+import Console from "./Console";
+import MobileManu from "./Mobileheader";
+
+
+
 
 type P = "html" | "js" | "css";
 export  type S = {
@@ -31,7 +35,6 @@ const [ Show, setShow ] = useState<S>()
    
     const deviceWidth = window.innerWidth;
     
-    console.log("device width: " + deviceWidth);
 
     if(deviceWidth < 1024 ){
       setShow({
@@ -44,6 +47,19 @@ const [ Show, setShow ] = useState<S>()
   } , [])
 
 
+  useEffect(() => {
+        localStorage.setItem("html", htmlCode);
+
+  } , [htmlCode])
+  useEffect(() => {
+    localStorage.setItem("js", jsCode);
+
+  } , [jsCode])
+  useEffect(() => {
+    localStorage.setItem("css", cssCode);
+
+  } , [cssCode])
+
 
   const reloadJsFunc = () => {
     setReloadJs(true);
@@ -54,7 +70,6 @@ const [ Show, setShow ] = useState<S>()
       setReloadJs(false);
     }
 
-    localStorage.setItem("html", newValue);
     setHtmlCode(newValue);
   };
 
@@ -63,7 +78,6 @@ const [ Show, setShow ] = useState<S>()
       setReloadJs(false);
     }
 
-    localStorage.setItem("css", newValue);
     setCssCode(newValue);
   };
 
@@ -73,7 +87,6 @@ const [ Show, setShow ] = useState<S>()
    
       setReloadJs(false);
     }
-    localStorage.setItem("js", newValue);
     setJsCode(newValue);
   };
 
@@ -84,6 +97,25 @@ const [ Show, setShow ] = useState<S>()
       <Shower Show={Show} setShow={setShow}></Shower>
       <div className={` lg:w-1/2 w-full ${Show?.editor}`}>
         <Header
+          setHtmlCode={setHtmlCode}
+          setCssCode={setCssCode}
+          setJsCode={setJsCode}
+          htmlCode={htmlCode}
+          cssCode={cssCode}
+          setShowConsole={setShowConsole}
+          showConsole={showConsole}
+          reloadJsFunc={reloadJsFunc}
+          reloadJs={reloadJs}
+          jsCode={jsCode}
+          language={language}
+          setLanguage={setLanguage}
+        />
+        <MobileManu
+          setHtmlCode={setHtmlCode}
+          setCssCode={setCssCode}
+          setJsCode={setJsCode}
+          htmlCode={htmlCode}
+          cssCode={cssCode}
           setShowConsole={setShowConsole}
           showConsole={showConsole}
           reloadJsFunc={reloadJsFunc}
@@ -100,7 +132,6 @@ const [ Show, setShow ] = useState<S>()
             onChange={handleHtmlChange}
             width="100%"
             value={htmlCode}
-           
           />
         ) : language === "css" ? (
           <Editor
@@ -115,7 +146,6 @@ const [ Show, setShow ] = useState<S>()
           <Editor
             height="100vh"
             language="javascript"
-            
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
@@ -124,12 +154,8 @@ const [ Show, setShow ] = useState<S>()
               renderValidationDecorations: "on",
               acceptSuggestionOnCommitCharacter: true,
               showUnused: true,
-              formatOnPaste:true,
-              glyphMargin:true, 
-              
-
-
-
+              formatOnPaste: true,
+              glyphMargin: true,
             }}
           />
         )}
@@ -142,11 +168,11 @@ const [ Show, setShow ] = useState<S>()
           htmlCode={htmlCode}
         ></Output>
       </div>
-      <CodeExecutor
+      <Console
         setShowConsole={setShowConsole}
         showConsole={showConsole}
         jsCode={jsCode}
-      ></CodeExecutor>
+      ></Console>
     </div>
   );
 }

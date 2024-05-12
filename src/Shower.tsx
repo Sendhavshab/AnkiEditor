@@ -19,7 +19,7 @@ const showCode = () => {
 };
 
   return (
-    <div className="inline-block lg:hidden fixed top-1 right-2">
+    <div className="inline-block z-10 lg:hidden fixed top-1 right-2">
       {
         <FaEye
           onClick={showCode}

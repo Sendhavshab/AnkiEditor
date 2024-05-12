@@ -1,12 +1,14 @@
 import { FaWrench } from "react-icons/fa";
 import Infoalert from "./Infoalert";
+import SaveToCodeYogi from "./SaveToCodeYogi";
+import { Dispatch, SetStateAction } from "react";
 
 const Header = (prop: P) => {
   let clases =
-    "bg-gray-800 hover:bg-gray-700 m-2  text-white font-bold py-2 px-4 rounded";
+    "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   return (
-    <div className=" flex gap-2 items-center justify-center  ">
+    <div className=" md:flex gap-2 hidden  items-center justify-center  ">
       <div className="p-5 rounded-full absolute -left-5  bg-blue-600">
         <img className=" " src="/logo.svg" width={50} />
       </div>
@@ -43,11 +45,19 @@ const Header = (prop: P) => {
       </button>
       <div className="relative">
         <FaWrench
-          onClick={() => prop.setShowConsole(!(prop.showConsole))}
+          onClick={() => prop.setShowConsole(!prop.showConsole)}
           className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
         />
         <Infoalert> Error console </Infoalert>
       </div>
+      <SaveToCodeYogi
+        setJsCode={prop.setJsCode}
+        setCssCode={prop.setCssCode}
+        setHtmlCode={prop.setHtmlCode}
+        cssCode={prop.cssCode}
+        htmlCode={prop.htmlCode}
+        jsCode={prop.jsCode}
+      ></SaveToCodeYogi>
       {prop.jsCode.indexOf("prompt") !== -1 && (
         <button
           disabled={prop.reloadJs}
@@ -69,6 +79,11 @@ type P = {
   reloadJs: boolean;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;
+  setHtmlCode: Dispatch<SetStateAction<string>>;
+  setCssCode: Dispatch<SetStateAction<string>>;
+  setJsCode: Dispatch<SetStateAction<string>>;
+  cssCode: String;
+  htmlCode: String;
 };
 
 Header.defaultProps = {

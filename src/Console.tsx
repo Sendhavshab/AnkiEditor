@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import * as acorn from "acorn";
 import { IoMdClose } from "react-icons/io";
 
-  type T = {
-    jsCode: string;
-    showConsole: boolean;
-    setShowConsole: (showConsole: boolean) => void;
-  };
+type T = {
+  jsCode: string;
+  showConsole: boolean;
+  setShowConsole: (showConsole: boolean) => void;
+};
 
 
 const CodeExecutor: React.FC<T> = ({
