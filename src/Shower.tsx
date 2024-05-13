@@ -1,5 +1,5 @@
 import { FaEye } from "react-icons/fa";
-import { S } from "./App";
+import { S } from  "./COdeByLocalStorage"
 
 
 const Shower = (prop : P) => {

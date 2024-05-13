@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as acorn from "acorn";
 import { IoMdClose } from "react-icons/io";
+import { CodeContextHOC } from "./Context";
 
 type T = {
   jsCode: string;
@@ -45,4 +46,4 @@ const CodeExecutor: React.FC<T> = ({
   );
 };
 
-export default CodeExecutor;
+export default CodeContextHOC(CodeExecutor);

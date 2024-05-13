@@ -1,30 +1,28 @@
 import { Component } from "react";
+import { CodeContextHOC } from "./Context";
 
 type P = {
-  jsCode: String;
-  cssCode: String;
-  htmlCode: String;
-  reloadJs:boolean;
+  jsCode: string;
+  cssCode: string;
+  htmlCode: string;
+  reloadJs: boolean;
 };
 
 class Output extends Component<P> {
-
-
-  
-
   shouldComponentUpdate(nextProps: Readonly<P>): boolean {
-     console.log(
-       "shouldComponentUpdate",
-       nextProps.reloadJs,
-       nextProps.jsCode.indexOf("props")
-     );
-       if (nextProps.reloadJs === true || nextProps.jsCode.indexOf("prompt") === -1) {
-         return true;
-       }
-    return false
+    console.log(
+      "shouldComponentUpdate",
+      nextProps.reloadJs,
+      nextProps.jsCode.indexOf("props")
+    );
+    if (
+      nextProps.reloadJs === true ||
+      nextProps.jsCode.indexOf("prompt") === -1
+    ) {
+      return true;
+    }
+    return false;
   }
-
-
 
   render() {
     console.log("render run");
@@ -57,4 +55,4 @@ class Output extends Component<P> {
   }
 }
 
-export default Output;
+export default CodeContextHOC(Output);

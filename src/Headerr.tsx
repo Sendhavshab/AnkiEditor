@@ -2,8 +2,14 @@ import { FaWrench } from "react-icons/fa";
 import Infoalert from "./Infoalert";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { Dispatch, SetStateAction } from "react";
+import { CodeContextHOC } from "./Context";
 
 const Header = (prop: P) => {
+
+
+  console.log("header run huaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
@@ -51,12 +57,6 @@ const Header = (prop: P) => {
         <Infoalert> Error console </Infoalert>
       </div>
       <SaveToCodeYogi
-        setJsCode={prop.setJsCode}
-        setCssCode={prop.setCssCode}
-        setHtmlCode={prop.setHtmlCode}
-        cssCode={prop.cssCode}
-        htmlCode={prop.htmlCode}
-        jsCode={prop.jsCode}
       ></SaveToCodeYogi>
       {prop.jsCode.indexOf("prompt") !== -1 && (
         <button
@@ -74,7 +74,7 @@ const Header = (prop: P) => {
 type P = {
   language: "html" | "js" | "css";
   setLanguage: (language: "html" | "js" | "css") => void;
-  jsCode: String;
+  jsCode: string;
   reloadJsFunc: () => void;
   reloadJs: boolean;
   setShowConsole: (showConsole: boolean) => void;
@@ -82,12 +82,12 @@ type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
   setJsCode: Dispatch<SetStateAction<string>>;
-  cssCode: String;
-  htmlCode: String;
+  cssCode: string;
+  htmlCode: string;
 };
 
 Header.defaultProps = {
   live: "html",
 };
 
-export default Header;
+export default CodeContextHOC(Header);

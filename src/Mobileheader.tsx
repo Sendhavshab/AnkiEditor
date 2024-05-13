@@ -4,6 +4,7 @@ import { FaWrench } from "react-icons/fa";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import Infoalert from "./Infoalert";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { CodeContextHOC } from "./Context";
 
 const MobileManu = (props: P) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -116,4 +117,4 @@ MobileManu.defaultProps = {
   live: "html",
 };
 
-export default MobileManu;
+export default CodeContextHOC(MobileManu);
