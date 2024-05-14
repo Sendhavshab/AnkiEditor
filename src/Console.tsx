@@ -19,17 +19,13 @@ const CodeExecutor: React.FC<T> = ({
 
   useEffect(() => {
     try {
-      const pqrd = acorn.parse(jsCode, { ecmaVersion: 2020, locations: true });
-      //  const pqrda = eval(jsCode);
-
-      console.log("error nahi: ", pqrd);
+      acorn.parse(jsCode, { ecmaVersion: 2020, locations: true });
       setError(null);
     } catch (error: any) {
-      // If an error occurs, display it to the user
-      console.log("error: ", error);
       setError(error.message);
     }
   }, [jsCode]);
+  
 
   return (
     <div

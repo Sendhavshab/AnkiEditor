@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
 import Output from "./Output";
@@ -8,10 +8,7 @@ import MobileManu from "./Mobileheader";
 import { CodeContextHOC } from "./Context";
 // import {  useSearchParams } from "react-router-dom";
 
-
-
-
-export  type S = {
+export type S = {
   editor: "hidden" | "block";
   shower: "hidden" | "block";
 };
@@ -20,7 +17,9 @@ type G = {
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
   setCssCode: React.Dispatch<React.SetStateAction<string>>;
   setJsCode: React.Dispatch<React.SetStateAction<string>>;
+  setNotSavedJs: React.Dispatch<React.SetStateAction<string>>;
   htmlCode: string;
+  notSavedJs: string;
   cssCode: string;
   jsCode: string;
   showConsole: boolean;
@@ -28,33 +27,28 @@ type G = {
     React.SetStateAction<"html" | "css" | "javascript">
   >;
   language: "html" | "css" | "javascript";
-  setReloadJs: React.Dispatch<React.SetStateAction<boolean>>;
-  reloadJs: boolean;
+  setRunJs: React.Dispatch<React.SetStateAction<boolean>>;
+  runJs: boolean;
 };
 
-
 const CodeByLocalStorage: React.FC<G> = ({
-  
   setHtmlCode,
   setCssCode,
   setJsCode,
   htmlCode,
   cssCode,
-  jsCode,
   showConsole,
-  reloadJs,
-  
+  setNotSavedJs,
+  runJs,
+  notSavedJs ,
+
   language,
-  setReloadJs,
+  setRunJs,
 }) => {
   const [Show, setShow] = useState<S>();
-
-
   //  const [searchParams , setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    
-
     const deviceWidth = window.innerWidth;
 
     if (deviceWidth < 1024) {
@@ -65,49 +59,38 @@ const CodeByLocalStorage: React.FC<G> = ({
     }
   }, []);
 
-  const reloadJsFunc = () => {
-    setReloadJs(true);
+  const runJsFunc = () => {
+    setRunJs(true);
+    setJsCode(notSavedJs)
   };
 
   const handleHtmlChange = (newValue: any) => {
-    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
-      setReloadJs(false);
-    }
-
+     setRunJs(false);
     setHtmlCode(newValue);
   };
 
   const handleCssChange = (newValue: any) => {
-    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
-      setReloadJs(false);
-    }
+    
+     setRunJs(false);
 
     setCssCode(newValue);
   };
 
   const handleJsChange = (newValue: any) => {
-    console.log("promp  ", jsCode.indexOf("prompt"), reloadJs);
-    if (reloadJs && jsCode.indexOf("prompt") !== -1) {
-      setReloadJs(false);
-    }
-    setJsCode(newValue);
+   
+     setRunJs(false);
+    setNotSavedJs(newValue)
+
   };
 
   console.log("showConsole && " + showConsole);
 
   return (
     <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
-
       <Shower Show={Show} setShow={setShow}></Shower>
       <div className={` lg:w-1/2 w-full ${Show?.editor}`}>
-        <Header
-          reloadJsFunc={reloadJsFunc}
-          reloadJs={reloadJs}
-        />
-        <MobileManu
-          reloadJsFunc={reloadJsFunc}
-          reloadJs={reloadJs}
-        />
+        <Header runJsFunc={runJsFunc} runJs={runJs} />
+        <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
         {language === "html" ? (
           <Editor
             height="100vh"
@@ -133,7 +116,7 @@ const CodeByLocalStorage: React.FC<G> = ({
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
-            value={jsCode}
+            value={notSavedJs}
             options={{
               renderValidationDecorations: "on",
               acceptSuggestionOnCommitCharacter: true,
@@ -145,7 +128,7 @@ const CodeByLocalStorage: React.FC<G> = ({
         )}
       </div>
       <div className={`lg:w-1/2 w-full h-full bg-white ${Show?.shower}`}>
-        <Output reloadJs={reloadJs}></Output>
+        <Output></Output>
       </div>
       <Console></Console>
     </div>

@@ -25,6 +25,7 @@
     "monaco-languageclient": "^8.3.1",
     "monaco-languages": "^2.11.1",
     "react": "^18.2.0",
+    "react-console-emulator": "^5.0.2",
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
     "react-router-dom": "^6.22.2"

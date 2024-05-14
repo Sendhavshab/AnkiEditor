@@ -1,18 +1,29 @@
 // import React from "react";
-import AlertList from "./handleError/AlertList";
+// import { ConsoleEmulator } from "react-console-emulator";
 
+// const Test = () => {
+//   // Function to handle code execution
+//   const handleExecute = (code) => {
+//     try {
+//       // Evaluate user's JS code
+//       const result = eval(code); // Use a safer alternative in production code
+//       return result;
+//     } catch (error) {
+//       // Handle errors
+//       throw error;
+//     }
+//   };
 
-const Test = () => {
+//   return (
+//     <div>
+//       <ConsoleEmulator
+//         commands={{ execute: handleExecute }}
+//         welcomeMessage={
+//           "Welcome to the Console! Type `help` to see available commands."
+//         }
+//       />
+//     </div>
+//   );
+// };
 
-
-  return (
-    <div className="">
-      <AlertList howMuch={2} type="success">
-        successfully saved your assignmennt to codeyogi
-      </AlertList>
-      ;
-    </div>
-  );
-};
-
-export default Test;
+// export default Test;
