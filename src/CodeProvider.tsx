@@ -28,6 +28,15 @@ const CodeProvider: React.FC<F> = ({ children }) => {
      
 
   }, [notSavedJs]);
+
+  useEffect(() => {
+    localStorage.setItem("js", notSavedJs);
+  }, [notSavedJs]);
+  useEffect(() => {
+
+     setNotSavedJs(jsCode)
+
+  }, [jsCode]);
   useEffect(() => {
     localStorage.setItem("css", cssCode);
   }, [cssCode]);
