@@ -12,30 +12,32 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   const [htmlCode, setHtmlCode] = useState(html);
   const [cssCode, setCssCode] = useState(css);
   const [notSavedJs, setNotSavedJs] = useState(js);
-  const [jsCode, setJsCode] = useState('');
+  const [jsCode, setJsCode] = useState("");
 
- const whichLanguage = html.length > css.length ? html.length > js.length ? "html" : "js" : css.length < js.length ? "js" : "css"
+  const whichLanguage =
+    html.length > css.length
+      ? html.length > js.length
+        ? "html"
+        : "js"
+      : css.length < js.length
+      ? "js"
+      : "css";
   const [language, setLanguage] = useState<P>(whichLanguage);
   const [runJs, setRunJs] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
-  
+
   useEffect(() => {
     localStorage.setItem("html", htmlCode);
   }, [htmlCode]);
   useEffect(() => {
     localStorage.setItem("js", notSavedJs);
-
-     
-
   }, [notSavedJs]);
 
   useEffect(() => {
     localStorage.setItem("js", notSavedJs);
   }, [notSavedJs]);
   useEffect(() => {
-
-     setNotSavedJs(jsCode)
-
+    setNotSavedJs(jsCode);
   }, [jsCode]);
   useEffect(() => {
     localStorage.setItem("css", cssCode);

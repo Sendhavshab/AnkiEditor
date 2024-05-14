@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import * as acorn from "acorn";
 import { IoMdClose } from "react-icons/io";
-import { CodeContextHOC } from "./Context";
+import { CodeContextHOC } from "./HOC&Context/Context";
 
 type T = {
   jsCode: string;
   showConsole: boolean;
   setShowConsole: (showConsole: boolean) => void;
 };
-
 
 const CodeExecutor: React.FC<T> = ({
   jsCode,
@@ -25,7 +24,6 @@ const CodeExecutor: React.FC<T> = ({
       setError(error.message);
     }
   }, [jsCode]);
-  
 
   return (
     <div

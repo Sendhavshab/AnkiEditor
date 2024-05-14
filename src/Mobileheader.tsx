@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { FaWrench } from "react-icons/fa";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { CodeContextHOC } from "./Context";
+import { CodeContextHOC } from "./HOC&Context/Context";
 
 const MobileManu = (props: P) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -78,7 +78,10 @@ const MobileManu = (props: P) => {
                 ></SaveToCodeYogi>
                 <div
                   className="flex gap-2 items-center cursor-pointer"
-                  onClick={() =>{ props.setShowConsole(!props.showConsole); toggleMenu()}}
+                  onClick={() => {
+                    props.setShowConsole(!props.showConsole);
+                    toggleMenu();
+                  }}
                 >
                   <FaWrench className="text-4xl  bg-blue-500 p-2 rounded-full text-white" />
                   <h1 className="text-xl font-bold">CONSOLE</h1>
