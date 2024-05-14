@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
-import Header from "./Headerr";
 import { Editor } from "@monaco-editor/react";
+import React, { useEffect, useState } from "react";
+import Console from "./Console";
+import { CodeContextHOC } from "./HOC&Context/Context";
+import Header from "./Headerr";
+import MobileManu from "./Mobileheader";
 import Output from "./Output";
 import Shower from "./Shower";
-import Console from "./Console";
-import MobileManu from "./Mobileheader";
-import { CodeContextHOC } from "./HOC&Context/Context";
-// import {  useSearchParams } from "react-router-dom";
 
 export type S = {
   editor: "hidden" | "block";
   shower: "hidden" | "block";
 };
+
+
+
+
+
+
 
 type G = {
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
@@ -46,7 +51,6 @@ const CodeByLocalStorage: React.FC<G> = ({
   setRunJs,
 }) => {
   const [Show, setShow] = useState<S>();
-  //  const [searchParams , setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const deviceWidth = window.innerWidth;
