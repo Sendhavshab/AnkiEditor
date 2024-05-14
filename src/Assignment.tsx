@@ -41,6 +41,7 @@ const Assignment: React.FC<P> = ({ setHtmlCode, setCssCode, setJsCode }) => {
 
     code.then((a: any) => {
       console.table("code", a);
+      
       setHtmlCode(a.html);
       setCssCode(a.css);
       setJsCode(a.js);

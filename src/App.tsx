@@ -15,7 +15,7 @@ const App = () => {
       <CodeProvider>
       <Routes>
         <Route index element={<CodeByLocalStorage />} />
-        <Route  path="/assignment/c/:assiID" element={<Assignment></Assignment>} />
+        <Route  path="/assignment/c/:assiID/" element={<Assignment></Assignment>} />
         {/* <Route  path="/a" element={<Test></Test>} /> */}
       </Routes>
       </CodeProvider>
