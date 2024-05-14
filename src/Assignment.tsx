@@ -5,7 +5,7 @@ import CodeByLocalStorage from "./COdeByLocalStorage";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "./ApiCall";
 import Loader from "./handleError/Loader";
-import { CodeContextHOC } from "./Context";
+import { CodeContextHOC } from "./HOC&Context/Context";
 
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
@@ -13,14 +13,11 @@ type P = {
   setJsCode: Dispatch<SetStateAction<string>>;
 };
 
-
 const Assignment: React.FC<P> = ({ setHtmlCode, setCssCode, setJsCode }) => {
   const assignmentId = useParams().assiID || "";
   const [loading, setLoading] = useState(false);
 
-
-  const assignment = useParams().assiID
-
+  const assignment = useParams().assiID;
 
   useEffect(() => {
     console.log("useeffects", assignmentId);
@@ -41,7 +38,7 @@ const Assignment: React.FC<P> = ({ setHtmlCode, setCssCode, setJsCode }) => {
 
     code.then((a: any) => {
       console.table("code", a);
-      
+
       setHtmlCode(a.html);
       setCssCode(a.css);
       setJsCode(a.js);

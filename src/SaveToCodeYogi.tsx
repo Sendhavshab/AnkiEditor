@@ -1,130 +1,94 @@
-
-import {  useEffect, useRef, useState } from "react";
-import Loader from "./handleError/Loader"
-import AlertList from "./handleError/AlertList";
-import { CodeContextHOC } from "./Context";
+import { useEffect, useRef, useState } from "react";
+import Loader from "./handleError/Loader";
+import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
 import ApiCall from "./ApiCall";
 import { Navigate, useParams } from "react-router-dom";
-import { AlertType } from "./handleError/Alert";
+import { showAlertType } from "./HOC&Context/AlertProvider";
 
 
-
-
-type B = {
-  value: number;
-  type: AlertType;
-  message: string;
-}
 
 const SaveToCodeYogi = ({
   jsCode,
   cssCode,
   htmlCode,
   className,
+  showAlert ,
+  setShowAlert,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
   const [showSave, setShowSave] = useState(0);
   const [loading, setLoading] = useState(false);
   const InputRef = useRef<HTMLInputElement>(null);
-  const [id , setId] = useState('')
-          
-  const [showAlert, setShowAlert] = useState<B>({
-    value: 0,
-    type: "success",
-    message: " successfully saved your assignmennt to codeyogi",
-  });
-  const LinkId = useParams().assiID ;
+  const [id, setId] = useState("");
 
+  const LinkId = useParams().assiID;
 
   useEffect(() => {
     InputRef.current?.focus();
   }, []);
 
- 
-  if(showAlert.value){
-    setTimeout(() => {
-      setShowAlert({...showAlert , value : showAlert.value - 1})
-    }, 4000);
-  }
- 
-  
-
-
   const confirmPostClick = () => {
+    let key = "";
 
-    let key =""
+    if (!LinkId) {
+      setShowSave(1);
+      if (!inputValue) {
+        return;
+      } else {
+        const match = inputValue.match(/\/c\/([^\/?]+)/);
 
+        if (match) {
+          setLoading(true);
+          setShowSave(0);
 
-    if (!LinkId){
- setShowSave(1);
- if(!inputValue){
-       return;
-    }else{
-       const match = inputValue.match(/\/c\/([^\/?]+)/);
-
-      if (match) {
-      
- setLoading(true);
-    setShowSave(0);
-
- 
-      key = match[1]
-
+          key = match[1];
+        }
       }
+    } else {
+      key = LinkId;
     }
-    } else{
-      key = LinkId
-    }
-    setLoading(true)
+    setLoading(true);
     const o = ApiCall("post", key, htmlCode, cssCode, jsCode);
 
     o?.then(() => {
-        setShowAlert({
-          value: showAlert.value + 1,
-          type: "success",
-          message: " successfully saved your assignmennt to codeyogi",
- 
-        })
+      setShowAlert({
+        value: showAlert.value + 1,
+        type: "success",
+        message: " successfully saved your assignmennt to codeyogi",
+      });
       setLoading(false);
     }).catch((err) => {
       setLoading(false);
-     setShowAlert({
-      value: showAlert.value + 1,
-      type: "error",
-      message: err.message,
-     })
+      setShowAlert({
+        value: showAlert.value + 1,
+        type: "error",
+        message: err.message,
+      });
     });
   };
 
   const confirmGetClick = () => {
-    setShowSave(0)
-     const match = inputValue.match(/\/c\/([^\/?]+)/);
+    setShowSave(0);
+    const match = inputValue.match(/\/c\/([^\/?]+)/);
 
-      if (match) {
-           setId(match[1]);
-         
-
-             
-
-      }
+    if (match) {
+      setId(match[1]);
+    }
   };
 
-console.log("save vala run hua ", id, LinkId,  id !== LinkId);
+  console.log("save vala run hua ", id, LinkId, id !== LinkId);
 
-if(id && id !== LinkId){
-  console.log("save vala if ke andar" , id)
-  return <Navigate to={`/assignment/c/${id}`}></Navigate>;
-}
+  if (id && id !== LinkId) {
+    console.log("save vala if ke andar", id);
+    return <Navigate to={`/assignment/c/${id}`}></Navigate>;
+  }
 
-console.log("save vala if ke niche" , id)
-
+  console.log("save vala if ke niche", id);
 
   return (
     <div className={`${className}`}>
       {loading && <Loader></Loader>}
-      {!!showAlert.value && <AlertList howMuch={showAlert.value} type={showAlert.type}>
-           {showAlert.message}
-         </AlertList>}
+
       <button
         onClick={() => confirmPostClick()}
         className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
@@ -183,13 +147,15 @@ console.log("save vala if ke niche" , id)
   );
 };
 
- export type CodeWithSet = {
+export type CodeWithSet = {
   jsCode: string;
   cssCode: string;
   htmlCode: string;
-  className?: string ;
+  className?: string;
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+  showAlert: showAlertType;
 };
 
 SaveToCodeYogi.defaultProps = {};
 
-export default CodeContextHOC(SaveToCodeYogi);
+export default CodeContextHOC(AlertShowerProviderHOC(SaveToCodeYogi));

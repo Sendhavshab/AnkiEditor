@@ -5,7 +5,7 @@ import Output from "./Output";
 import Shower from "./Shower";
 import Console from "./Console";
 import MobileManu from "./Mobileheader";
-import { CodeContextHOC } from "./Context";
+import { CodeContextHOC } from "./HOC&Context/Context";
 // import {  useSearchParams } from "react-router-dom";
 
 export type S = {
@@ -40,7 +40,7 @@ const CodeByLocalStorage: React.FC<G> = ({
   showConsole,
   setNotSavedJs,
   runJs,
-  notSavedJs ,
+  notSavedJs,
 
   language,
   setRunJs,
@@ -61,26 +61,23 @@ const CodeByLocalStorage: React.FC<G> = ({
 
   const runJsFunc = () => {
     setRunJs(true);
-    setJsCode(notSavedJs)
+    setJsCode(notSavedJs);
   };
 
   const handleHtmlChange = (newValue: any) => {
-     setRunJs(false);
+    setRunJs(false);
     setHtmlCode(newValue);
   };
 
   const handleCssChange = (newValue: any) => {
-    
-     setRunJs(false);
+    setRunJs(false);
 
     setCssCode(newValue);
   };
 
   const handleJsChange = (newValue: any) => {
-   
-     setRunJs(false);
-    setNotSavedJs(newValue)
-
+    setRunJs(false);
+    setNotSavedJs(newValue);
   };
 
   console.log("showConsole && " + showConsole);

@@ -38,3 +38,6 @@ const defaultValues: P = {
 export const CodeContext = createContext<P>(defaultValues);
 
 export const CodeContextHOC = HocCreater(CodeContext);
+export const AlertShowerContext = createContext({});
+
+export const AlertShowerProviderHOC = HocCreater(AlertShowerContext);

@@ -1,20 +1,27 @@
-import { FaWrench } from "react-icons/fa";
+import { FaCopy, FaShare, FaWrench } from "react-icons/fa";
 import Infoalert from "./Infoalert";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { Dispatch, SetStateAction } from "react";
-import { CodeContextHOC } from "./Context";
+import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
+import Share from "./Share";
+import { showAlertType } from "./HOC&Context/AlertProvider";
+import { useParams } from "react-router-dom";
 
 const Header = (prop: P) => {
-
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
-  return (
-    <div className=" md:flex gap-2 hidden  items-center justify-center  ">
-      <div className="p-5 rounded-full absolute -left-5  bg-blue-600">
-        <img className=" " src="/logo.svg" width={50} />
-      </div>
 
+    const didAnotherUser = useParams().didshare;
+
+
+
+
+  return (
+    <div className=" md:flex gap-2 hidden flex-wrap items-center justify-center  ">
+      {/* <div className="p-5 rounded-full absolute -left-5  bg-blue-600">
+        <img className=" " src="/logo.svg" width={50} />
+      </div> */}
       <button
         onClick={() => {
           prop.setLanguage("html");
@@ -52,15 +59,34 @@ const Header = (prop: P) => {
         />
         <Infoalert> Error console </Infoalert>
       </div>
-      <SaveToCodeYogi></SaveToCodeYogi>
-  
-      { prop.notSavedJs !== prop.jsCode &&   <button
+      {prop.notSavedJs !== prop.jsCode && (
+        <button
           onClick={prop.runJsFunc}
           className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
         >
           Load Js
-        </button>}
-     
+        </button>
+      )}
+
+      {!didAnotherUser && (
+        <div className=" flex gap-2 mb-2 flex-wrap items-center justify-center  ">
+          {" "}
+          <SaveToCodeYogi></SaveToCodeYogi>
+          <button
+            onClick={() => Share("other", prop.setShowAlert)}
+            className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+          >
+            Share to other
+            <FaShare />
+          </button>
+          <button
+            onClick={() => Share("me", prop.setShowAlert)}
+            className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+          >
+            copy for you <FaCopy />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
@@ -78,6 +104,7 @@ type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
   setJsCode: Dispatch<SetStateAction<string>>;
+  setShowAlert: Dispatch<SetStateAction<showAlertType>>;
   cssCode: string;
   htmlCode: string;
 };
@@ -86,4 +113,4 @@ Header.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(Header);
+export default CodeContextHOC(AlertShowerProviderHOC(Header));
