@@ -5,24 +5,20 @@ type P = {
   jsCode: string;
   cssCode: string;
   htmlCode: string;
-  reloadJs: boolean;
+  runJs: boolean;
 };
 
 class Output extends Component<P> {
-  shouldComponentUpdate(nextProps: Readonly<P>): boolean {
-    console.log(
-      "shouldComponentUpdate",
-      nextProps.reloadJs,
-      nextProps.jsCode.indexOf("props")
-    );
-    if (
-      nextProps.reloadJs === true ||
-      nextProps.jsCode.indexOf("prompt") === -1
-    ) {
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps: Readonly<P>): boolean {
+
+  //   if (
+  //     nextProps.runJs === true ||
+  //     nextProps.jsCode.indexOf("prompt") === -1
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   render() {
     console.log("render run");
@@ -39,7 +35,7 @@ class Output extends Component<P> {
               <body>
               <div>${this.props.htmlCode}</div>
               <script>
-                ${this.props.jsCode}
+                ${this.props.runJs && this.props.jsCode}
               
             
               </script>

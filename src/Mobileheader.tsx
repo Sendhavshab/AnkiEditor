@@ -2,7 +2,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaWrench } from "react-icons/fa";
 import SaveToCodeYogi from "./SaveToCodeYogi";
-import Infoalert from "./Infoalert";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CodeContextHOC } from "./Context";
 
@@ -12,14 +11,14 @@ const MobileManu = (props: P) => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
-let clases =
-  "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
+  let clases =
+    "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   return (
     <div className="flex gap-2 md:hidden items-center justify-center relative">
-      <div className="p-5 rounded-full absolute -left-5 bg-blue-600">
+      {/* <div className="p-5 rounded-full absolute -left-5 bg-blue-600">
         <img className="" src="/logo.svg" width={50} alt="Logo" />
-      </div>
+      </div> */}
       <button
         onClick={() => {
           props.setLanguage("html");
@@ -51,31 +50,20 @@ let clases =
         JS
       </button>
 
-      <div className="relative">
-        <FaWrench
-          onClick={() => props.setShowConsole(!props.showConsole)}
-          className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
-        />
-        <Infoalert> Error console </Infoalert>
-      </div>
-
-      {props.jsCode.includes("prompt") && (
+      {props.notSavedJs !== props.jsCode && (
         <button
-          disabled={props.reloadJs}
-          onClick={props.reloadJsFunc}
-          className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline`}
+          onClick={props.runJsFunc}
+          className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
         >
-          Run
+          Load Js
         </button>
       )}
 
-      {/* Hamburger Menu Icon */}
       <GiHamburgerMenu
         className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
         onClick={toggleMenu}
       />
 
-      {/* Mobile Menu */}
       {showMenu && (
         <div
           className={`w-screen h-screen inset-0 z-20 bg-black fixed bg-opacity-80 `}
@@ -88,6 +76,13 @@ let clases =
                   className="flex relative text-black z-40 flex-col gap-5"
                   {...props}
                 ></SaveToCodeYogi>
+                <div
+                  className="flex gap-2 items-center cursor-pointer"
+                  onClick={() =>{ props.setShowConsole(!props.showConsole); toggleMenu()}}
+                >
+                  <FaWrench className="text-4xl  bg-blue-500 p-2 rounded-full text-white" />
+                  <h1 className="text-xl font-bold">CONSOLE</h1>
+                </div>
               </div>
             </div>
           </div>
@@ -102,8 +97,9 @@ type P = {
   language: "html" | "js" | "css";
   setLanguage: (language: "html" | "js" | "css") => void;
   jsCode: string;
-  reloadJsFunc: () => void;
-  reloadJs: boolean;
+  runJsFunc: () => void;
+  runJs: boolean;
+  notSavedJs: string;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;
   setHtmlCode: Dispatch<SetStateAction<string>>;

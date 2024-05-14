@@ -6,10 +6,6 @@ import { CodeContextHOC } from "./Context";
 
 const Header = (prop: P) => {
 
-
-  console.log("header run huaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-
-
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
@@ -56,17 +52,15 @@ const Header = (prop: P) => {
         />
         <Infoalert> Error console </Infoalert>
       </div>
-      <SaveToCodeYogi
-      ></SaveToCodeYogi>
-      {prop.jsCode.indexOf("prompt") !== -1 && (
-        <button
-          disabled={prop.reloadJs}
-          onClick={prop.reloadJsFunc}
+      <SaveToCodeYogi></SaveToCodeYogi>
+  
+      { prop.notSavedJs !== prop.jsCode &&   <button
+          onClick={prop.runJsFunc}
           className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
         >
-          Run
-        </button>
-      )}
+          Load Js
+        </button>}
+     
     </div>
   );
 };
@@ -75,8 +69,10 @@ type P = {
   language: "html" | "js" | "css";
   setLanguage: (language: "html" | "js" | "css") => void;
   jsCode: string;
-  reloadJsFunc: () => void;
-  reloadJs: boolean;
+  notSavedJs: string;
+
+  runJsFunc: () => void;
+  runJs: boolean;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;
   setHtmlCode: Dispatch<SetStateAction<string>>;

@@ -1,16 +1,17 @@
-import  { createContext } from "react";
+import { createContext } from "react";
 import HocCreater from "./HocCreater";
-
 
 interface P {
   jsCode: string;
-  setReloadJs: React.Dispatch<React.SetStateAction<boolean>>;
-  reloadJs: boolean;
+  setRunJs: React.Dispatch<React.SetStateAction<boolean>>;
+  runJs: boolean;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
   setCssCode: React.Dispatch<React.SetStateAction<string>>;
   setJsCode: React.Dispatch<React.SetStateAction<string>>;
+  notSavedJs: string;
+  setNotSavedJs: React.Dispatch<React.SetStateAction<string>>;
   cssCode: string;
   htmlCode: string;
   language: "html" | "js" | "css";
@@ -18,11 +19,13 @@ interface P {
 }
 
 const defaultValues: P = {
+  notSavedJs: "",
+  setNotSavedJs: () => {},
   language: "html",
   setLanguage: (_language: "html" | "js" | "css") => {},
   jsCode: "",
-  setReloadJs: () => {},
-  reloadJs: false,
+  setRunJs: () => {},
+  runJs: false,
   setShowConsole: (_showConsole: boolean) => {},
   showConsole: false,
   setHtmlCode: () => {},
@@ -32,6 +35,6 @@ const defaultValues: P = {
   htmlCode: "",
 };
 
- export const CodeContext = createContext<P>(defaultValues);
+export const CodeContext = createContext<P>(defaultValues);
 
- export const CodeContextHOC = HocCreater(CodeContext)
+export const CodeContextHOC = HocCreater(CodeContext);
