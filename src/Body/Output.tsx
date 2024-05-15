@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { CodeContextHOC } from "./HOC&Context/Context";
+import { CodeContextHOC } from "../HOC&Context/Context";
 
 type P = {
   jsCode: string;
@@ -21,7 +21,6 @@ class Output extends Component<P> {
   // }
 
   render() {
-
     return (
       <div className="w-full h-full">
         <iframe

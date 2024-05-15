@@ -1,10 +1,10 @@
 // import React from "react";
 
 import { useParams } from "react-router-dom";
-import CodeByLocalStorage from "./COdeByLocalStorage";
+import CodeByLocalStorage from "./Body/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "./ApiCall";
-import Loader from "./handleError/Loader";
+import Loader from "./AlertAndLoader/Loder/Loader";
 import { CodeContextHOC } from "./HOC&Context/Context";
 
 type P = {

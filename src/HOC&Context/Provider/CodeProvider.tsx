@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useState } from "react";
-import { CodeContext } from "./Context";
+import { CodeContext } from "../Context";
 
 type P = "html" | "js" | "css";
 
@@ -30,11 +30,10 @@ const CodeProvider: React.FC<F> = ({ children }) => {
     localStorage.setItem("html", htmlCode);
   }, [htmlCode]);
 
-
   useEffect(() => {
     localStorage.setItem("js", notSavedJs);
   }, [notSavedJs]);
-  
+
   useEffect(() => {
     localStorage.setItem("css", cssCode);
   }, [cssCode]);

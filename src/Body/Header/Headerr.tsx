@@ -1,21 +1,21 @@
 import { FaCopy, FaShare, FaWrench } from "react-icons/fa";
-import Infoalert from "./Infoalert";
+import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { Dispatch, SetStateAction } from "react";
-import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+} from "../../HOC&Context/Context";
 import Share from "./Share";
-import { showAlertType } from "./HOC&Context/AlertProvider";
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 import { useParams } from "react-router-dom";
 
 const Header = (prop: P) => {
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
-
-    const didAnotherUser = useParams().didshare;
-
-
-
+  const didAnotherUser = useParams().didshare;
+  const didAssignment = useParams().assiID;
 
   return (
     <div className=" md:flex gap-2 hidden flex-wrap items-center justify-center  ">
@@ -72,13 +72,15 @@ const Header = (prop: P) => {
         <div className=" flex gap-2 mb-2 flex-wrap items-center justify-center  ">
           {" "}
           <SaveToCodeYogi></SaveToCodeYogi>
-          <button
-            onClick={() => Share("other", prop.setShowAlert)}
-            className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
-          >
-            Share to other
-            <FaShare />
-          </button>
+          {didAssignment && (
+            <button
+              onClick={() => Share("other", prop.setShowAlert)}
+              className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+            >
+              Share to other
+              <FaShare />
+            </button>
+          )}
           <button
             onClick={() => Share("me", prop.setShowAlert)}
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"

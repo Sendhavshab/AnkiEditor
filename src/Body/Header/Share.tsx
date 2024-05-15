@@ -1,4 +1,4 @@
-import { showAlertType } from "./HOC&Context/AlertProvider";
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const Share = (
   shareTo: "me" | "other",
@@ -16,7 +16,6 @@ const Share = (
   navigator.clipboard
     .writeText(link)
     .then(() => {
-
       setShowAlert({
         value: 1,
         type: "success",
@@ -36,9 +35,9 @@ export function generateRandomString(length: number) {
   let result = "";
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
+
   for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
 }

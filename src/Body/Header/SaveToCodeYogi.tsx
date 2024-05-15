@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import Loader from "./handleError/Loader";
-import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
-import ApiCall from "./ApiCall";
+import Loader from "../../AlertAndLoader/Loder/Loader";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+} from "../../HOC&Context/Context";
+import ApiCall from "../../ApiCall";
 import { Navigate, useParams } from "react-router-dom";
-import { showAlertType } from "./HOC&Context/AlertProvider";
-
-
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
   jsCode,
   cssCode,
   htmlCode,
   className,
-  showAlert ,
+  showAlert,
   setShowAlert,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
@@ -31,8 +32,8 @@ const SaveToCodeYogi = ({
     let key = "";
 
     if (!LinkId) {
-      setShowSave(1);
       if (!inputValue) {
+        setShowSave(1);
         return;
       } else {
         const match = inputValue.match(/\/c\/([^\/?]+)/);
@@ -76,11 +77,9 @@ const SaveToCodeYogi = ({
     }
   };
 
-
   if (id && id !== LinkId) {
     return <Navigate to={`/assignment/c/${id}`}></Navigate>;
   }
-
 
   return (
     <div className={`${className}`}>
@@ -108,11 +107,11 @@ const SaveToCodeYogi = ({
               link {showSave === 1 ? "to save" : "to get"}
             </h1>
             <input
-              // onKeyDown={(e) => {
-              //   if (e.key === "Enter") {
-              //     confirmPostClick();
-              //   }
-              // }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  showSave === 1 ? confirmPostClick() : confirmGetClick();
+                }
+              }}
               ref={InputRef}
               type="text"
               onChange={(e) => {

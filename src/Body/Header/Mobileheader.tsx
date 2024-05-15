@@ -3,10 +3,13 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { FaCopy, FaShare, FaWrench } from "react-icons/fa";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+} from "../../HOC&Context/Context";
 import { useParams } from "react-router-dom";
 import Share from "./Share";
-import { showAlertType } from "./HOC&Context/AlertProvider";
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const MobileManu = (props: P) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -15,7 +18,8 @@ const MobileManu = (props: P) => {
     setShowMenu(!showMenu);
   };
 
-    const didAnotherUser = useParams().didshare;
+  const didAnotherUser = useParams().didshare;
+  const didAssignment = useParams().assiID;
 
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
@@ -89,18 +93,19 @@ const MobileManu = (props: P) => {
                       <FaWrench className="text-4xl  bg-blue-500 p-2 rounded-full text-white" />
                       <h1 className="text-xl font-bold">CONSOLE</h1>
                     </div>
-
                     <SaveToCodeYogi
                       className="flex relative text-black z-40 flex-col gap-5"
                       {...props}
                     ></SaveToCodeYogi>
-                    <button
-                      onClick={() => Share("other", props.setShowAlert)}
-                      className="bg-gradient-to-r min-w-max flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
-                    >
-                      Share to other
-                      <FaShare />
-                    </button>
+                    {didAssignment && (
+                      <button
+                        onClick={() => Share("other", props.setShowAlert)}
+                        className="bg-gradient-to-r min-w-max flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+                      >
+                        Share to other
+                        <FaShare />
+                      </button>
+                    )}
                     <button
                       onClick={() => Share("me", props.setShowAlert)}
                       className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"

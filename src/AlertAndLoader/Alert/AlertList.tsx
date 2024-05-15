@@ -6,7 +6,7 @@ const AlertList: React.FC<{
   type: AlertType;
   howMuch?: number;
   className?: string;
-  children: string
+  children: string;
 }> = ({ type, children, howMuch = 1, className = "" }) => {
   return (
     howMuch > 0 && (

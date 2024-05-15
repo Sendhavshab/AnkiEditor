@@ -1,22 +1,20 @@
 import { FaEye } from "react-icons/fa";
-import { S } from  "./COdeByLocalStorage"
+import { S } from "./Body/CodeAria";
 
-
-const Shower = (prop : P) => {
-
-const showCode = () => {
-  if (prop.Show?.editor === "block") {
-    prop.setShow({
-      editor: "hidden",
-      shower: "block",
-    });
-  } else {
-    prop.setShow({
-      editor: "block",
-      shower: "hidden",
-    });
-  }
-};
+const Shower = (prop: P) => {
+  const showCode = () => {
+    if (prop.Show?.editor === "block") {
+      prop.setShow({
+        editor: "hidden",
+        shower: "block",
+      });
+    } else {
+      prop.setShow({
+        editor: "block",
+        shower: "hidden",
+      });
+    }
+  };
 
   return (
     <div className="inline-block z-10 lg:hidden fixed top-1 right-2">
@@ -30,13 +28,11 @@ const showCode = () => {
   );
 };
 
- type P = {
-   setShow: (obj: S) => void;
-   Show: S | undefined;
- };
-
-Shower.defaultProps = {
-
+type P = {
+  setShow: (obj: S) => void;
+  Show: S | undefined;
 };
+
+Shower.defaultProps = {};
 
 export default Shower;
