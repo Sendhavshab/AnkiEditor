@@ -75,8 +75,8 @@ const MobileManu = (props: P) => {
             <div
               className={`w-screen h-screen inset-0 z-20 bg-black fixed bg-opacity-80 `}
             >
-              <div onClick={toggleMenu} className="w-2/4 h-full"></div>
-              <div className=" bg-indigo-900 h-full  w-2/4 fixed top-0 right-0  p-8 z-10">
+              <div onClick={toggleMenu} className="w-1/4 h-full"></div>
+              <div className=" bg-indigo-900 h-full  w-3/4 fixed top-0 right-0  p-8 z-10">
                 <div className="text-xl flex flex-col gap-3">
                   <div className="flex flex-col  gap-5 font-bold  text-white ">
                     <div
