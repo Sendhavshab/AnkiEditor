@@ -42,7 +42,6 @@ const CodeByLocalStorage: React.FC<G> = ({
   setJsCode,
   htmlCode,
   cssCode,
-  showConsole,
   setNotSavedJs,
   runJs,
   notSavedJs,
@@ -84,7 +83,6 @@ const CodeByLocalStorage: React.FC<G> = ({
     setNotSavedJs(newValue);
   };
 
-  console.log("showConsole && " + showConsole);
 
   return (
     <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
