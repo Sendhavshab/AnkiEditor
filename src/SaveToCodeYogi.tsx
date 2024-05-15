@@ -76,14 +76,11 @@ const SaveToCodeYogi = ({
     }
   };
 
-  console.log("save vala run hua ", id, LinkId, id !== LinkId);
 
   if (id && id !== LinkId) {
-    console.log("save vala if ke andar", id);
     return <Navigate to={`/assignment/c/${id}`}></Navigate>;
   }
 
-  console.log("save vala if ke niche", id);
 
   return (
     <div className={`${className}`}>

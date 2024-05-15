@@ -10,38 +10,37 @@ import { CodeContextHOC } from "./HOC&Context/Context";
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
-  setJsCode: Dispatch<SetStateAction<string>>;
+  setNotSavedJs: Dispatch<SetStateAction<string>>;
 };
 
-const Assignment: React.FC<P> = ({ setHtmlCode, setCssCode, setJsCode }) => {
+const Assignment: React.FC<P> = ({
+  setHtmlCode,
+  setCssCode,
+  setNotSavedJs,
+}) => {
   const assignmentId = useParams().assiID || "";
   const [loading, setLoading] = useState(false);
 
   const assignment = useParams().assiID;
 
   useEffect(() => {
-    console.log("useeffects", assignmentId);
     setLoading(true);
     const code: any = ApiCall("get", assignmentId)
       ?.then((data) => {
-        console.log(data.data);
         setLoading(false);
         if (data.data.code) {
           return data.data.code;
         }
         return data.data.assignment.initCode;
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
-        console.log("error" + err.message);
       });
 
     code.then((a: any) => {
-      console.table("code", a);
-
       setHtmlCode(a.html);
       setCssCode(a.css);
-      setJsCode(a.js);
+      setNotSavedJs(a.js);
     });
   }, [assignment]);
 

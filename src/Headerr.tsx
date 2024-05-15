@@ -103,7 +103,6 @@ type P = {
   showConsole: boolean;
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
-  setJsCode: Dispatch<SetStateAction<string>>;
   setShowAlert: Dispatch<SetStateAction<showAlertType>>;
   cssCode: string;
   htmlCode: string;

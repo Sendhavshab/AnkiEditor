@@ -21,7 +21,6 @@ class Output extends Component<P> {
   // }
 
   render() {
-    console.log("render run");
 
     return (
       <div className="w-full h-full">
