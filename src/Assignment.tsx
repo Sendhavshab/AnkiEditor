@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "./ApiCall";
 import Loader from "./AlertAndLoader/Loder/Loader";
 import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
-import { CodeWordToString } from "./Codeword";
+import { CodeWordToString } from "./StrToCode";
 import { showAlertType } from "./HOC&Context/Provider/AlertProvider";
 
 type P = {
