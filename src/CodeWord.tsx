@@ -30,7 +30,7 @@ const charMap: { [key: string]: string } = {
 };
 
 // Function to convert a string to a simple code word
-export function stringToCodeWord(str: string): string {
+export function StringToCodeWord(str: string): string {
   let codeWord = "";
   for (let i = 0; i < str.length; i++) {
     // Check if character exists in the mapping object
@@ -46,7 +46,7 @@ export function stringToCodeWord(str: string): string {
 }
 
 // Function to convert a simple code word back to original string
-export function codeWordToString(codeWord: string): string {
+export function CodeWordToString(codeWord: string): string {
   let originalString = "";
   // Invert the mapping object to get original characters
   const reverseMap: { [key: string]: string } = {};
