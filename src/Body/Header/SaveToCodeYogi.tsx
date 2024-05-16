@@ -32,8 +32,8 @@ const SaveToCodeYogi = ({
     let key = "";
 
     if (!LinkId) {
+      setShowSave(1);
       if (!inputValue) {
-        setShowSave(1);
         return;
       } else {
         const match = inputValue.match(/\/c\/([^\/?]+)/);
@@ -43,6 +43,13 @@ const SaveToCodeYogi = ({
           setShowSave(0);
 
           key = match[1];
+        } else {
+          setShowAlert({
+            value: showAlert.value + 1,
+            type: "error",
+            message: "can't find link ",
+          });
+          return
         }
       }
     } else {
@@ -59,6 +66,8 @@ const SaveToCodeYogi = ({
       });
       setLoading(false);
     }).catch((err) => {
+
+
       setLoading(false);
       setShowAlert({
         value: showAlert.value + 1,
@@ -74,6 +83,12 @@ const SaveToCodeYogi = ({
 
     if (match) {
       setId(match[1]);
+    }else{
+      setShowAlert({
+        value: showAlert.value + 1,
+        type: "error",
+        message: "can't find link ",
+      });
     }
   };
 
@@ -148,7 +163,7 @@ export type CodeWithSet = {
   cssCode: string;
   htmlCode: string;
   className?: string;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;  
   showAlert: showAlertType;
 };
 

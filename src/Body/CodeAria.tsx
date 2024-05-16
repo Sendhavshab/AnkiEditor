@@ -46,16 +46,15 @@ const CodeAria: React.FC<G> = ({
 }) => {
   const [Show, setShow] = useState<S>();
 
+  const deviceWidth = window.innerWidth;
   useEffect(() => {
-    const deviceWidth = window.innerWidth;
-
     if (deviceWidth < 1024) {
       setShow({
         editor: "block",
         shower: "hidden",
       });
     }
-  }, []);
+  }, [deviceWidth]);
 
   const runJsFunc = () => {
     setRunJs(true);

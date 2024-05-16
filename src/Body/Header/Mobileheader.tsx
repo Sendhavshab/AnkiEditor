@@ -19,7 +19,7 @@ const MobileManu = (props: P) => {
   };
 
   const didAnotherUser = useParams().didshare;
-  const didAssignment = useParams().assiID;
+  const didAssignment = useParams().assiID || "";
 
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
@@ -99,7 +99,9 @@ const MobileManu = (props: P) => {
                     ></SaveToCodeYogi>
                     {didAssignment && (
                       <button
-                        onClick={() => Share("other", props.setShowAlert)}
+                        onClick={() =>
+                          Share("other", props.setShowAlert, didAssignment)
+                        }
                         className="bg-gradient-to-r min-w-max flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                       >
                         Share to other
@@ -107,7 +109,9 @@ const MobileManu = (props: P) => {
                       </button>
                     )}
                     <button
-                      onClick={() => Share("me", props.setShowAlert)}
+                      onClick={() =>
+                        Share("me", props.setShowAlert, didAssignment)
+                      }
                       className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                     >
                       copy for you <FaCopy />

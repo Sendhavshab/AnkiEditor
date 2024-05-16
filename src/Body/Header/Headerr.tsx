@@ -15,7 +15,7 @@ const Header = (prop: P) => {
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   const didAnotherUser = useParams().didshare;
-  const didAssignment = useParams().assiID;
+  const didAssignment = useParams().assiID|| ''
 
   return (
     <div className=" md:flex gap-2 hidden flex-wrap items-center justify-center  ">
@@ -74,7 +74,7 @@ const Header = (prop: P) => {
           <SaveToCodeYogi></SaveToCodeYogi>
           {didAssignment && (
             <button
-              onClick={() => Share("other", prop.setShowAlert)}
+              onClick={() => Share("other", prop.setShowAlert, didAssignment)}
               className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
             >
               Share to other
@@ -82,7 +82,7 @@ const Header = (prop: P) => {
             </button>
           )}
           <button
-            onClick={() => Share("me", prop.setShowAlert)}
+            onClick={() => Share("me", prop.setShowAlert, didAssignment)}
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
             copy for you <FaCopy />

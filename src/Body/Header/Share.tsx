@@ -1,17 +1,28 @@
+import { stringToCodeWord } from "../../Codeword";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const Share = (
   shareTo: "me" | "other",
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>,
+  assignmentId: string
 ) => {
   let link = window.location.href;
 
+
+
   if (shareTo === "other") {
     if (link.charAt(link.length - 1) === "/") {
+     
       link = link + generateRandomString(7);
     } else {
       link = link + "/" + generateRandomString(7);
     }
+
+    const codeId = stringToCodeWord(assignmentId);
+
+  link = link.replace(assignmentId, codeId);
+
+
   }
   navigator.clipboard
     .writeText(link)
