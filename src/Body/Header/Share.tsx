@@ -1,4 +1,4 @@
-import { StringToCodeWord } from "../../Codeword";
+import { StringToCodeWord } from "../../StrToCode";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const Share = (
