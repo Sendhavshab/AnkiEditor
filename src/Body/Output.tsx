@@ -9,18 +9,17 @@ type P = {
 };
 
 class Output extends Component<P> {
-  // shouldComponentUpdate(nextProps: Readonly<P>): boolean {
 
-  //   if (
-  //     nextProps.runJs === true ||
-  //     nextProps.jsCode.indexOf("prompt") === -1
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+
+  
+
 
   render() {
+
+
+   
+
+
     return (
       <div className="w-full h-full">
         <iframe
@@ -33,6 +32,8 @@ class Output extends Component<P> {
               <body>
               <div>${this.props.htmlCode}</div>
               <script>
+ 
+  
                 ${this.props.runJs && this.props.jsCode}
               
             
