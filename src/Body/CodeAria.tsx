@@ -1,22 +1,17 @@
 import { Editor } from "@monaco-editor/react";
 import React, { useEffect, useState } from "react";
-import Console from "./Console";
-import { CodeContextHOC } from "./HOC&Context/Context";
-import Header from "./Headerr";
-import MobileManu from "./Mobileheader";
+import Console from "./Header/Console";
+import { CodeContextHOC } from "../HOC&Context/Context";
+import Header from "./Header/Headerr";
+import MobileManu from "./Header/Mobileheader";
 import Output from "./Output";
-import Shower from "./Shower";
+import Shower from "../Shower";
+import ColorLoader from "../AlertAndLoader/Loder/ColorLoader";
 
 export type S = {
   editor: "hidden" | "block";
   shower: "hidden" | "block";
 };
-
-
-
-
-
-
 
 type G = {
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
@@ -36,7 +31,7 @@ type G = {
   runJs: boolean;
 };
 
-const CodeByLocalStorage: React.FC<G> = ({
+const CodeAria: React.FC<G> = ({
   setHtmlCode,
   setCssCode,
   setJsCode,
@@ -51,16 +46,15 @@ const CodeByLocalStorage: React.FC<G> = ({
 }) => {
   const [Show, setShow] = useState<S>();
 
+  const deviceWidth = window.innerWidth;
   useEffect(() => {
-    const deviceWidth = window.innerWidth;
-
     if (deviceWidth < 1024) {
       setShow({
         editor: "block",
         shower: "hidden",
       });
     }
-  }, []);
+  }, [deviceWidth]);
 
   const runJsFunc = () => {
     setRunJs(true);
@@ -83,7 +77,6 @@ const CodeByLocalStorage: React.FC<G> = ({
     setNotSavedJs(newValue);
   };
 
-
   return (
     <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
       <Shower Show={Show} setShow={setShow}></Shower>
@@ -98,12 +91,14 @@ const CodeByLocalStorage: React.FC<G> = ({
             onChange={handleHtmlChange}
             width="100%"
             value={htmlCode}
+            loading={<ColorLoader />}
           />
         ) : language === "css" ? (
           <Editor
             height="100vh"
             language="css"
             theme="vs-dark"
+            loading={<ColorLoader />}
             onChange={handleCssChange}
             width="100%"
             value={cssCode}
@@ -115,6 +110,7 @@ const CodeByLocalStorage: React.FC<G> = ({
             theme="vs-dark"
             onChange={handleJsChange}
             width="100%"
+            loading={<ColorLoader />}
             value={notSavedJs}
             options={{
               renderValidationDecorations: "on",
@@ -134,4 +130,4 @@ const CodeByLocalStorage: React.FC<G> = ({
   );
 };
 
-export default CodeContextHOC(CodeByLocalStorage);
+export default CodeContextHOC(CodeAria);

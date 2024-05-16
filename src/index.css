@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@keyframes loader {
+    
+    0% {
+        transform: rotate(0deg);
+        color: goldenrod;
+    }
+    25% {
+        transform: rotate(45deg);
+        color: rgb(8, 246, 20);
+    }
+    50% {
+        transform: rotate(90deg);
+        color: blue;
+    }
+    75% {
+        transform: rotate(135deg);
+        color: rgb(238, 15, 22);
+    }
+    100% {
+        transform: rotate(180deg);
+        color: goldenrod;
+    }
+}

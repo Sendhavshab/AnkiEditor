@@ -1,30 +1,39 @@
 // import React from "react";
 
 import { useParams } from "react-router-dom";
-import CodeByLocalStorage from "./COdeByLocalStorage";
+import CodeByLocalStorage from "./Body/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "./ApiCall";
-import Loader from "./handleError/Loader";
-import { CodeContextHOC } from "./HOC&Context/Context";
+import Loader from "./AlertAndLoader/Loder/Loader";
+import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
+import { codeWordToString } from "./Codeword";
+import { showAlertType } from "./HOC&Context/Provider/AlertProvider";
 
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
   setNotSavedJs: Dispatch<SetStateAction<string>>;
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
 };
 
 const Assignment: React.FC<P> = ({
   setHtmlCode,
   setCssCode,
+  setShowAlert,
+
   setNotSavedJs,
 }) => {
-  const assignmentId = useParams().assiID || "";
+  let assignmentId = useParams().assiID || "";
   const [loading, setLoading] = useState(false);
 
-  const assignment = useParams().assiID;
+  const IsAssignmentShared = useParams().didshare;
 
   useEffect(() => {
     setLoading(true);
+
+    if (IsAssignmentShared) {
+      assignmentId = codeWordToString(assignmentId);
+    }
     const code: any = ApiCall("get", assignmentId)
       ?.then((data) => {
         setLoading(false);
@@ -33,8 +42,13 @@ const Assignment: React.FC<P> = ({
         }
         return data.data.assignment.initCode;
       })
-      .catch(() => {
+      .catch((err) => {
         setLoading(false);
+        setShowAlert({
+          value: 1,
+          type: "error",
+          message: err.message,
+        });
       });
 
     code.then((a: any) => {
@@ -42,7 +56,7 @@ const Assignment: React.FC<P> = ({
       setCssCode(a.css);
       setNotSavedJs(a.js);
     });
-  }, [assignment]);
+  }, [assignmentId]);
 
   return (
     <div>
@@ -53,4 +67,4 @@ const Assignment: React.FC<P> = ({
   );
 };
 
-export default CodeContextHOC(Assignment);
+export default CodeContextHOC(AlertShowerProviderHOC(Assignment));

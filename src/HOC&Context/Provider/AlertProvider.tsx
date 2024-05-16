@@ -1,15 +1,15 @@
 // import React from "react";
-import { AlertType } from "../handleError/Alert";
+import { AlertType } from "../../AlertAndLoader/Alert/Alert";
 import { useState } from "react";
-import AlertList from "../handleError/AlertList";
-import { AlertShowerContext } from "./Context";
+import AlertList from "../../AlertAndLoader/Alert/AlertList";
+import { AlertShowerContext } from "../Context";
 
- export type showAlertType = {
+export type showAlertType = {
   value: number;
   type: AlertType;
   message: string;
 };
-const AlertProvider: React.FC<F> = ({children}) => {
+const AlertProvider: React.FC<F> = ({ children }) => {
   const [showAlert, setShowAlert] = useState<showAlertType>({
     value: 0,
     type: "success",
@@ -34,7 +34,6 @@ const AlertProvider: React.FC<F> = ({children}) => {
 type F = {
   children: any;
 };
-
 
 AlertProvider.defaultProps = {};
 

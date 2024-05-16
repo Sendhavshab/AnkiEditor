@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as acorn from "acorn";
 import { IoMdClose } from "react-icons/io";
-import { CodeContextHOC } from "./HOC&Context/Context";
+import { CodeContextHOC } from "../../HOC&Context/Context";
 
 type T = {
   jsCode: string;
@@ -17,9 +17,6 @@ const CodeExecutor: React.FC<T> = ({
   const [error, setError] = useState<string | null>(null);
   // const [consoles, setConsoles] = useState<string[]>([]);
 
-
-  
-  
   // const console = (function (oldCons) {
   //   return {
   //     log: function (text: any) {
@@ -43,7 +40,7 @@ const CodeExecutor: React.FC<T> = ({
   //     },
   //   };
   // })(window.console);
-  
+
   // //Then redefine the old console
   // window.console = console as any;
 
@@ -73,5 +70,3 @@ const CodeExecutor: React.FC<T> = ({
 };
 
 export default CodeContextHOC(CodeExecutor);
-
-

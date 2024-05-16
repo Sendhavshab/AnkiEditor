@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import Loader from "./handleError/Loader";
-import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
-import ApiCall from "./ApiCall";
+import Loader from "../../AlertAndLoader/Loder/Loader";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+} from "../../HOC&Context/Context";
+import ApiCall from "../../ApiCall";
 import { Navigate, useParams } from "react-router-dom";
-import { showAlertType } from "./HOC&Context/AlertProvider";
-
-
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
   jsCode,
   cssCode,
   htmlCode,
   className,
-  showAlert ,
+  showAlert,
   setShowAlert,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
@@ -42,6 +43,13 @@ const SaveToCodeYogi = ({
           setShowSave(0);
 
           key = match[1];
+        } else {
+          setShowAlert({
+            value: showAlert.value + 1,
+            type: "error",
+            message: "can't find link ",
+          });
+          return
         }
       }
     } else {
@@ -58,6 +66,8 @@ const SaveToCodeYogi = ({
       });
       setLoading(false);
     }).catch((err) => {
+
+
       setLoading(false);
       setShowAlert({
         value: showAlert.value + 1,
@@ -73,14 +83,18 @@ const SaveToCodeYogi = ({
 
     if (match) {
       setId(match[1]);
+    }else{
+      setShowAlert({
+        value: showAlert.value + 1,
+        type: "error",
+        message: "can't find link ",
+      });
     }
   };
-
 
   if (id && id !== LinkId) {
     return <Navigate to={`/assignment/c/${id}`}></Navigate>;
   }
-
 
   return (
     <div className={`${className}`}>
@@ -108,11 +122,11 @@ const SaveToCodeYogi = ({
               link {showSave === 1 ? "to save" : "to get"}
             </h1>
             <input
-              // onKeyDown={(e) => {
-              //   if (e.key === "Enter") {
-              //     confirmPostClick();
-              //   }
-              // }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  showSave === 1 ? confirmPostClick() : confirmGetClick();
+                }
+              }}
               ref={InputRef}
               type="text"
               onChange={(e) => {
@@ -149,7 +163,7 @@ export type CodeWithSet = {
   cssCode: string;
   htmlCode: string;
   className?: string;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;  
   showAlert: showAlertType;
 };
 
