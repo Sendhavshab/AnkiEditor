@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "./ApiCall";
 import Loader from "./AlertAndLoader/Loder/Loader";
 import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
-import { codeWordToString } from "./Codeword";
+import { CodeWordToString } from "./Codeword";
 import { showAlertType } from "./HOC&Context/Provider/AlertProvider";
 
 type P = {
@@ -32,7 +32,7 @@ const Assignment: React.FC<P> = ({
     setLoading(true);
 
     if (IsAssignmentShared) {
-      assignmentId = codeWordToString(assignmentId);
+      assignmentId = CodeWordToString(assignmentId);
     }
     const code: any = ApiCall("get", assignmentId)
       ?.then((data) => {

@@ -1,4 +1,4 @@
-import { stringToCodeWord } from "../../Codeword";
+import { StringToCodeWord } from "../../Codeword";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const Share = (
@@ -8,21 +8,16 @@ const Share = (
 ) => {
   let link = window.location.href;
 
-
-
   if (shareTo === "other") {
     if (link.charAt(link.length - 1) === "/") {
-     
       link = link + generateRandomString(7);
     } else {
       link = link + "/" + generateRandomString(7);
     }
 
-    const codeId = stringToCodeWord(assignmentId);
+    const codeId = StringToCodeWord(assignmentId);
 
-  link = link.replace(assignmentId, codeId);
-
-
+    link = link.replace(assignmentId, codeId);
   }
   navigator.clipboard
     .writeText(link)
