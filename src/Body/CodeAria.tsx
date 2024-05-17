@@ -113,15 +113,16 @@ const CodeAria: React.FC<G> = ({
             loading={<ColorLoader />}
             value={notSavedJs}
             options={{
+              lineNumbersMinChars: deviceWidth > 1024 ? 5 : 1,
               renderValidationDecorations: "on",
               acceptSuggestionOnCommitCharacter: true,
               showUnused: true,
               formatOnPaste: true,
               glyphMargin: deviceWidth > 1024,
-              padding : {
-                top : 8 ,
-                bottom : 5
-              } ,
+              padding: {
+                top: 8,
+                bottom: 5,
+              },
               minimap: {
                 enabled: deviceWidth > 1024,
               },
