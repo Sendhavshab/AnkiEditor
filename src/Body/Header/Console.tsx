@@ -15,34 +15,7 @@ const CodeExecutor: React.FC<T> = ({
   setShowConsole,
 }: T) => {
   const [error, setError] = useState<string | null>(null);
-  // const [consoles, setConsoles] = useState<string[]>([]);
-
-  // const console = (function (oldCons) {
-  //   return {
-  //     log: function (text: any) {
-  //       oldCons.log(text);
-  //       setConsoles([...consoles, text]);
-  //     },
-  //     info: function (text: any) {
-  //       oldCons.info(text);
-  //       // Your code
-  //       setConsoles([...consoles, text]);
-  //     },
-  //     warn: function (text: any) {
-  //       oldCons.warn(text);
-  //       // Your code
-  //       setConsoles([...consoles, text]);
-  //     },
-  //     error: function (text: any) {
-  //       oldCons.error(text);
-  //       // Your code
-  //       setConsoles([...consoles, text]);
-  //     },
-  //   };
-  // })(window.console);
-
-  // //Then redefine the old console
-  // window.console = console as any;
+  
 
   useEffect(() => {
     try {

@@ -25,7 +25,7 @@ const MobileManu = (props: P) => {
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   return (
-    <div className="flex gap-2 md:hidden items-center justify-center relative">
+    <div className="flex gap-2 flex-wrap md:hidden items-center justify-center relative">
       {/* <div className="p-5 rounded-full absolute -left-5 bg-blue-600">
         <img className="" src="/logo.svg" width={50} alt="Logo" />
       </div> */}

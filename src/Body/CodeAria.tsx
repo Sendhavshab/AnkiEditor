@@ -5,7 +5,7 @@ import { CodeContextHOC } from "../HOC&Context/Context";
 import Header from "./Header/Headerr";
 import MobileManu from "./Header/Mobileheader";
 import Output from "./Output";
-import Shower from "../Shower";
+import Shower from "./Header/Shower";
 import ColorLoader from "../AlertAndLoader/Loder/ColorLoader";
 
 export type S = {
@@ -117,7 +117,14 @@ const CodeAria: React.FC<G> = ({
               acceptSuggestionOnCommitCharacter: true,
               showUnused: true,
               formatOnPaste: true,
-              glyphMargin: true,
+              glyphMargin: deviceWidth > 1024,
+              padding : {
+                top : 8 ,
+                bottom : 5
+              } ,
+              minimap: {
+                enabled: deviceWidth > 1024,
+              },
             }}
           />
         )}

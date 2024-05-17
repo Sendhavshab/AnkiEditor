@@ -1,5 +1,5 @@
 import { FaEye } from "react-icons/fa";
-import { S } from "./Body/CodeAria";
+import { S } from "../CodeAria";
 
 const Shower = (prop: P) => {
   const showCode = () => {
