@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import {
   AlertShowerProviderHOC,
   CodeContextHOC,
+  ConsoleProviderHOC,
 } from "../../HOC&Context/Context";
 import { useParams } from "react-router-dom";
 import Share from "./Share";
@@ -84,13 +85,17 @@ const MobileManu = (props: P) => {
                 <div className="text-xl flex flex-col gap-3">
                   <div className="flex flex-col  gap-5 font-bold  text-white ">
                     <div
-                      className="flex gap-2 items-center cursor-pointer"
+                      className="flex gap-2 items-center relative cursor-pointer"
                       onClick={() => {
                         props.setShowConsole(!props.showConsole);
                         toggleMenu();
                       }}
                     >
                       <FaWrench className="text-4xl  bg-blue-500 p-2 rounded-full text-white" />
+                      {props.consoleMessages.length !== 0 && (
+                        <span className="p-2 rounded-full bg-red-600 bg-opacity-90 absolute -left-1 -top-1"></span>
+                      )}
+
                       <h1 className="text-xl font-bold">CONSOLE</h1>
                     </div>
                     <SaveToCodeYogi
@@ -132,6 +137,7 @@ const MobileManu = (props: P) => {
 // Props interface
 type P = {
   language: "html" | "js" | "css";
+  consoleMessages: { type: string; message: string }[];
   setLanguage: (language: "html" | "js" | "css") => void;
   jsCode: string;
   runJsFunc: () => void;
@@ -150,4 +156,4 @@ MobileManu.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(MobileManu));
+export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(MobileManu)));

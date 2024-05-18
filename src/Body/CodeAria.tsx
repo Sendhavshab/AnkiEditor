@@ -1,7 +1,7 @@
 import { Editor } from "@monaco-editor/react";
 import React, { useEffect, useState } from "react";
 import Console from "./Header/Console";
-import { CodeContextHOC } from "../HOC&Context/Context";
+import { CodeContextHOC, ConsoleProviderHOC } from "../HOC&Context/Context";
 import Header from "./Header/Headerr";
 import MobileManu from "./Header/Mobileheader";
 import Output from "./Output";
@@ -15,6 +15,7 @@ export type S = {
 
 type G = {
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
+  setConsoleMessages: React.Dispatch<React.SetStateAction<string[]>>;
   setCssCode: React.Dispatch<React.SetStateAction<string>>;
   setJsCode: React.Dispatch<React.SetStateAction<string>>;
   setNotSavedJs: React.Dispatch<React.SetStateAction<string>>;
@@ -43,6 +44,7 @@ const CodeAria: React.FC<G> = ({
 
   language,
   setRunJs,
+  setConsoleMessages,
 }) => {
   const [Show, setShow] = useState<S>();
 
@@ -57,6 +59,7 @@ const CodeAria: React.FC<G> = ({
   }, [deviceWidth]);
 
   const runJsFunc = () => {
+    setConsoleMessages([])
     setRunJs(true);
     setJsCode(notSavedJs);
   };
@@ -113,7 +116,7 @@ const CodeAria: React.FC<G> = ({
             loading={<ColorLoader />}
             value={notSavedJs}
             options={{
-              lineNumbersMinChars: deviceWidth > 1024 ? 5 : 1,
+              lineNumbersMinChars: 1,
               renderValidationDecorations: "on",
               acceptSuggestionOnCommitCharacter: true,
               showUnused: true,
@@ -138,4 +141,4 @@ const CodeAria: React.FC<G> = ({
   );
 };
 
-export default CodeContextHOC(CodeAria);
+export default CodeContextHOC(ConsoleProviderHOC(CodeAria));

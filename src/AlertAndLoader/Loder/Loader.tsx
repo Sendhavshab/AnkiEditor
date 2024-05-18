@@ -7,7 +7,7 @@ function Loader(){
      <div className="w-screen  flex items-center justify-center">
        <ImSpinner6
          style={{
-           animation: "loader 0.3s linear infinite",
+           animation: "loader 0.6s linear infinite",
            transitionProperty: "color rotate",
          }}
          className=" text-white h-6 w-6"

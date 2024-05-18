@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import {
   AlertShowerProviderHOC,
   CodeContextHOC,
+  ConsoleProviderHOC,
 } from "../../HOC&Context/Context";
 import Share from "./Share";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
@@ -57,7 +58,8 @@ const Header = (prop: P) => {
           onClick={() => prop.setShowConsole(!prop.showConsole)}
           className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
         />
-        <Infoalert> Error console </Infoalert>
+  { prop.consoleMessages.length !== 0 &&        <span className="p-2 rounded-full bg-red-600 bg-opacity-90 absolute -right-1 -top-1"></span>}
+        <Infoalert> console </Infoalert>
       </div>
       {prop.notSavedJs !== prop.jsCode && (
         <button
@@ -95,6 +97,7 @@ const Header = (prop: P) => {
 
 type P = {
   language: "html" | "js" | "css";
+  consoleMessages: { type: string; message: string }[];
   setLanguage: (language: "html" | "js" | "css") => void;
   jsCode: string;
   notSavedJs: string;
@@ -114,4 +117,4 @@ Header.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(Header));
+export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(Header)));
