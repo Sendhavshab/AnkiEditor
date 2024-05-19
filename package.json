@@ -14,6 +14,7 @@
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "@monaco-editor/react": "^4.6.0",
+    "@sentry/react": "^8.2.1",
     "@uiw/codemirror-theme-vscode": "^4.21.25",
     "@uiw/react-codemirror": "^4.21.25",
     "acorn": "^8.11.3",
