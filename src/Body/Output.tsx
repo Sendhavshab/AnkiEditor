@@ -124,6 +124,8 @@ componentWillUnmount(): void {
               <body>
                 <div>${this.props.htmlCode}</div>
                 <script>
+                  ${this.props.runJs && this.props.jsCode}
+
                   (function() {
                     const captureMessage = (type, ...args) => {
                       const error = new Error();
@@ -137,6 +139,8 @@ componentWillUnmount(): void {
                             if (callerInfo) {
                               callerLine = \`line \${callerInfo[1]}, col \${callerInfo[2]}\`;
                               break;
+
+                          
                             }
                           }
                         }
@@ -180,7 +184,6 @@ componentWillUnmount(): void {
                     });
                   })();
 
-                  ${this.props.runJs && this.props.jsCode}
                 </script>
               </body>
             </html>

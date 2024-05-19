@@ -18,7 +18,27 @@ const Share = (
     const codeId = StringToCodeWord(assignmentId);
 
     link = link.replace(assignmentId, codeId);
-  }
+
+     const handleShare = async () => {
+       if (navigator.share) {
+         try {
+           await navigator.share({
+             title: "Awesome Website",
+             text: "Check out this awesome website!",
+             url: window.location.href,
+           });
+           console.log("Successful share");
+         } catch (error) {
+           console.log("Error sharing", error);
+         }
+       } else {
+         alert("Web Share API is not supported in your browser.");
+       }
+     };
+
+     handleShare();
+
+  } else{
   navigator.clipboard
     .writeText(link)
     .then(() => {
@@ -35,6 +55,7 @@ const Share = (
         message: "Failed to copy link to clipboard",
       });
     });
+  }
 };
 
 export function generateRandomString(length: number) {

@@ -83,7 +83,7 @@ const CodeAria: React.FC<G> = ({
   return (
     <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
       <Shower Show={Show} setShow={setShow}></Shower>
-      <div className={` lg:w-1/2 w-full ${Show?.editor}`}>
+      <div className={` lg:w-1/2 w-full  ${Show?.editor}`}>
         <Header runJsFunc={runJsFunc} runJs={runJs} />
         <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
         {language === "html" ? (

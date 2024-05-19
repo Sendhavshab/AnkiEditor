@@ -1,50 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const ErrorLogComponent: React.FC = () => {
-  const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
-  const [errors, setErrors] = useState<any[]>([]);
-
-  useEffect(() => {
-    // Console Log Capture
-    const originalConsoleLog = console.log;
-    console.log = (...args: any[]) => {
-      originalConsoleLog(...args);
-      setConsoleLogs((prevLogs) => [...prevLogs, args.join(" ")]);
-    };
-
-    // Error Handling
-    const originalOnError = window.onerror;
-    window.onerror = (message, source, lineno, colno, error) => {
-      if (originalOnError) {
-        originalOnError(message, source, lineno, colno, error);
+const ShareButton: React.FC = () => {
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Awesome Website",
+          text: "Check out this awesome website!",
+          url: window.location.href,
+        });
+        console.log("Successful share");
+      } catch (error) {
+        console.log("Error sharing", error);
       }
-      setErrors((prevErrors) => [...prevErrors, message]);
-      return false;
-    };
-
-    // Cleanup
-    return () => {
-      console.log = originalConsoleLog;
-      window.onerror = originalOnError;
-    };
-  }, []);
+    } else {
+      alert("Web Share API is not supported in your browser.");
+    }
+  };
 
   return (
-    <div>
-      <h2>Console Logs:</h2>
-      <ul>
-        {consoleLogs.map((log, index) => (
-          <li key={index}>{log}</li>
-        ))}
-      </ul>
-      <h2>Errors:</h2>
-      <ul>
-        {errors.map((error, index) => (
-          <li key={index}>{error}</li>
-        ))}
-      </ul>
-    </div>
+    <button onClick={handleShare} style={buttonStyle}>
+      Share this page
+    </button>
   );
 };
 
-export default ErrorLogComponent;
+const buttonStyle: React.CSSProperties = {
+  backgroundColor: "#4CAF50",
+  border: "none",
+  color: "white",
+  padding: "10px 20px",
+  textAlign: "center",
+  textDecoration: "none",
+  display: "inline-block",
+  fontSize: "16px",
+  margin: "4px 2px",
+  cursor: "pointer",
+  borderRadius: "5px",
+};
+
+export default ShareButton;

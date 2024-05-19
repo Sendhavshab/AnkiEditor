@@ -1,20 +1,20 @@
 // import React, { useEffect } from "react";
-// import ErrorLogComponent from "./Abd";
+import ErrorLogComponent from "./Abd";
 
-// const Test = () => {
-//   // Function to handle code execution
+const Test = () => {
+  // Function to handle code execution
   
 
   
 
-// console.log("fdfdfd")
+console.log("fdfdfd")
 
-//   return (
-//     <div>
-//     <ErrorLogComponent />
-//     </div>
-//   );
-// };
+  return (
+    <div>
+    <ErrorLogComponent />
+    </div>
+  );
+};
 
-// export default Test;
-// // 
+export default Test;
+// 

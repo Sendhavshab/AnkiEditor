@@ -13,7 +13,7 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   const [cssCode, setCssCode] = useState(css);
   const [notSavedJs, setNotSavedJs] = useState(js);
   const [jsCode, setJsCode] = useState("");
-
+  const [isNotJsInassignment , setIsNotJsInassignment] = useState(false)
   const whichLanguage =
     html.length > css.length
       ? html.length > js.length
@@ -55,6 +55,8 @@ const CodeProvider: React.FC<F> = ({ children }) => {
         showConsole,
         setShowConsole,
         setNotSavedJs,
+        setIsNotJsInassignment,
+        isNotJsInassignment
       }}
     >
       {children}

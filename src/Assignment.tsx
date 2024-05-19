@@ -14,49 +14,63 @@ type P = {
   setCssCode: Dispatch<SetStateAction<string>>;
   setNotSavedJs: Dispatch<SetStateAction<string>>;
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+  setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>;
 };
 
 const Assignment: React.FC<P> = ({
   setHtmlCode,
   setCssCode,
   setShowAlert,
+  setIsNotJsInassignment ,
 
   setNotSavedJs,
 }) => {
   let assignmentId = useParams().assiID || "";
+
+   const isEdited = localStorage.getItem(assignmentId);
+
   const [loading, setLoading] = useState(false);
 
   const IsAssignmentShared = useParams().didshare;
 
   useEffect(() => {
-    setLoading(true);
+    console.log("useEffect run hua ", isEdited);
+    if (isEdited === "rerun" || !isEdited) {
+      setLoading(true);
 
-    if (IsAssignmentShared) {
-      assignmentId = CodeWordToString(assignmentId);
-    }
-    const code: any = ApiCall("get", assignmentId)
-      ?.then((data) => {
-        setLoading(false);
-        if (data.data.code) {
-          return data.data.code;
-        }
-        return data.data.assignment.initCode;
-      })
-      .catch((err) => {
-        setLoading(false);
-        setShowAlert({
-          value: 1,
-          type: "error",
-          message: err.message,
+      if (IsAssignmentShared) {
+        assignmentId = CodeWordToString(assignmentId);
+      }
+      const code: any = ApiCall("get", assignmentId)
+        ?.then((data) => {
+          setLoading(false);
+          if (data.data.code) {
+            return data.data.code;
+          }
+          return data.data.assignment.initCode;
+        })
+        .catch((err) => {
+          setLoading(false);
+          setShowAlert({
+            value: 1,
+            type: "error",
+            message: err.message,
+          });
         });
-      });
 
-    code.then((a: any) => {
-      setHtmlCode(a.html);
-      setCssCode(a.css);
-      setNotSavedJs(a.js);
-    });
-  }, [assignmentId]);
+      code.then((a: any) => {
+        localStorage.setItem(assignmentId, "edited");
+        setHtmlCode(a.html);
+        setCssCode(a.css);
+        if (a.js) {
+          setNotSavedJs(a.js);
+          setIsNotJsInassignment(false);
+        } else {
+          setIsNotJsInassignment(true);
+        }
+      });
+    }
+  }, [assignmentId, isEdited]);
 
   return (
     <div>

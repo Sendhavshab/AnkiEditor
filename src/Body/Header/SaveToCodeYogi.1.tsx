@@ -1,18 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Loader from "../../AlertAndLoader/Loder/Loader";
-import {
-  AlertShowerProviderHOC,
-  CodeContextHOC,
-} from "../../HOC&Context/Context";
 import ApiCall from "../../ApiCall";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 import { IoMdRefreshCircle } from "react-icons/io";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
-import { BiImport } from "react-icons/bi";
-import { FaFileExport } from "react-icons/fa";
+import { CodeWithSet } from "./SaveToCodeYogi";
 
-const SaveToCodeYogi = ({
+export const SaveToCodeYogi = ({
   jsCode,
   cssCode,
   htmlCode,
@@ -27,7 +21,7 @@ const SaveToCodeYogi = ({
   const [id, setId] = useState("");
 
   const LinkId = useParams().assiID || "";
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     InputRef.current?.focus();
@@ -54,7 +48,7 @@ const SaveToCodeYogi = ({
             type: "error",
             message: "can't find link ",
           });
-          return
+          return;
         }
       }
     } else {
@@ -71,8 +65,6 @@ const SaveToCodeYogi = ({
       });
       setLoading(false);
     }).catch((err) => {
-
-
       setLoading(false);
       setShowAlert({
         value: showAlert.value + 1,
@@ -83,14 +75,10 @@ const SaveToCodeYogi = ({
   };
 
   const handleReGetClick = () => {
-    const confirmOutPut = confirm("this will descard all your change and reImport from CodeYogi")
-   
-    if(confirmOutPut){
-   
     localStorage.setItem(LinkId, "rerun");
 
-     navigate(`/assignment/c/${LinkId}`);
-  }}
+    navigate(`/assignment/c/${LinkId}`);
+  };
 
   const confirmGetClick = () => {
     setShowSave(0);
@@ -98,7 +86,7 @@ const SaveToCodeYogi = ({
 
     if (match) {
       setId(match[1]);
-    }else{
+    } else {
       setShowAlert({
         value: showAlert.value + 1,
         type: "error",
@@ -111,48 +99,29 @@ const SaveToCodeYogi = ({
     return <Navigate to={`/assignment/c/${id}`}></Navigate>;
   }
 
-   
-
-
   return (
     <div className={`${className}`}>
       {loading && <Loader></Loader>}
-      {/* <button
+
+      <button
         onClick={() => confirmPostClick()}
         className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
       >
         Save C.Y.
-      </button> */}
-      <div
-        className="inline-block cursor-pointer"
-        onClick={() => setShowSave(2)}
-      >
-        <div className="relative inline-block">
-          <BiImport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
-          <Infoalert>Get from CodeYogi</Infoalert>
-        </div>
-        <p className="lg:hidden inline-block  text-white">Get C. Y.</p>
-      </div>
-
-      <div
-        className="inline-block cursor-pointer"
-        onClick={() => confirmPostClick()}
-      >
-        <div className="relative inline-block">
-          <FaFileExport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
-          <Infoalert>Save to CodeYogi</Infoalert>
-        </div>
-        <p className="lg:hidden inline-block  text-white">Save C. Y.</p>
-      </div>
+      </button>
       {/* <button
-        onClick={() => setShowSave(2)}
-        className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
-      >
-        Get C.Y.
-      </button> */}
-      <div onClick={handleReGetClick} className="inline-block cursor-pointer">
+              onClick={() => setShowSave(2)}
+              className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
+            >
+              Get C.Y.
+            </button> */}
+      <BiImport />
+      <div>
         <div className="relative inline-block">
-          <IoMdRefreshCircle className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
+          <IoMdRefreshCircle
+            onClick={handleReGetClick}
+            className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 "
+          />
           <Infoalert>ReGet from CY</Infoalert>
         </div>
         <p className="lg:hidden inline-block  text-white">Refresh</p>
@@ -202,16 +171,3 @@ const SaveToCodeYogi = ({
     </div>
   );
 };
-
-export type CodeWithSet = {
-  jsCode: string;
-  cssCode: string;
-  htmlCode: string;
-  className?: string;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;  
-  showAlert: showAlertType;
-};
-
-SaveToCodeYogi.defaultProps = {};
-
-export default CodeContextHOC(AlertShowerProviderHOC(SaveToCodeYogi));
