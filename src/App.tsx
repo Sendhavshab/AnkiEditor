@@ -6,6 +6,7 @@ import Assignment from "./Assignment";
 import CodeProvider from "./HOC&Context/Provider/CodeProvider";
 import AlertProvider from "./HOC&Context/Provider/AlertProvider";
 import ConsoleValueProvide from "./HOC&Context/Provider/ConsoleValueProvide";
+import Test from "./Test/Test";
 // import Test from "./Test/Test";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
                 path="/assignment/c/:assiID/:didshare?"
                 element={<Assignment></Assignment>}
               />
-              {/* <Route  path="/a" element={<Test></Test>} /> */}
+              <Route  path="/a" element={<Test></Test>} />
             </Routes>
           </CodeProvider>
         </ConsoleValueProvide>

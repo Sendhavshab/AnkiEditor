@@ -50,18 +50,19 @@ const MobileManu = (props: P) => {
       >
         CSS
       </button>
-      <button
-        onClick={() => {
-          props.setLanguage("js");
-        }}
-        className={` ${clases} ${
-          props.language === "js" && "scale-110 border-2 border-white"
-        } `}
-      >
-        JS
-      </button>
-
-      {props.notSavedJs !== props.jsCode && (
+      {props.isNotJsInassignment || (
+        <button
+          onClick={() => {
+            props.setLanguage("js");
+          }}
+          className={` ${clases} ${
+            props.language === "js" && "scale-110 border-2 border-white"
+          } `}
+        >
+          JS
+        </button>
+      )}
+      {props.notSavedJs !== props.jsCode && !props.isNotJsInassignment && (
         <button
           onClick={props.runJsFunc}
           className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
@@ -142,6 +143,7 @@ type P = {
   jsCode: string;
   runJsFunc: () => void;
   runJs: boolean;
+  isNotJsInassignment: boolean
   notSavedJs: string;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;

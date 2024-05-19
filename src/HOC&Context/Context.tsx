@@ -16,6 +16,8 @@ interface P {
   htmlCode: string;
   language: "html" | "js" | "css";
   setLanguage: (language: "html" | "js" | "css") => void;
+  setIsNotJsInassignment: React.Dispatch<React.SetStateAction<boolean>>;
+  isNotJsInassignment: boolean
 }
 
 const defaultValues: P = {
@@ -33,6 +35,8 @@ const defaultValues: P = {
   setJsCode: () => {},
   cssCode: "",
   htmlCode: "",
+  setIsNotJsInassignment : () => {},
+  isNotJsInassignment: false
 };
 
 export const CodeContext = createContext<P>(defaultValues);

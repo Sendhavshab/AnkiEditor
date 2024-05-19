@@ -1,4 +1,4 @@
-import { FaCopy, FaShare, FaWrench } from "react-icons/fa";
+import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { Dispatch, SetStateAction } from "react";
@@ -43,25 +43,29 @@ const Header = (prop: P) => {
       >
         CSS
       </button>
-      <button
-        onClick={() => {
-          prop.setLanguage("js");
-        }}
-        className={` ${clases} ${
-          prop.language === "js" && "scale-110 border-2 border-white"
-        } `}
-      >
-        JS
-      </button>
+      {prop.isNotJsInassignment || (
+        <button
+          onClick={() => {
+            prop.setLanguage("js");
+          }}
+          className={` ${clases} ${
+            prop.language === "js" && "scale-110 border-2 border-white"
+          } `}
+        >
+          JS
+        </button>
+      )}
       <div className="relative">
         <FaWrench
           onClick={() => prop.setShowConsole(!prop.showConsole)}
           className="text-4xl peer bg-blue-500 p-2 rounded-full text-white"
         />
-  { prop.consoleMessages.length !== 0 &&        <span className="p-2 rounded-full bg-red-600 bg-opacity-90 absolute -right-1 -top-1"></span>}
+        {prop.consoleMessages.length !== 0 && (
+          <span className="p-2 rounded-full bg-red-600 bg-opacity-90 absolute -right-1 -top-1"></span>
+        )}
         <Infoalert> console </Infoalert>
       </div>
-      {prop.notSavedJs !== prop.jsCode && (
+      {prop.notSavedJs !== prop.jsCode && !prop.isNotJsInassignment && (
         <button
           onClick={prop.runJsFunc}
           className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
@@ -79,15 +83,15 @@ const Header = (prop: P) => {
               onClick={() => Share("other", prop.setShowAlert, didAssignment)}
               className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
             >
-              Share to other
-              <FaShare />
+              Other
+              <FaShareAlt />
             </button>
           )}
           <button
             onClick={() => Share("me", prop.setShowAlert, didAssignment)}
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
-            copy for you <FaCopy />
+            You <FaCopy />
           </button>
         </div>
       )}
@@ -101,7 +105,7 @@ type P = {
   setLanguage: (language: "html" | "js" | "css") => void;
   jsCode: string;
   notSavedJs: string;
-
+  isNotJsInassignment : boolean;
   runJsFunc: () => void;
   runJs: boolean;
   setShowConsole: (showConsole: boolean) => void;
