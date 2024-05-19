@@ -23,9 +23,9 @@ const Share = (
        if (navigator.share) {
          try {
            await navigator.share({
-             title: "Awesome Website",
-             text: "Check out this awesome website!",
-             url: window.location.href,
+             title: "my assigtnment",
+             text: "checkout my assignment and see what is error in this",
+             url: link,
            });
            console.log("Successful share");
          } catch (error) {
