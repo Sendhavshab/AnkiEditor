@@ -13,7 +13,7 @@ const Infoalert = ({children} : P) => {
 };
 
  type P = {
-    children : string ;
+    children : any ;
 
 };
 

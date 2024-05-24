@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,4 +26,8 @@
         transform: rotate(180deg);
         color: goldenrod;
     }
+}
+.myfont {
+  font-family: "Anton", sans-serif;
+  font-style: normal;
 }

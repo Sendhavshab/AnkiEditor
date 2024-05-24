@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ApiCall = (
+const CodeYogiApiCall = (
   mathod: "get" | "post",
   id: string,
   htmlCode?: string,
@@ -20,4 +20,52 @@ const ApiCall = (
 };
 
 
-export default (ApiCall) ;
+export default (CodeYogiApiCall) ;
+
+export const saveToServerApi = (codewithID: { [key: string]: string }) => {
+  return axios.post("https://faltu-ylbv.onrender.com/api/code/store", {
+   
+   
+      code: {
+        link : codewithID.link,
+        html: codewithID.htmlCode,
+        css: codewithID.cssCode,
+        js: codewithID.notSavedJs,
+      },
+    },
+    {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  }
+  );
+};
+export const getFromServerApi = (id:string) => {
+  return axios.get("https://faltu-ylbv.onrender.com/api/code/retrieve/" + id, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+export const GetUserName = () => {
+  return axios.get("https://faltu-ylbv.onrender.com/token", {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+
+export const SignUpApi = (data:{[key:string] : string}) => {
+   
+  return axios.post("https://faltu-ylbv.onrender.com/api/auth/signup", {
+    name: data.name,
+    password: data.password,
+    username : data.username,
+  });
+}
+export const LogInApi = (data: { [key: string]: string }) => {
+  return axios.post("https://faltu-ylbv.onrender.com/api/auth/login", {
+    password: data.password,
+    username: data.username,
+  });
+};

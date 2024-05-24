@@ -1,72 +1,76 @@
 import { StringToCodeWord } from "../../StrToCode";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
+import { generateRandomString } from "../RandomStr";
 
 const Share = (
   shareTo: "me" | "other",
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>,
-  assignmentId: string
+  realId: string
 ) => {
   let link = window.location.href;
 
   if (shareTo === "other") {
     if (link.charAt(link.length - 1) === "/") {
-      link = link + generateRandomString(7);
+      link = link + generateRandomString(5);
     } else {
-      link = link + "/" + generateRandomString(7);
+      link = link + "/" + generateRandomString(5);
     }
 
-    const codeId = StringToCodeWord(assignmentId);
+    const codeWordId = StringToCodeWord(realId);
 
-    link = link.replace(assignmentId, codeId);
+    link = link.replace(realId, codeWordId);
 
-     const handleShare = async () => {
-       if (navigator.share) {
-         try {
-           await navigator.share({
-             title: "my assigtnment",
-             text: "checkout my assignment and see what is error in this",
-             url: link,
-           });
-           console.log("Successful share");
-         } catch (error) {
-           console.log("Error sharing", error);
-         }
-       } else {
-         alert("Web Share API is not supported in your browser.");
-       }
-     };
+    const handleShare = async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "my assigtnment",
+            text: "checkout my assignment and see what is error in this",
+            url: link,
+          });
+          console.log("Successful share");
+        } catch (error) {
+          console.log("Error sharing", error);
+        }
+      } else {
+        navigator.clipboard
+          .writeText(link)
+          .then(() => {
+            setShowAlert({
+              value: 1,
+              type: "success",
+              message: "Link Copied successfully to Clipboard",
+            });
+          })
+          .catch(() => {
+            setShowAlert({
+              value: 1,
+              type: "error",
+              message: "Failed to copy link to clipboard",
+            });
+          });
+      }
+    };
 
-     handleShare();
-
-  } else{
-  navigator.clipboard
-    .writeText(link)
-    .then(() => {
-      setShowAlert({
-        value: 1,
-        type: "success",
-        message: "Link Copied successfully to Clipboard",
+    handleShare();
+  } else {
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        setShowAlert({
+          value: 1,
+          type: "success",
+          message: "Link Copied successfully to Clipboard",
+        });
+      })
+      .catch(() => {
+        setShowAlert({
+          value: 1,
+          type: "error",
+          message: "Failed to copy link to clipboard",
+        });
       });
-    })
-    .catch(() => {
-      setShowAlert({
-        value: 1,
-        type: "error",
-        message: "Failed to copy link to clipboard",
-      });
-    });
   }
 };
-
-export function generateRandomString(length: number) {
-  let result = "";
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
 
 export default Share;

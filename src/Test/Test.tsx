@@ -1,20 +1,18 @@
 // import React, { useEffect } from "react";
-import ErrorLogComponent from "./Abd";
+
+import DashBoard from "../Body/DashBoard";
 
 const Test = () => {
   // Function to handle code execution
-  
 
-  
-
-console.log("fdfdfd")
+  console.log("fdfdfd");
 
   return (
     <div>
-    <ErrorLogComponent />
+      <DashBoard></DashBoard>
     </div>
   );
 };
 
 export default Test;
-// 
+//

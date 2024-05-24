@@ -13,6 +13,7 @@ type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
   setNotSavedJs: Dispatch<SetStateAction<string>>;
+  setCodeId: Dispatch<SetStateAction<string | undefined>>;
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
   setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>;
 };
@@ -22,7 +23,7 @@ const Assignment: React.FC<P> = ({
   setCssCode,
   setShowAlert,
   setIsNotJsInassignment ,
-
+  setCodeId,
   setNotSavedJs,
 }) => {
   let assignmentId = useParams().assiID || "";
@@ -34,7 +35,10 @@ const Assignment: React.FC<P> = ({
   const IsAssignmentShared = useParams().didshare;
 
   useEffect(() => {
-    console.log("useEffect run hua ", isEdited);
+
+    setCodeId(assignmentId)
+
+    console.log("assignment is in a" , assignmentId)
     if (isEdited === "rerun" || !isEdited) {
       setLoading(true);
 
@@ -66,6 +70,7 @@ const Assignment: React.FC<P> = ({
           setNotSavedJs(a.js);
           setIsNotJsInassignment(false);
         } else {
+          
           setIsNotJsInassignment(true);
         }
       });

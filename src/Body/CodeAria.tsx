@@ -86,52 +86,43 @@ const CodeAria: React.FC<G> = ({
       <div className={` lg:w-1/2 w-full  ${Show?.editor}`}>
         <Header runJsFunc={runJsFunc} runJs={runJs} />
         <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
-        {language === "html" ? (
-          <Editor
-            height="100vh"
-            language="html"
-            theme="vs-dark"
-            onChange={handleHtmlChange}
-            width="100%"
-            value={htmlCode}
-            loading={<ColorLoader />}
-          />
-        ) : language === "css" ? (
-          <Editor
-            height="100vh"
-            language="css"
-            theme="vs-dark"
-            loading={<ColorLoader />}
-            onChange={handleCssChange}
-            width="100%"
-            value={cssCode}
-          />
-        ) : (
-          <Editor
-            height="100vh"
-            language="javascript"
-            theme="vs-dark"
-            onChange={handleJsChange}
-            width="100%"
-            loading={<ColorLoader />}
-            value={notSavedJs}
-            options={{
-              lineNumbersMinChars: 1,
-              renderValidationDecorations: "on",
-              acceptSuggestionOnCommitCharacter: true,
-              showUnused: true,
-              formatOnPaste: true,
-              glyphMargin: deviceWidth > 1024,
-              padding: {
-                top: 8,
-                bottom: 5,
-              },
-              minimap: {
-                enabled: deviceWidth > 1024,
-              },
-            }}
-          />
-        )}
+
+        <Editor
+          height="100vh"
+          language={language}
+          theme="vs-dark"
+          onChange={
+            language === "html"
+              ? handleHtmlChange
+              : language === "css"
+              ? handleCssChange
+              : handleJsChange
+          }
+          width="100%"
+          loading={<ColorLoader />}
+          value={
+            language === "html"
+              ? htmlCode
+              : language === "css"
+              ? cssCode
+              : notSavedJs
+          }
+          options={{
+            lineNumbersMinChars: 1,
+            renderValidationDecorations: "on",
+            acceptSuggestionOnCommitCharacter: true,
+            showUnused: true,
+            formatOnPaste: true,
+            glyphMargin: deviceWidth > 1024,
+            padding: {
+              top: 8,
+              bottom: 5,
+            },
+            minimap: {
+              enabled: false,
+            },
+          }}
+        />
       </div>
       <div className={`lg:w-1/2 w-full h-full bg-white ${Show?.shower}`}>
         <Output></Output>

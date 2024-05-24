@@ -5,7 +5,7 @@ import { IoMdRefreshCircle } from "react-icons/io";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
 import Loader from "../../AlertAndLoader/Loder/Loader";
-import ApiCall from "../../ApiCall";
+import ApiCall, { saveToServerApi } from "../../ApiCall";
 import {
   AlertShowerProviderHOC,
   CodeContextHOC,
@@ -13,30 +13,63 @@ import {
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
-  jsCode,
+  notSavedJs,
   cssCode,
   htmlCode,
   className,
   showAlert,
   setShowAlert,
+  onlyGet,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
   const [showSave, setShowSave] = useState(0);
   const [loading, setLoading] = useState(false);
   const InputRef = useRef<HTMLInputElement>(null);
-  const [id, setId] = useState("");
+  const [assignmentId, setAssignmentId] = useState("");
+  const LinkAssignmentId = useParams().assiID || "";
+  let LinkPracticeId = useParams().practiceId || "";
 
-  const LinkId = useParams().assiID || "";
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    InputRef.current?.focus();
-  }, []);
+    if (!!showSave) InputRef.current?.focus();
+  }, [showSave]);
 
-  const confirmPostClick = () => {
+  const confirmServerSaveClick = () => {
+    setLoading(true);
+    const code: any = saveToServerApi({
+      htmlCode,
+      cssCode,
+      notSavedJs,
+      link: LinkPracticeId,
+    });
+code
+  .then((r: any) => {
+
+    setShowAlert({
+      value: showAlert.value + 1,
+      type: "success",
+      message: r.data,
+    });
+    setLoading(false);
+  })
+  .catch((err:any) => {
+    console.log("error aaya a" , err)
+    setLoading(false);
+    setShowAlert({
+      value: showAlert.value + 1,
+      type: "error",
+      message: err.message || err.data,
+    });
+  });
+
+
+  };
+
+  const confirmCyPostClick = () => {
     let key = "";
 
-    if (!LinkId) {
+    if (!LinkAssignmentId) {
       setShowSave(1);
       if (!inputValue) {
         return;
@@ -54,25 +87,23 @@ const SaveToCodeYogi = ({
             type: "error",
             message: "can't find link ",
           });
-          return
+          return;
         }
       }
     } else {
-      key = LinkId;
+      key = LinkAssignmentId;
     }
     setLoading(true);
-    const o = ApiCall("post", key, htmlCode, cssCode, jsCode);
+    const o = ApiCall("post", key, htmlCode, cssCode, notSavedJs);
 
-    o?.then(() => {
+    o.then(() => {
       setShowAlert({
         value: showAlert.value + 1,
         type: "success",
-        message: " successfully saved your assignmennt to codeyogi",
+        message: " successfully saved your assignmennt to codeyogi ",
       });
       setLoading(false);
     }).catch((err) => {
-
-
       setLoading(false);
       setShowAlert({
         value: showAlert.value + 1,
@@ -83,22 +114,30 @@ const SaveToCodeYogi = ({
   };
 
   const handleReGetClick = () => {
-    const confirmOutPut = confirm("this will descard all your change and reImport from CodeYogi")
-   
-    if(confirmOutPut){
-   
-    localStorage.setItem(LinkId, "rerun");
+    const confirmOutPut = confirm(
+      "this will descard all your change and reImport from CodeYogi"
+    );
 
-     navigate(`/assignment/c/${LinkId}`);
-  }}
+    if (confirmOutPut) {
+      if (LinkAssignmentId) {
+        ~localStorage.setItem(LinkAssignmentId, "rerun");
+
+        navigate(`/assignment/c/${LinkAssignmentId}`);
+      } else {
+        localStorage.setItem(LinkPracticeId, "rerun");
+
+        navigate(`/code/a/${LinkPracticeId}`);
+      }
+    }
+  };
 
   const confirmGetClick = () => {
     setShowSave(0);
     const match = inputValue.match(/\/c\/([^\/?]+)/);
 
     if (match) {
-      setId(match[1]);
-    }else{
+      setAssignmentId(match[1]);
+    } else {
       setShowAlert({
         value: showAlert.value + 1,
         type: "error",
@@ -107,59 +146,73 @@ const SaveToCodeYogi = ({
     }
   };
 
-  if (id && id !== LinkId) {
-    return <Navigate to={`/assignment/c/${id}`}></Navigate>;
+  if (assignmentId && assignmentId !== LinkAssignmentId) {
+    return <Navigate to={`/assignment/c/${assignmentId}`}></Navigate>;
   }
-
-   
-
+  // if (practiceId && practiceId !== LinkPracticeId) {
+  //   return <Navigate to={`/code/a/${assignmentId}`} />;
+  // }
 
   return (
     <div className={`${className}`}>
       {loading && <Loader></Loader>}
-      {/* <button
-        onClick={() => confirmPostClick()}
-        className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
-      >
-        Save C.Y.
-      </button> */}
-      <div
-        className="inline-block cursor-pointer"
-        onClick={() => setShowSave(2)}
-      >
-        <div className="relative inline-block">
-          <BiImport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
-          <Infoalert>Get from CodeYogi</Infoalert>
-        </div>
-        <p className="lg:hidden inline-block  text-white">Get C. Y.</p>
-      </div>
-
-      <div
-        className="inline-block cursor-pointer"
-        onClick={() => confirmPostClick()}
-      >
-        <div className="relative inline-block">
-          <FaFileExport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
-          <Infoalert>Save to CodeYogi</Infoalert>
-        </div>
-        <p className="lg:hidden inline-block  text-white">Save C. Y.</p>
-      </div>
-      {/* <button
+      {onlyGet && (
+        <button
+          onClick={() => setShowSave(2)}
+          className="px-4 m-2 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
+        >
+          Do CodeYogi assignment
+        </button>
+      )}
+      {onlyGet || (
+        <>
+          {!!LinkPracticeId || (
+            <div
+              className="inline-block cursor-pointer"
+              onClick={() => setShowSave(2)}
+            >
+              <div className="relative inline-block">
+                <BiImport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
+                <Infoalert>Get from CodeYogi</Infoalert>
+              </div>
+              <p className="lg:hidden inline-block  text-white">Get C. Y.</p>
+            </div>
+          )}
+          <div
+            className="inline-block cursor-pointer"
+            onClick={() =>
+              LinkPracticeId ? confirmServerSaveClick() : confirmCyPostClick()
+            }
+          >
+            <div className="relative inline-block">
+              <FaFileExport className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
+              <Infoalert>
+                Save to {LinkAssignmentId ? "CodeYogi" : "Server"}
+              </Infoalert>
+            </div>
+            <p className="lg:hidden inline-block  text-white">Save to server</p>
+          </div>
+          {/* <button
         onClick={() => setShowSave(2)}
         className="px-4 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
       >
         Get C.Y.
       </button> */}
-      <div onClick={handleReGetClick} className="inline-block cursor-pointer">
-        <div className="relative inline-block">
-          <IoMdRefreshCircle className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
-          <Infoalert>ReGet from CY</Infoalert>
-        </div>
-        <p className="lg:hidden inline-block  text-white">Refresh</p>
-      </div>
+          <div
+            onClick={handleReGetClick}
+            className="inline-block cursor-pointer"
+          >
+            <div className="relative inline-block">
+              <IoMdRefreshCircle className="text-gray-500 peer inline-block   text-3xl hover:text-white m-2 " />
+              <Infoalert>get code again</Infoalert>
+            </div>
+            <p className="lg:hidden inline-block  text-white">Refresh</p>
+          </div>
+        </>
+      )}
       {showSave !== 0 && (
         <div
-          // onClick={() => setShowSave(false)}
+          onDoubleClick={() => setShowSave(0)}
           className="fixed inset-0 flex  justify-center z-40 items-center bg-black bg-opacity-60"
         >
           <div className="w-fit m-auto flex flex-col z-50 relative  gap-4 px-8 py-5 max-w-screen-lg  bg-white p-8 rounded-lg">
@@ -169,7 +222,7 @@ const SaveToCodeYogi = ({
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  showSave === 1 ? confirmPostClick() : confirmGetClick();
+                  showSave === 1 ? confirmCyPostClick() : confirmGetClick();
                 }
               }}
               ref={InputRef}
@@ -190,7 +243,7 @@ const SaveToCodeYogi = ({
                 Cencle
               </button>
               <button
-                onClick={showSave === 1 ? confirmPostClick : confirmGetClick}
+                onClick={showSave === 1 ? confirmCyPostClick : confirmGetClick}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
               >
                 Confirm
@@ -204,12 +257,13 @@ const SaveToCodeYogi = ({
 };
 
 export type CodeWithSet = {
-  jsCode: string;
+  notSavedJs: string;
   cssCode: string;
   htmlCode: string;
   className?: string;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;  
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
   showAlert: showAlertType;
+  onlyGet?: boolean;
 };
 
 SaveToCodeYogi.defaultProps = {};
