@@ -1,6 +1,6 @@
 // import { FaWrench, GiHamburgerMenu } from "react-icons/all";
 import { Dispatch, SetStateAction, useState } from "react";
-import { FaCopy, FaShare, FaWrench } from "react-icons/fa";
+import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
 import SaveToCodeYogi from "./SaveToCodeYogi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
@@ -8,11 +8,12 @@ import {
   CodeContextHOC,
   ConsoleProviderHOC,
 } from "../../HOC&Context/Context";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Share from "./Share";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
+import { IoHomeSharp } from "react-icons/io5";
 
-const MobileManu = (props: P) => {
+const MobileManu = (props: HeaderProps) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -21,6 +22,8 @@ const MobileManu = (props: P) => {
 
   const didAnotherUser = useParams().didshare;
   const didAssignment = useParams().assiID || "";
+  const practiceId = useParams().practiceId || "";
+
 
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
@@ -53,10 +56,10 @@ const MobileManu = (props: P) => {
       {props.isNotJsInassignment || (
         <button
           onClick={() => {
-            props.setLanguage("js");
+            props.setLanguage("javascript");
           }}
           className={` ${clases} ${
-            props.language === "js" && "scale-110 border-2 border-white"
+            props.language === "javascript" && "scale-110 border-2 border-white"
           } `}
         >
           JS
@@ -70,7 +73,7 @@ const MobileManu = (props: P) => {
           Load Js
         </button>
       )}
-      {!didAnotherUser ? (
+      {!didAnotherUser && props.isAuther ? (
         <div>
           <GiHamburgerMenu
             className="text-4xl  bg-blue-500 p-2 rounded-full text-white"
@@ -85,6 +88,31 @@ const MobileManu = (props: P) => {
               <div className=" bg-indigo-900 h-full  w-3/4 fixed top-0 right-0  p-8 z-10">
                 <div className="text-xl flex flex-col gap-3">
                   <div className="flex flex-col  gap-5 font-bold  text-white ">
+                    <Link to="/">
+                      <div className="flex gap-2 items-center relative cursor-pointer">
+                        <IoHomeSharp className="text-4xl  bg-blue-500 p-2 rounded-full text-white" />
+
+                        <h1 className="text-xl font-bold">Go HOME</h1>
+                      </div>
+                    </Link>
+                    <div
+                      onClick={() =>
+                        props.setIsTailwindProject(!props.isTailwindProject)
+                      }
+                      className="flex gap-2 items-center relative cursor-pointer"
+                    >
+                      <div className="w-10 h-10 overflow-hidden rounded-full ">
+                        <img
+                          className={`object-cover  ${
+                            props.isTailwindProject || "opacity-40"
+                          } `}
+                          src="/Images/tailwindbright.jpg"
+                        />
+                      </div>
+                      <h1 className="text-xl font-bold">
+                        Tailwind {props.isTailwindProject ? "on" : "off"}
+                      </h1>
+                    </div>
                     <div
                       className="flex gap-2 items-center relative cursor-pointer"
                       onClick={() => {
@@ -103,25 +131,34 @@ const MobileManu = (props: P) => {
                       className="flex relative text-black z-40 flex-col gap-5"
                       {...props}
                     ></SaveToCodeYogi>
-                    {didAssignment && (
-                      <button
-                        onClick={() =>
-                          Share("other", props.setShowAlert, didAssignment)
-                        }
-                        className="bg-gradient-to-r min-w-max flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
-                      >
-                        Share to other
-                        <FaShare />
-                      </button>
+                    {!didAnotherUser && props.isAuther && (
+                      <div className=" flex gap-2 mb-2 flex-col items-center justify-center  ">
+                        <button
+                          onClick={() =>
+                            Share(
+                              "other",
+                              props.setShowAlert,
+                              practiceId ? practiceId : didAssignment
+                            )
+                          }
+                          className="bg-gradient-to-r flex items-center  gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+                        >
+                          <FaShareAlt /> share to Other
+                        </button>
+                        <button
+                          onClick={() =>
+                            Share(
+                              "me",
+                              props.setShowAlert,
+                              practiceId ? practiceId : didAssignment
+                            )
+                          }
+                          className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+                        >
+                          <FaCopy /> copy for You
+                        </button>
+                      </div>
                     )}
-                    <button
-                      onClick={() =>
-                        Share("me", props.setShowAlert, didAssignment)
-                      }
-                      className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
-                    >
-                      copy for you <FaCopy />
-                    </button>
                   </div>
                 </div>
               </div>
@@ -136,14 +173,14 @@ const MobileManu = (props: P) => {
 };
 
 // Props interface
-type P = {
-  language: "html" | "js" | "css";
+export type HeaderProps = {
+  language: "html" | "javascript" | "css";
   consoleMessages: { type: string; message: string }[];
-  setLanguage: (language: "html" | "js" | "css") => void;
+  setLanguage: (language: "html" | "javascript" | "css") => void;
   jsCode: string;
   runJsFunc: () => void;
   runJs: boolean;
-  isNotJsInassignment: boolean
+  isNotJsInassignment: boolean;
   notSavedJs: string;
   setShowConsole: (showConsole: boolean) => void;
   showConsole: boolean;
@@ -152,6 +189,9 @@ type P = {
   setShowAlert: Dispatch<SetStateAction<showAlertType>>;
   cssCode: string;
   htmlCode: string;
+  isAuther: boolean;
+  isTailwindProject: boolean;
+  setIsTailwindProject: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 MobileManu.defaultProps = {

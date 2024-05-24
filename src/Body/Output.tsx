@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { CodeContextHOC, ConsoleProviderHOC } from "../HOC&Context/Context";
+import Preview from "./Preview";
 
 
 
@@ -89,7 +90,9 @@ componentWillUnmount(): void {
         ...prev,
         {
           type: event.data.level,
-          message: `${event.data.message}  ${event.data.line}`,
+          message: `${event.data.message}  ${
+            event.data.line
+          }`,
         },
       ]);
     } else if (event.data && event.data.type === "error") {
@@ -97,7 +100,7 @@ componentWillUnmount(): void {
         ...prev,
         {
           type: "error",
-          message: `${event.data.message} (at ${event.data.filename}, line ${event.data.lineno  - 66}, col ${event.data.colno})`,
+          message: `${event.data.message} (at ${event.data.filename}, line ${event.data.lineno  - 65}, col ${event.data.colno})`,
         },
       ]);
     } else if (event.data && event.data.type === "unhandledrejection") {
@@ -114,84 +117,7 @@ componentWillUnmount(): void {
   render() {
     return (
       <div className="w-full h-full">
-        <iframe
-          title="output"
-          srcDoc={`
-            <html>
-              <head>
-                <style>${this.props.cssCode}</style>
-              </head>
-              <body>
-                <div>${this.props.htmlCode}</div>
-                <script>
-                  ${this.props.runJs && this.props.jsCode}
-
-                  (function() {
-                    const captureMessage = (type, ...args) => {
-                      const error = new Error();
-                      const stack = error.stack;
-                      let callerLine = "";
-                      if (stack) {
-                        const stackLines = stack.split("\\n");
-                        for (const line of stackLines) {
-                          if (line.includes("<anonymous>") || line.includes("eval at")) {
-                            const callerInfo = line.match(/:(\\d+):(\\d+)/);
-                            if (callerInfo) {
-                              callerLine = \`line \${callerInfo[1]}, col \${callerInfo[2]}\`;
-                              break;
-
-                          
-                            }
-                          }
-                        }
-                      }
-                      window.parent.postMessage({
-                        type: "console",
-                        level: type,
-                        message: args.join(" "),
-                        line: callerLine
-                      }, "*");
-                    };
-
-                    const originalConsole = {
-                      log: console.log,
-                      warn: console.warn,
-                      error: console.error
-                    };
-
-                    console.log = (...args) => captureMessage("log", ...args);
-                    console.warn = (...args) => captureMessage("warn", ...args);
-                    console.error = (...args) => captureMessage("error", ...args);
-
-                    window.addEventListener('error', function(event) {
-                      window.parent.postMessage({
-                        type: "error",
-                        message: event.message,
-                        filename: event.filename,
-                        lineno: event.lineno,
-                        colno: event.colno
-                      }, "*");
-                    });
-
-                    window.addEventListener('unhandledrejection', function(event) {
-                      window.parent.postMessage({
-                        type: "unhandledrejection",
-                        message: event.reason,
-                        filename: event.filename || "unknown",
-                        lineno: event.lineno || 0,
-                        colno: event.colno || 0
-                      }, "*");
-                    });
-                  })();
-
-                </script>
-              </body>
-            </html>
-          `}
-          width="100%"
-          height="100%"
-          sandbox="allow-scripts allow-modals"
-        ></iframe>
+       <Preview />
       </div>
     );
   }

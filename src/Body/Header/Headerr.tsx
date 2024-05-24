@@ -1,28 +1,30 @@
 import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
 import SaveToCodeYogi from "./SaveToCodeYogi";
-import { Dispatch, SetStateAction } from "react";
 import {
   AlertShowerProviderHOC,
   CodeContextHOC,
   ConsoleProviderHOC,
+  FolderProviderHOC,
 } from "../../HOC&Context/Context";
 import Share from "./Share";
-import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { IoHomeSharp } from "react-icons/io5";
+import { HeaderProps } from "./Mobileheader";
 
-const Header = (prop: P) => {
+const Header = (prop: HeaderProps) => {
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   const didAnotherUser = useParams().didshare;
   const didAssignment = useParams().assiID|| ''
+  const practiceId = useParams().practiceId|| ''
 
   return (
     <div className=" md:flex gap-2 hidden flex-wrap items-center justify-center  ">
-      {/* <div className="p-5 rounded-full absolute -left-5  bg-blue-600">
-        <img className=" " src="/logo.svg" width={50} />
-      </div> */}
+      <Link to="/">
+        <IoHomeSharp className="text-gray-500 peer inline-block   text-2xl hover:text-white m-2 " />
+      </Link>
       <button
         onClick={() => {
           prop.setLanguage("html");
@@ -46,10 +48,10 @@ const Header = (prop: P) => {
       {prop.isNotJsInassignment || (
         <button
           onClick={() => {
-            prop.setLanguage("js");
+            prop.setLanguage("javascript");
           }}
           className={` ${clases} ${
-            prop.language === "js" && "scale-110 border-2 border-white"
+            prop.language === "javascript" && "scale-110 border-2 border-white"
           } `}
         >
           JS
@@ -65,6 +67,15 @@ const Header = (prop: P) => {
         )}
         <Infoalert> console </Infoalert>
       </div>
+      <div
+        onClick={() => prop.setIsTailwindProject(!prop.isTailwindProject)}
+        className="w-10 h-10 rounded-full "
+      >
+        <img
+          className={`object-cover  ${prop.isTailwindProject || "opacity-40"} `}
+          src="/Images/tailwindbright.jpg"
+        />
+      </div>
       {prop.notSavedJs !== prop.jsCode && !prop.isNotJsInassignment && (
         <button
           onClick={prop.runJsFunc}
@@ -74,21 +85,31 @@ const Header = (prop: P) => {
         </button>
       )}
 
-      {!didAnotherUser && (
+      {!didAnotherUser && prop.isAuther && (
         <div className=" flex gap-2 mb-2 flex-wrap items-center justify-center  ">
           {" "}
           <SaveToCodeYogi></SaveToCodeYogi>
-          {didAssignment && (
-            <button
-              onClick={() => Share("other", prop.setShowAlert, didAssignment)}
-              className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
-            >
-              Other
-              <FaShareAlt />
-            </button>
-          )}
           <button
-            onClick={() => Share("me", prop.setShowAlert, didAssignment)}
+            onClick={() =>
+              Share(
+                "other",
+                prop.setShowAlert,
+                practiceId ? practiceId : didAssignment
+              )
+            }
+            className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+          >
+            Other
+            <FaShareAlt />
+          </button>
+          <button
+            onClick={() =>
+              Share(
+                "me",
+                prop.setShowAlert,
+                practiceId ? practiceId : didAssignment
+              )
+            }
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
             You <FaCopy />
@@ -99,26 +120,10 @@ const Header = (prop: P) => {
   );
 };
 
-type P = {
-  language: "html" | "js" | "css";
-  consoleMessages: { type: string; message: string }[];
-  setLanguage: (language: "html" | "js" | "css") => void;
-  jsCode: string;
-  notSavedJs: string;
-  isNotJsInassignment : boolean;
-  runJsFunc: () => void;
-  runJs: boolean;
-  setShowConsole: (showConsole: boolean) => void;
-  showConsole: boolean;
-  setHtmlCode: Dispatch<SetStateAction<string>>;
-  setCssCode: Dispatch<SetStateAction<string>>;
-  setShowAlert: Dispatch<SetStateAction<showAlertType>>;
-  cssCode: string;
-  htmlCode: string;
-};
+
 
 Header.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(Header)));
+export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(FolderProviderHOC(Header))));
