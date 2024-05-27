@@ -38,7 +38,6 @@ const Assignment: React.FC<P> = ({
 
     setCodeId(assignmentId)
 
-    console.log("assignment is in a" , assignmentId)
     if (isEdited === "rerun" || !isEdited) {
       setLoading(true);
 

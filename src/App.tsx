@@ -15,12 +15,11 @@ import SignUp from "./Acount/SignUp";
 import RedirectLogin , { RedirectHomeHOC } from "./Acount/redirect";
 
 const App = () => {
-  console.log("hello world")
   return (
     <div className="">
       <AlertProvider>
-        <UserAccountProvider>
           <FolderInfoProvider>
+        <UserAccountProvider>
             <ConsoleValueProvide>
               <CodeProvider>
                 <Routes>
@@ -60,8 +59,8 @@ const App = () => {
                 </Routes>
               </CodeProvider>
             </ConsoleValueProvide>
-          </FolderInfoProvider>
         </UserAccountProvider>
+          </FolderInfoProvider>
       </AlertProvider>
     </div>
   );

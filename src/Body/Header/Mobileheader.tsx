@@ -11,7 +11,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import Share from "./Share";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
-import { IoHomeSharp } from "react-icons/io5";
+import { IoHomeSharp, IoLink } from "react-icons/io5";
 
 const MobileManu = (props: HeaderProps) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -143,7 +143,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center  gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaShareAlt /> share to Other
+                          <FaShareAlt /> share to Other <IoLink />
                         </button>
                         <button
                           onClick={() =>
@@ -155,7 +155,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaCopy /> copy for You
+                          <FaCopy /> copy for You <IoLink />
                         </button>
                       </div>
                     )}

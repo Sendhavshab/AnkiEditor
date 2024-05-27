@@ -9,7 +9,7 @@ import {
 } from "../../HOC&Context/Context";
 import Share from "./Share";
 import { Link, useParams } from "react-router-dom";
-import { IoHomeSharp } from "react-icons/io5";
+import { IoHomeSharp, IoLink } from "react-icons/io5";
 import { HeaderProps } from "./Mobileheader";
 
 const Header = (prop: HeaderProps) => {
@@ -99,7 +99,7 @@ const Header = (prop: HeaderProps) => {
             }
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
-            Other
+            <IoLink /> Other
             <FaShareAlt />
           </button>
           <button
@@ -112,7 +112,7 @@ const Header = (prop: HeaderProps) => {
             }
             className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
-            You <FaCopy />
+            <IoLink /> You <FaCopy />
           </button>
         </div>
       )}

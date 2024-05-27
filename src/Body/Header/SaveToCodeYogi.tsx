@@ -54,7 +54,6 @@ code
     setLoading(false);
   })
   .catch((err:any) => {
-    console.log("error aaya a" , err)
     setLoading(false);
     setShowAlert({
       value: showAlert.value + 1,

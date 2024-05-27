@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { AlertShowerProviderHOC, FolderProvider } from "../Context";
 import { generateRandomString } from "../../Body/RandomStr";
 import { showAlertType } from "./AlertProvider";
+import { PushFolders } from "../../ApiCall";
 
 interface FolderInfoProviderProps {
   children: ReactNode;
@@ -27,6 +28,28 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
     localStorage.setItem("folders", JSON.stringify(folders));
   }, [folders]);
 
+
+  const uploadFolder = (newFolder : Folder , message? : string) => {
+
+     PushFolders(newFolder)
+       .then((m : any) => {
+         props.setShowAlert({
+           value: 1,
+           type: "success",
+           message: message || m.message || m.data ,
+         });
+       })
+       .catch((e) => {
+         props.setShowAlert({
+           value: 1,
+           type: "error",
+           message: e.message || e.data,
+         });
+       });
+  }
+
+
+
   const createFolder = (folderName: string) => {
     folderName = folderName.trim();
     if (folders[folderName]) {
@@ -48,6 +71,12 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
       ...folders,
       [folderName]: { id: folderId },
     });
+
+   uploadFolder({
+     ...folders,
+     [folderName]: { id: folderId },
+   });
+
   };
 
  const DeleteFolder = (folderName: string) => {
@@ -55,13 +84,14 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
      `Are you sure you want to delete ${folderName} folder?`
    );
 
+   const newFolder = { ...folders };
    if (confirmMsg) {
-     const newFolder = { ...folders };
 
      delete newFolder[folderName];
 
      setFolders(newFolder);
    }
+   uploadFolder(newFolder , "folder deleted successfully");
  };
 
  const findFolderById = (id: string) => {
@@ -78,7 +108,7 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
 
   return (
     <FolderProvider.Provider
-      value={{ createFolder, folders, DeleteFolder, findFolderById }}
+      value={{ createFolder, folders, DeleteFolder, findFolderById  , setFolders}}
     >
       {props.children}
     </FolderProvider.Provider>

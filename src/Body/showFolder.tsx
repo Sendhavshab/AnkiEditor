@@ -21,9 +21,9 @@ const showFolder: React.FC<showFolderProps> = (props) => {
             <div className=" flex gap-2 items-center p-2 relative bg-indigo-300 bg-opacity-90 text-white font-bold text-xl  m-2 border-4 rounded-xl border-blue-600">
               <img width={40} src="/Images/folder.png" />
               {foldersName}
-              <Link to="/">
-                <MdDeleteForever onClick={() => {props.DeleteFolder(foldersName);}} className="absolute right-2 top-1/3 text-black hover:text-gray-500" />
-              </Link>
+              {/* <Link to="/"> */}
+                <MdDeleteForever onClick={(e) => { e.preventDefault() ;   props.DeleteFolder(foldersName);}} className="absolute right-2 top-1/3 text-black hover:text-gray-500" />
+              {/* </Link> */}
             </div>
           </Link>
         );

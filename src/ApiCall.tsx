@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Folder } from "./HOC&Context/Provider/FolderInfoProvider";
 
 const CodeYogiApiCall = (
   mathod: "get" | "post",
@@ -54,6 +55,23 @@ export const GetUserName = () => {
     },
   });
 };
+export const GetFolders = (token : string) => {
+  return axios.get("https://faltu-ylbv.onrender.com/folder", {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+export const PushFolders = (folders : Folder) => {
+
+  return axios.post("https://faltu-ylbv.onrender.com/folder" , 
+folders
+   , {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
 
 export const SignUpApi = (data:{[key:string] : string}) => {
    
@@ -69,3 +87,5 @@ export const LogInApi = (data: { [key: string]: string }) => {
     username: data.username,
   });
 };
+
+

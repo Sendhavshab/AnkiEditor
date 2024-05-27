@@ -58,6 +58,8 @@ const CodeAria: React.FC<G> = ({
     }
   }, [deviceWidth]);
 
+
+  
   const runJsFunc = () => {
     setConsoleMessages([])
     setRunJs(true);
@@ -108,6 +110,7 @@ const CodeAria: React.FC<G> = ({
               : notSavedJs
           }
           options={{
+            wordWrap: "on" ,
             lineNumbersMinChars: 1,
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,

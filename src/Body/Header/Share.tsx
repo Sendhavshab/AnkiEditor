@@ -28,9 +28,12 @@ const Share = (
             text: "checkout my assignment and see what is error in this",
             url: link,
           });
-          console.log("Successful share");
         } catch (error) {
-          console.log("Error sharing", error);
+          setShowAlert({
+            value: 1,
+            type: "error",
+            message: "Failed to share link",
+          })
         }
       } else {
         navigator.clipboard

@@ -9,9 +9,7 @@ const ShareButton: React.FC = () => {
           text: "Check out this awesome website!",
           url: window.location.href,
         });
-        console.log("Successful share");
       } catch (error) {
-        console.log("Error sharing", error);
       }
     } else {
       alert("Web Share API is not supported in your browser.");
