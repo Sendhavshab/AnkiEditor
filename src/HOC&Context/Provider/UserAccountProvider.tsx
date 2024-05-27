@@ -2,6 +2,7 @@ import React, { useEffect, useState, ReactNode } from "react";
 import { AlertShowerProviderHOC, FolderProviderHOC, UserAccountProvider } from "../Context";
 import { GetFolders, GetUserName, LogInApi, SignUpApi } from "../../ApiCall";
 import { Folder } from "./FolderInfoProvider";
+import { generateRandomString } from "../../Body/RandomStr";
 
 interface UserProviderProps {
   children: ReactNode;
@@ -72,9 +73,12 @@ const UserProvider: React.FC<UserProviderProps> = ({
           setLoading(false);
         }).catch((e) => {
 
-          if(e.message === "Folders not found"){
-
-            setFolders({})
+          if (e.message === "Request failed with status code 404") {
+            setFolders({
+              "example folder": {
+                id: generateRandomString(19),
+              },
+            });
           }
           setShowAlert({
             value: showAlert.value + 1,
