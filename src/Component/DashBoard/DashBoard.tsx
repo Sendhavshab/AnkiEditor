@@ -1,11 +1,11 @@
 import React from "react";
-import FolderCleateButton from "./FolderCleateButton";
-import ShowFolder from "./showFolder";
-import SaveToCodeYogi from "./Header/SaveToCodeYogi";
-import { UserAccountProviderHOC } from "../HOC&Context/Context";
+import FolderCleateButton from "./Folders/FolderCleateButton";
+import ShowFolder from "./Folders/showFolder";
+import SaveToCodeYogi from "../../Api/SaveToCodeYogi";
+import { UserAccountProviderHOC } from "../../HOC&Context/Context";
 
 interface DashBoardProps {
-user:string
+  user: string;
 }
 
 const DashBoard: React.FC<DashBoardProps> = ({ user }) => {

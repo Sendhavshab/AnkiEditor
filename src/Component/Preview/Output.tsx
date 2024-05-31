@@ -1,9 +1,6 @@
 import { Component } from "react";
-import { CodeContextHOC, ConsoleProviderHOC } from "../HOC&Context/Context";
+import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
 import Preview from "./Preview";
-
-
-
 
 type P = {
   jsCode: string;
@@ -24,14 +21,14 @@ class Output extends Component<P> {
   }
 
   componentDidMount(): void {
-      window.addEventListener("message", this.handleMessage);
+    window.addEventListener("message", this.handleMessage);
   }
-componentWillUnmount(): void {
+  componentWillUnmount(): void {
     window.removeEventListener("message", this.handleMessage);
-}
+  }
 
   // componentDidMount() {
-   
+
   //   window.addEventListener("message", this.handleMessage);
 
   //   const captureMessage = (type: keyof Console, ...args: any[]) => {
@@ -50,7 +47,7 @@ componentWillUnmount(): void {
   //         }
   //       }
   //     }
-      
+
   //     this.props.setConsoleMessages((prev) => [
   //       ...prev,
   //       { type, message: `${args.join(" ")} (at ${callerLine})` },
@@ -60,11 +57,9 @@ componentWillUnmount(): void {
   //     }
   //   };
 
-
-  
   //   // Capture all console methods
   //   for (const method  in console) {
-      
+
   //     if (typeof console[method]  === "function") {
   //       this.originalConsole[method] =  console[method];
   //       console[method]   = (...args: any[]) =>
@@ -90,9 +85,7 @@ componentWillUnmount(): void {
         ...prev,
         {
           type: event.data.level,
-          message: `${event.data.message}  ${
-            event.data.line
-          }`,
+          message: `${event.data.message}  ${event.data.line}`,
         },
       ]);
     } else if (event.data && event.data.type === "error") {
@@ -100,7 +93,9 @@ componentWillUnmount(): void {
         ...prev,
         {
           type: "error",
-          message: `${event.data.message} (at ${event.data.filename}, line ${event.data.lineno  - 65}, col ${event.data.colno})`,
+          message: `${event.data.message} (at ${event.data.filename}, line ${
+            event.data.lineno - 65
+          }, col ${event.data.colno})`,
         },
       ]);
     } else if (event.data && event.data.type === "unhandledrejection") {
@@ -117,12 +112,10 @@ componentWillUnmount(): void {
   render() {
     return (
       <div className="w-full h-full">
-       <Preview />
+        <Preview />
       </div>
     );
   }
 }
 
 export default CodeContextHOC(ConsoleProviderHOC(Output));
-
-

@@ -1,13 +1,13 @@
 import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
-import SaveToCodeYogi from "./SaveToCodeYogi";
+import SaveToCodeYogi from "../../Api/SaveToCodeYogi";
 import {
   AlertShowerProviderHOC,
   CodeContextHOC,
   ConsoleProviderHOC,
   FolderProviderHOC,
 } from "../../HOC&Context/Context";
-import Share from "./Share";
+import Share from "../../Api/Share";
 import { Link, useParams } from "react-router-dom";
 import { IoHomeSharp, IoLink } from "react-icons/io5";
 import { HeaderProps } from "./Mobileheader";
@@ -17,8 +17,8 @@ const Header = (prop: HeaderProps) => {
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
 
   const didAnotherUser = useParams().didshare;
-  const didAssignment = useParams().assiID|| ''
-  const practiceId = useParams().practiceId|| ''
+  const didAssignment = useParams().assiID || "";
+  const practiceId = useParams().practiceId || "";
 
   return (
     <div className=" md:flex gap-2 hidden flex-wrap items-center justify-center  ">
@@ -120,10 +120,10 @@ const Header = (prop: HeaderProps) => {
   );
 };
 
-
-
 Header.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(FolderProviderHOC(Header))));
+export default CodeContextHOC(
+  AlertShowerProviderHOC(ConsoleProviderHOC(FolderProviderHOC(Header)))
+);

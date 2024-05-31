@@ -4,9 +4,9 @@ import {
   FolderProviderHOC,
   UserAccountProvider,
 } from "../Context";
-import { GetFolders, GetUserName, LogInApi, SignUpApi } from "../../ApiCall";
+import { GetFolders, GetUserName, LogInApi, SignUpApi } from "../../Api/ApiCall";
 import { Folder } from "./FolderInfoProvider";
-import { generateRandomString } from "../../Body/RandomStr";
+import { generateRandomString } from "../../functions/RandomStr";
 
 interface UserProviderProps {
   children: ReactNode;

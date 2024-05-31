@@ -1,13 +1,16 @@
 // import React from "react";
 
 import { useParams } from "react-router-dom";
-import CodeByLocalStorage from "./Body/CodeAria";
+import CodeByLocalStorage from "../CodeAria/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ApiCall from "./ApiCall";
-import Loader from "./AlertAndLoader/Loder/Loader";
-import { AlertShowerProviderHOC, CodeContextHOC } from "./HOC&Context/Context";
-import { CodeWordToString } from "./StrToCode";
-import { showAlertType } from "./HOC&Context/Provider/AlertProvider";
+import ApiCall from "../../Api/ApiCall";
+import Loader from "../../AlertAndLoader/Loder/Loader";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+} from "../../HOC&Context/Context";
+import { CodeWordToString } from "../../functions/StrToCode";
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
@@ -22,21 +25,20 @@ const Assignment: React.FC<P> = ({
   setHtmlCode,
   setCssCode,
   setShowAlert,
-  setIsNotJsInassignment ,
+  setIsNotJsInassignment,
   setCodeId,
   setNotSavedJs,
 }) => {
   let assignmentId = useParams().assiID || "";
 
-   const isEdited = localStorage.getItem(assignmentId);
+  const isEdited = localStorage.getItem(assignmentId);
 
   const [loading, setLoading] = useState(false);
 
   const IsAssignmentShared = useParams().didshare;
 
   useEffect(() => {
-
-    setCodeId(assignmentId)
+    setCodeId(assignmentId);
 
     if (isEdited === "rerun" || !isEdited) {
       setLoading(true);
@@ -69,7 +71,6 @@ const Assignment: React.FC<P> = ({
           setNotSavedJs(a.js);
           setIsNotJsInassignment(false);
         } else {
-          
           setIsNotJsInassignment(true);
         }
       });

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { GiConfirmed } from "react-icons/gi";
-import { FolderProviderHOC } from "../HOC&Context/Context";
+import { FolderProviderHOC } from "../../../HOC&Context/Context";
 
 interface FolderCleateButtonProps {
   createFolder: (folderName: string) => void;

@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { AlertShowerProviderHOC, FolderProvider } from "../Context";
-import { generateRandomString } from "../../Body/RandomStr";
 import { showAlertType } from "./AlertProvider";
-import { PushFolders } from "../../ApiCall";
+import { PushFolders } from "../../Api/ApiCall";
+import { generateRandomString } from "../../functions/RandomStr";
 
 interface FolderInfoProviderProps {
   children: ReactNode;

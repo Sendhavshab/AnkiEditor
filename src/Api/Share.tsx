@@ -1,6 +1,6 @@
-import { StringToCodeWord } from "../../StrToCode";
-import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
-import { generateRandomString } from "../RandomStr";
+import { StringToCodeWord } from "../functions/StrToCode";
+import { showAlertType } from "../HOC&Context/Provider/AlertProvider";
+import { generateRandomString } from "../functions/RandomStr";
 
 const Share = (
   shareTo: "me" | "other",
@@ -33,7 +33,7 @@ const Share = (
             value: 1,
             type: "error",
             message: "Failed to share link",
-          })
+          });
         }
       } else {
         navigator.clipboard
