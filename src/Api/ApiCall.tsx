@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Folder } from "../HOC&Context/Provider/FolderInfoProvider";
 
 const CodeYogiApiCall = (
   mathod: "get" | "post",
@@ -19,28 +20,27 @@ const CodeYogiApiCall = (
   );
 };
 
-
-export default (CodeYogiApiCall) ;
+export default CodeYogiApiCall;
 
 export const saveToServerApi = (codewithID: { [key: string]: string }) => {
-  return axios.post("https://faltu-ylbv.onrender.com/api/code/store", {
-   
-   
+  return axios.post(
+    "https://faltu-ylbv.onrender.com/api/code/store",
+    {
       code: {
-        link : codewithID.link,
+        link: codewithID.link,
         html: codewithID.htmlCode,
         css: codewithID.cssCode,
         js: codewithID.notSavedJs,
       },
     },
     {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  }
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
   );
 };
-export const getFromServerApi = (id:string) => {
+export const getFromServerApi = (id: string) => {
   return axios.get("https://faltu-ylbv.onrender.com/api/code/retrieve/" + id, {
     headers: {
       Authorization: localStorage.getItem("token"),
@@ -54,15 +54,28 @@ export const GetUserName = () => {
     },
   });
 };
+export const GetFolders = (token: string) => {
+  return axios.get("https://faltu-ylbv.onrender.com/folder", {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+export const PushFolders = (folders: Folder) => {
+  return axios.post("https://faltu-ylbv.onrender.com/folder", folders, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
 
-export const SignUpApi = (data:{[key:string] : string}) => {
-   
+export const SignUpApi = (data: { [key: string]: string }) => {
   return axios.post("https://faltu-ylbv.onrender.com/api/auth/signup", {
     name: data.name,
     password: data.password,
-    username : data.username,
+    username: data.username,
   });
-}
+};
 export const LogInApi = (data: { [key: string]: string }) => {
   return axios.post("https://faltu-ylbv.onrender.com/api/auth/login", {
     password: data.password,

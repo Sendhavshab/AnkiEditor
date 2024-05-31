@@ -1,13 +1,16 @@
-
-
 import { Navigate, useParams } from "react-router-dom";
-import CodeByLocalStorage from "./Body/CodeAria";
+import CodeByLocalStorage from "../CodeAria/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import  { getFromServerApi } from "./ApiCall";
-import Loader from "./AlertAndLoader/Loder/Loader";
-import { AlertShowerProviderHOC, CodeContextHOC, FolderProviderHOC, UserAccountProviderHOC } from "./HOC&Context/Context";
-import { showAlertType } from "./HOC&Context/Provider/AlertProvider";
-import { CodeWordToString } from "./StrToCode";
+import { getFromServerApi } from "../../Api/ApiCall";
+import Loader from "../../AlertAndLoader/Loder/Loader";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+  FolderProviderHOC,
+  UserAccountProviderHOC,
+} from "../../HOC&Context/Context";
+import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
+import { CodeWordToString } from "../../functions/StrToCode";
 
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
@@ -31,7 +34,7 @@ const Practice: React.FC<P> = ({
   setCodeId,
   setNotSavedJs,
   setIsAuther,
-  token
+  token,
 }) => {
   let practiceId = useParams().practiceId || "";
 
@@ -39,19 +42,12 @@ const Practice: React.FC<P> = ({
 
   const [loading, setLoading] = useState(false);
   const IsCodeShared = useParams().didshare;
-const isNewFolder = localStorage.getItem("folder" + practiceId) 
-  if (!token && !IsCodeShared){
+  const isNewFolder = localStorage.getItem("folder" + practiceId);
 
-    return <Navigate to="/login" />;
-  }
-    useEffect(() => {
-      setCodeId(practiceId);
+  useEffect(() => {
+    setCodeId(practiceId);
 
-      if (!isNewFolder) {
-      
-
-
-
+    if (!isNewFolder) {
       if (isEdited === "rerun" || !isEdited) {
         setLoading(true);
 
@@ -95,7 +91,11 @@ const isNewFolder = localStorage.getItem("folder" + practiceId)
     } else {
       localStorage.removeItem("folder" + practiceId);
     }
-    }, [practiceId, isEdited]);
+  }, [practiceId, isEdited]);
+
+  if (!token && !IsCodeShared) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
@@ -106,6 +106,6 @@ const isNewFolder = localStorage.getItem("folder" + practiceId)
   );
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(FolderProviderHOC(UserAccountProviderHOC(Practice))));
-
-
+export default CodeContextHOC(
+  AlertShowerProviderHOC(FolderProviderHOC(UserAccountProviderHOC(Practice)))
+);

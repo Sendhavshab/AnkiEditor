@@ -1,13 +1,18 @@
-import { Editor } from "@monaco-editor/react";
+import { Editor, Monaco } from "@monaco-editor/react";
 import React, { useEffect, useState } from "react";
-import Console from "./Header/Console";
-import { CodeContextHOC, ConsoleProviderHOC } from "../HOC&Context/Context";
-import Header from "./Header/Headerr";
-import MobileManu from "./Header/Mobileheader";
-import Output from "./Output";
-import Shower from "./Header/Shower";
-import ColorLoader from "../AlertAndLoader/Loder/ColorLoader";
-
+import Console from "./Console";
+import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
+import Header from "./Headerr";
+import MobileManu from "./Mobileheader";
+import Output from "../Preview/Output";
+import Shower from "./Shower";
+import ColorLoader from "../../AlertAndLoader/Loder/ColorLoader";
+import tailwindClasses from "../../../tailwind-classes.json"
+// import * as monaco from "monaco-editor";
+// import {
+//   configureMonacoTailwindcss,
+//   tailwindcssData,
+// } from "monaco-tailwindcss";
 export type S = {
   editor: "hidden" | "block";
   shower: "hidden" | "block";
@@ -58,8 +63,42 @@ const CodeAria: React.FC<G> = ({
     }
   }, [deviceWidth]);
 
+  const handleEditorWillMount = (monaco: Monaco) => {
+    
+    // console.log("tailwind css data " , tailwindcssData)
+    // // Set up Tailwind CSS data
+    // const b = monaco.languages.css.cssDefaults.setOptions({
+    //   data: {
+    //     dataProviders: {
+    //       tailwindcssData,
+    //     },
+    //   },
+    // });
+    // console.log(" b is ", b, monaco);
+    // // Configure Tailwind CSS IntelliSense
+    // const c = configureMonacoTailwindcss(monaco);
+    // console.log(" b c is ", b, c);
+      monaco.languages.registerCompletionItemProvider("html", {
+        provideCompletionItems: () => {
+          return {
+            suggestions: tailwindClasses.map((cls) => ({
+              label: cls,
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: cls,
+              range: {
+                endColumn: 9000,
+                endLineNumber: 9000,
+                startColumn : 0 ,
+                startLineNumber: 0
+              },
+            })),
+          };
+        },
+      });
+  };
+
   const runJsFunc = () => {
-    setConsoleMessages([])
+    setConsoleMessages([]);
     setRunJs(true);
     setJsCode(notSavedJs);
   };
@@ -91,6 +130,7 @@ const CodeAria: React.FC<G> = ({
           height="100vh"
           language={language}
           theme="vs-dark"
+          beforeMount={handleEditorWillMount}
           onChange={
             language === "html"
               ? handleHtmlChange
@@ -108,6 +148,7 @@ const CodeAria: React.FC<G> = ({
               : notSavedJs
           }
           options={{
+            wordWrap: "on",
             lineNumbersMinChars: 1,
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,

@@ -3,14 +3,11 @@ import { BiImport } from "react-icons/bi";
 import { FaFileExport } from "react-icons/fa";
 import { IoMdRefreshCircle } from "react-icons/io";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
-import Loader from "../../AlertAndLoader/Loder/Loader";
-import ApiCall, { saveToServerApi } from "../../ApiCall";
-import {
-  AlertShowerProviderHOC,
-  CodeContextHOC,
-} from "../../HOC&Context/Context";
-import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
+import Infoalert from "../AlertAndLoader/Alert/Infoalert";
+import Loader from "../AlertAndLoader/Loder/Loader";
+import ApiCall, { saveToServerApi } from "./ApiCall";
+import { AlertShowerProviderHOC, CodeContextHOC } from "../HOC&Context/Context";
+import { showAlertType } from "../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
   notSavedJs,
@@ -43,27 +40,23 @@ const SaveToCodeYogi = ({
       notSavedJs,
       link: LinkPracticeId,
     });
-code
-  .then((r: any) => {
-
-    setShowAlert({
-      value: showAlert.value + 1,
-      type: "success",
-      message: r.data,
-    });
-    setLoading(false);
-  })
-  .catch((err:any) => {
-    console.log("error aaya a" , err)
-    setLoading(false);
-    setShowAlert({
-      value: showAlert.value + 1,
-      type: "error",
-      message: err.message || err.data,
-    });
-  });
-
-
+    code
+      .then((r: any) => {
+        setShowAlert({
+          value: showAlert.value + 1,
+          type: "success",
+          message: r.data,
+        });
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setLoading(false);
+        setShowAlert({
+          value: showAlert.value + 1,
+          type: "error",
+          message: err.message || err.data,
+        });
+      });
   };
 
   const confirmCyPostClick = () => {

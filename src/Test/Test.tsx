@@ -1,11 +1,10 @@
 // import React, { useEffect } from "react";
 
-import DashBoard from "../Body/DashBoard";
+import DashBoard from "../Component/DashBoard/DashBoard";
+
 
 const Test = () => {
-  // Function to handle code execution
 
-  console.log("fdfdfd");
 
   return (
     <div>

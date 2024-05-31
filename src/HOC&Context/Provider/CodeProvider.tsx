@@ -47,7 +47,6 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   }, [codeId]);
 
   useEffect(() => {
-    console.log("code is ", codeId);
     if (typeof codeId === "string") {
       storeCode(
         {

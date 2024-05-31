@@ -1,6 +1,12 @@
 import React, { useEffect, useState, ReactNode } from "react";
-import { AlertShowerProviderHOC, UserAccountProvider } from "../Context";
-import { GetUserName, LogInApi, SignUpApi } from "../../ApiCall";
+import {
+  AlertShowerProviderHOC,
+  FolderProviderHOC,
+  UserAccountProvider,
+} from "../Context";
+import { GetFolders, GetUserName, LogInApi, SignUpApi } from "../../Api/ApiCall";
+import { Folder } from "./FolderInfoProvider";
+import { generateRandomString } from "../../functions/RandomStr";
 
 interface UserProviderProps {
   children: ReactNode;
@@ -11,21 +17,23 @@ interface UserProviderProps {
     message: string;
   }) => void;
   showAlert: { value: number; type: string; message: string };
+  setFolders: React.Dispatch<React.SetStateAction<Folder>>;
 }
 
 const UserProvider: React.FC<UserProviderProps> = ({
   children,
   setLoading,
   setShowAlert,
+  setFolders,
   showAlert,
 }) => {
   const sttoken = localStorage.getItem("token") || "";
 
-  const [ token, setToken ] = useState(sttoken) 
+  const [token, setToken] = useState(sttoken);
   const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
-    localStorage.setItem("token", token);
+    token !== "" && localStorage.setItem("token", token);
     if (token) {
       GetUserName()
         .then((response) => {
@@ -33,8 +41,8 @@ const UserProvider: React.FC<UserProviderProps> = ({
           setLoading(false);
         })
         .catch((err) => {
-          if(err.message !== "Network error"){
-
+          if (err.message !== "Network error") {
+            setToken("");
             localStorage.removeItem("token");
           }
           if (err.data === "User not found") {
@@ -56,29 +64,61 @@ const UserProvider: React.FC<UserProviderProps> = ({
     (type === "signup" ? SignUpApi(data) : LogInApi(data))
       .then((data) => {
         setToken(data.data.token);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log("err to he " , err)
-   console.log("err data" , err)
-        if (err.data === "User already exists"){
+
+        setShowAlert({
+          value: showAlert.value + 1,
+          type: "success",
+          message:
+            type === "signup"
+              ? "User created successfully"
+              : "User logged in successfully",
+        });
+        GetFolders(data.data.token)
+          .then((r) => {
+            console.clear();
+            setFolders(r.data);
+
+            setLoading(false);
+          })
+          .catch((e) => {
+            if (e.message === "Request failed with status code 404") {
+              const folderId = generateRandomString(19);
+
+              localStorage.setItem("folder" + folderId, "new");
+              setFolders({
+                "example folder": {
+                  id: folderId,
+                },
+              });
+            }
             setShowAlert({
               value: showAlert.value + 1,
               type: "error",
-              message: "User already exists",
+              message: e.message || e.data,
             });
-            return;
-  
-        }
-          if (err.message === "Request failed with status code 400") {
-            err.message =  type == "login" ? " email or password is incorrect" : "User already exists";
-          }
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        if (err.data === "User already exists") {
           setShowAlert({
             value: showAlert.value + 1,
             type: "error",
-            message: err.message || err.data,
+            message: "User already exists",
           });
+          return;
+        }
+        if (err.message === "Request failed with status code 400") {
+          err.message =
+            type == "login"
+              ? " email or password is incorrect"
+              : "User already exists";
+        }
+        setShowAlert({
+          value: showAlert.value + 1,
+          type: "error",
+          message: err.message || err.data,
+        });
       });
   };
 
@@ -91,4 +131,4 @@ const UserProvider: React.FC<UserProviderProps> = ({
   );
 };
 
-export default AlertShowerProviderHOC(UserProvider);
+export default AlertShowerProviderHOC(FolderProviderHOC(UserProvider));

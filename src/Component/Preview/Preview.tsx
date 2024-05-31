@@ -1,5 +1,5 @@
 import React from "react";
-import { CodeContextHOC, ConsoleProviderHOC } from "../HOC&Context/Context";
+import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
 
 type P = {
   jsCode: string;

@@ -1,7 +1,7 @@
 // import { FaWrench, GiHamburgerMenu } from "react-icons/all";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
-import SaveToCodeYogi from "./SaveToCodeYogi";
+import SaveToCodeYogi from "../../Api/SaveToCodeYogi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   AlertShowerProviderHOC,
@@ -9,9 +9,9 @@ import {
   ConsoleProviderHOC,
 } from "../../HOC&Context/Context";
 import { Link, useParams } from "react-router-dom";
-import Share from "./Share";
+import Share from "../../Api/Share";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
-import { IoHomeSharp } from "react-icons/io5";
+import { IoHomeSharp, IoLink } from "react-icons/io5";
 
 const MobileManu = (props: HeaderProps) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,7 +23,6 @@ const MobileManu = (props: HeaderProps) => {
   const didAnotherUser = useParams().didshare;
   const didAssignment = useParams().assiID || "";
   const practiceId = useParams().practiceId || "";
-
 
   let clases =
     "bg-gray-800 hover:bg-gray-700 m-2   text-white font-bold py-2 px-4 rounded";
@@ -143,7 +142,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center  gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaShareAlt /> share to Other
+                          <FaShareAlt /> share to Other <IoLink />
                         </button>
                         <button
                           onClick={() =>
@@ -155,7 +154,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaCopy /> copy for You
+                          <FaCopy /> copy for You <IoLink />
                         </button>
                       </div>
                     )}
@@ -198,4 +197,6 @@ MobileManu.defaultProps = {
   live: "html",
 };
 
-export default CodeContextHOC(AlertShowerProviderHOC(ConsoleProviderHOC(MobileManu)));
+export default CodeContextHOC(
+  AlertShowerProviderHOC(ConsoleProviderHOC(MobileManu))
+);
