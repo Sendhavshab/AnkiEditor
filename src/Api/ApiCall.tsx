@@ -24,7 +24,7 @@ export default CodeYogiApiCall;
 
 export const saveToServerApi = (codewithID: { [key: string]: string }) => {
   return axios.post(
-    "https://faltu-ylbv.onrender.com/api/code/store",
+    "https://faltu-1.onrender.com//api/code/store",
     {
       code: {
         link: codewithID.link,
@@ -41,28 +41,28 @@ export const saveToServerApi = (codewithID: { [key: string]: string }) => {
   );
 };
 export const getFromServerApi = (id: string) => {
-  return axios.get("https://faltu-ylbv.onrender.com/api/code/retrieve/" + id, {
+  return axios.get("https://faltu-1.onrender.com//api/code/retrieve/" + id, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
 };
 export const GetUserName = () => {
-  return axios.get("https://faltu-ylbv.onrender.com/token", {
+  return axios.get("https://faltu-1.onrender.com//token", {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
 };
 export const GetFolders = (token: string) => {
-  return axios.get("https://faltu-ylbv.onrender.com/folder", {
+  return axios.get("https://faltu-1.onrender.com//folder", {
     headers: {
       Authorization: token,
     },
   });
 };
 export const PushFolders = (folders: Folder) => {
-  return axios.post("https://faltu-ylbv.onrender.com/folder", folders, {
+  return axios.post("https://faltu-1.onrender.com//folder", folders, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -70,14 +70,14 @@ export const PushFolders = (folders: Folder) => {
 };
 
 export const SignUpApi = (data: { [key: string]: string }) => {
-  return axios.post("https://faltu-ylbv.onrender.com/api/auth/signup", {
+  return axios.post("https://faltu-1.onrender.com//api/auth/signup", {
     name: data.name,
     password: data.password,
     username: data.username,
   });
 };
 export const LogInApi = (data: { [key: string]: string }) => {
-  return axios.post("https://faltu-ylbv.onrender.com/api/auth/login", {
+  return axios.post("https://faltu-1.onrender.com//api/auth/login", {
     password: data.password,
     username: data.username,
   });

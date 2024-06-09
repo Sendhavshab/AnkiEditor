@@ -2,8 +2,8 @@ import { Editor, Monaco } from "@monaco-editor/react";
 import React, { useEffect, useState } from "react";
 import Console from "./Console";
 import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
-import Header from "./Headerr";
-import MobileManu from "./Mobileheader";
+import Header from "../Header/Headerr";
+import MobileManu from "../Header/Mobileheader";
 import Output from "../Preview/Output";
 import Shower from "./Shower";
 import ColorLoader from "../../AlertAndLoader/Loder/ColorLoader";
@@ -162,6 +162,7 @@ const CodeAria: React.FC<G> = ({
             minimap: {
               enabled: false,
             },
+            contextmenu: false,
           }}
         />
       </div>
