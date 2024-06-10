@@ -41,9 +41,8 @@ const UserProvider: React.FC<UserProviderProps> = ({
           setLoading(false);
         })
         .catch((err) => {
-          
-          if (err.data === "User not found") {
-              setToken("");
+          if (err.response.data === "User not found") {
+            setToken("");
             localStorage.removeItem("token");
             setLoading(false);
           } else if (err.message === "Network Error") {

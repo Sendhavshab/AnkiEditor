@@ -49,8 +49,8 @@ const Assignment: React.FC<P> = ({
       const code: any = ApiCall("get", assignmentId)
         ?.then((data) => {
           setLoading(false);
-          if (data.data.code) {
-            return data.data.code;
+          if (data.data.assignment.solutionCode) {
+            return data.data.assignment.solutionCode;
           }
           return data.data.assignment.initCode;
         })
