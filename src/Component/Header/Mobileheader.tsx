@@ -142,7 +142,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center  gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaShareAlt /> share to Other <IoLink />
+                          <FaShareAlt />   Other <IoLink />
                         </button>
                         <button
                           onClick={() =>
@@ -154,7 +154,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaCopy /> copy for You <IoLink />
+                          <FaCopy /> You <IoLink />
                         </button>
                       </div>
                     )}
