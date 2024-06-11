@@ -7,11 +7,6 @@ import MobileManu from "../Header/Mobileheader";
 import Output from "../Preview/Output";
 import Shower from "./Shower";
 import ColorLoader from "../../AlertAndLoader/Loder/ColorLoader";
-// import * as monaco from "monaco-editor";
-// import {
-//   configureMonacoTailwindcss,
-//   tailwindcssData,
-// } from "monaco-tailwindcss";
 export type S = {
   editor: "hidden" | "block";
   shower: "hidden" | "block";
@@ -62,9 +57,7 @@ const CodeAria: React.FC<G> = ({
     }
   }, [deviceWidth]);
 
-  const handleEditorWillMount = () => {
-  
-  };
+ 
 
   const runJsFunc = () => {
     setConsoleMessages([]);
@@ -99,7 +92,6 @@ const CodeAria: React.FC<G> = ({
           height="100vh"
           language={language}
           theme="vs-dark"
-          beforeMount={handleEditorWillMount}
           onChange={
             language === "html"
               ? handleHtmlChange
@@ -118,7 +110,6 @@ const CodeAria: React.FC<G> = ({
           }
           
           options={{
-            wordWrap: "on",
             lineNumbersMinChars: 1,
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,
