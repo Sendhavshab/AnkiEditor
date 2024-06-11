@@ -11,6 +11,7 @@ import {
 } from "../../HOC&Context/Context";
 import { CodeWordToString } from "../../functions/StrToCode";
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
+import { SolutionCodeType } from "../../HOC&Context/Provider/CodeProvider";
 
 type P = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
@@ -19,6 +20,8 @@ type P = {
   setCodeId: Dispatch<SetStateAction<string | undefined>>;
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
   setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>;
+  setSolution: Dispatch<SetStateAction<boolean>>;
+  setSolutionCode: Dispatch<SetStateAction<SolutionCodeType>>;
 };
 
 const Assignment: React.FC<P> = ({
@@ -28,6 +31,8 @@ const Assignment: React.FC<P> = ({
   setIsNotJsInassignment,
   setCodeId,
   setNotSavedJs,
+  setSolution,
+  setSolutionCode,
 }) => {
   let assignmentId = useParams().assiID || "";
 
@@ -50,7 +55,11 @@ const Assignment: React.FC<P> = ({
         ?.then((data) => {
           setLoading(false);
           if (data.data.assignment.solutionCode) {
-            return data.data.assignment.solutionCode;
+            setSolution(true);
+setSolutionCode(data.data.assignment.solutionCode)
+          }
+          if (data.data.code) {
+            return data.data.code;
           }
           return data.data.assignment.initCode;
         })
@@ -65,6 +74,7 @@ const Assignment: React.FC<P> = ({
 
       code.then((a: any) => {
         localStorage.setItem(assignmentId, "edited");
+          if(a){
         setHtmlCode(a.html);
         setCssCode(a.css);
         if (a.js) {
@@ -73,7 +83,7 @@ const Assignment: React.FC<P> = ({
         } else {
           setIsNotJsInassignment(true);
         }
-      });
+     } });
     }
   }, [assignmentId, isEdited]);
 

@@ -5,7 +5,13 @@ import { CodeContext } from "../Context";
 import { GetCode, storeCode } from "./CodeStore";
 
 type P = "html" | "javascript" | "css";
-
+export type SolutionCodeType =
+  | {
+      html: string;
+      css?: string;
+      js?: string;
+    }
+  | undefined;
 const CodeProvider: React.FC<F> = ({ children }) => {
   const [codeId, setCodeId] = useState<string>();
   const [isAuther, setIsAuther] = useState(true);
@@ -20,14 +26,15 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   const [isTailwindProject, setIsTailwindProject] = useState(
     localTailwind === "true"
   );
-  const p = ` /* aap tailwind ka use kar rahe he to kosis kare
+  const p = `/* aap tailwind ka use kar rahe he to kosis kare
  jitna ho sake utna kam css likhe is file me aur agar aapko
   kisi bhi prakar se tailwind me problem aa rahi he
-   to https://t.me/+D0obIs02o6s0NzBl group me message kare  */`
+   to https://t.me/+D0obIs02o6s0NzBl group me message kare  */`;
 
-  const cssInfo = isTailwindProject
-    ? p
-    : "";
+  const cssInfo = isTailwindProject ? p : "";
+
+  const [solution, setSolution] = useState(false);
+  const [solutionCode, setSolutionCode] = useState<SolutionCodeType>();
 
   const [cssCode, setCssCode] = useState(cssInfo);
   useEffect(() => {
@@ -40,11 +47,19 @@ const CodeProvider: React.FC<F> = ({ children }) => {
     if (typeof codeId === "string") {
       const { code } = GetCode(codeId);
 
-    (code?.css || cssCode !== p) &&  setCssCode(code?.css || '');
+      (code?.css || cssCode !== p) && setCssCode(code?.css || "");
       setHtmlCode(code?.html || "");
       setNotSavedJs(code?.js || "");
     }
   }, [codeId]);
+
+  function seeSolution() {
+    if (solutionCode) {
+      setCssCode(solutionCode.css || "");
+      setHtmlCode(solutionCode.html );
+      setNotSavedJs(solutionCode.js || "");
+    }
+  }
 
   useEffect(() => {
     if (typeof codeId === "string") {
@@ -71,14 +86,17 @@ const CodeProvider: React.FC<F> = ({ children }) => {
         htmlCode,
         cssCode,
         jsCode,
+        seeSolution,
         setCssCode,
         setHtmlCode,
         setJsCode,
+        setSolution,
         setCodeId,
         setLanguage,
         isAuther,
         setIsAuther,
         language,
+        solution,
         notSavedJs,
         runJs,
         setRunJs,
@@ -86,6 +104,8 @@ const CodeProvider: React.FC<F> = ({ children }) => {
         setShowConsole,
         setNotSavedJs,
         setIsNotJsInassignment,
+        setSolutionCode,
+        solutionCode,
         isNotJsInassignment,
       }}
     >

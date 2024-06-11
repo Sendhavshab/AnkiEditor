@@ -84,6 +84,14 @@ const Header = (prop: HeaderProps) => {
           Load Js
         </button>
       )}
+      {prop.solution && (
+        <button
+          onClick={prop.seeSolution}
+          className={`block m-2 bg-blue-500 disabled:bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline `}
+        >
+          Solution
+        </button>
+      )}
 
       {!didAnotherUser && prop.isAuther && (
         <div className=" flex gap-2 mb-2 flex-wrap items-center justify-center  ">
