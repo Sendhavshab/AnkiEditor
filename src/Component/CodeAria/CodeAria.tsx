@@ -134,9 +134,6 @@ const CodeAria: React.FC<G> = ({
             minimap: {
               enabled: false,
             },
-            // contextmenu: false,
-            
-            formatOnType: true,
             
           }}
         />
