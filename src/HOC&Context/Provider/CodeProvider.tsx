@@ -55,6 +55,7 @@ const CodeProvider: React.FC<F> = ({ children }) => {
 
   function seeSolution() {
     if (solutionCode) {
+      setSolution(false)
       setCssCode(solutionCode.css || "");
       setHtmlCode(solutionCode.html );
       setNotSavedJs(solutionCode.js || "");
