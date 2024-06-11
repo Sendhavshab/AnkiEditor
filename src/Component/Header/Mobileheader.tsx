@@ -142,7 +142,7 @@ const MobileManu = (props: HeaderProps) => {
                           }
                           className="bg-gradient-to-r flex items-center  gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
                         >
-                          <FaShareAlt />   Other <IoLink />
+                          <FaShareAlt /> Other <IoLink />
                         </button>
                         <button
                           onClick={() =>
@@ -156,6 +156,14 @@ const MobileManu = (props: HeaderProps) => {
                         >
                           <FaCopy /> You <IoLink />
                         </button>
+                        {props.solution && (
+                          <button
+                            onClick={props.seeSolution}
+                            className="bg-gradient-to-r flex items-center gap-2 from-purple-500 to-indigo-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+                          >
+                            Solution
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
@@ -179,6 +187,8 @@ export type HeaderProps = {
   jsCode: string;
   runJsFunc: () => void;
   runJs: boolean;
+  seeSolution: () => void;
+  solution: boolean;
   isNotJsInassignment: boolean;
   notSavedJs: string;
   setShowConsole: (showConsole: boolean) => void;
