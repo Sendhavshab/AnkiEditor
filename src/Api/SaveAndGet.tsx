@@ -6,7 +6,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Infoalert from "../AlertAndLoader/Alert/Infoalert";
 import Loader from "../AlertAndLoader/Loder/Loader";
 import ApiCall, { saveToServerApi } from "./ApiCall";
-import { AlertShowerProviderHOC, CodeContextHOC } from "../HOC&Context/Context";
+import { AlertShowerProviderHOC, CodeContextHOC, FolderProviderHOC } from "../HOC&Context/Context";
 import { showAlertType } from "../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
@@ -18,6 +18,7 @@ const SaveToCodeYogi = ({
   setShowAlert,
   isTailwindProject,
   onlyGet,
+  folderSaved,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
   const [showSave, setShowSave] = useState(0);
@@ -27,6 +28,7 @@ const SaveToCodeYogi = ({
   const LinkAssignmentId = useParams().assiID || "";
   let LinkPracticeId = useParams().practiceId || "";
 
+    console.log("sav");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const SaveToCodeYogi = ({
   }, [showSave]);
 
   const confirmServerSaveClick = () => {
+    console.log("save server")
     setLoading(true);
     const code: any = saveToServerApi({
       htmlCode,
@@ -44,6 +47,10 @@ const SaveToCodeYogi = ({
     });
     code
       .then((r: any) => {
+console.log(" r dekh");
+
+        folderSaved(LinkPracticeId);
+
         setShowAlert({
           value: showAlert.value + 1,
           type: "success",
@@ -253,6 +260,7 @@ const SaveToCodeYogi = ({
 
 export type CodeWithSet = {
   notSavedJs: string;
+  folderSaved: (folderId: string) => void;
   cssCode: string;
   htmlCode: string;
   className?: string;
@@ -264,4 +272,4 @@ export type CodeWithSet = {
 
 SaveToCodeYogi.defaultProps = {};
 
-export default CodeContextHOC(AlertShowerProviderHOC(SaveToCodeYogi));
+export default CodeContextHOC(AlertShowerProviderHOC(FolderProviderHOC(SaveToCodeYogi)));

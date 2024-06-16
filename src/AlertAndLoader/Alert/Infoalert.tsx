@@ -1,24 +1,35 @@
-// import React from "react";
+import React from "react";
 
-const Infoalert = ({children} : P) => {
+interface InfoAlertProps {
+  children: React.ReactNode;
+  mirror?: boolean;
+  contentRight?: boolean;
+}
 
+const InfoAlert: React.FC<InfoAlertProps> = ({ children, mirror, contentRight }) => {
+  // Note: Ensure the parent has position relative and the element with this component is wrapped in a div if necessary
 
-  // ise jab us karoiske parent ko absolute and aag vale ko peer karna he 
+  let sideClass = "before:right-4 right-0";
+  let classes = "before:rounded-br-full before:border-l-2 before:border-t-2 before:-top-[9px] -bottom-12";
+
+  if (mirror) {
+    classes = "before:rounded-tl-full before:border-r-2 before:border-b-2 before:-bottom-[9px] -top-12";
+  }
+
+  if (contentRight) {
+    sideClass = "before:left-4 left-0";
+  }
 
   return (
-    <div className="bg-black hidden peer-hover:block  min-w-max text-white font-bold py-1 px-2 border-2 border-white before:-z-10 before:rounded-br-full  before:border-l-2 before:border-white before:border-t-2  absolute  -bottom-12 z-20 right-0 before:bg-black  rounded-3xl before:w-4 text-center  before:h-4 before:absolute before:right-4 before:-top-[9px] before:rotate-45  ">
+    <div
+      className={`dark:bg-black bg-white text-black hidden peer-hover:block hover:block min-w-max dark:text-white font-bold py-1
+      px-2 border-2 dark:border-white border-black before:-z-10 before:dark:border-white before:border-black
+      absolute z-50 before:dark:bg-black before:bg-white rounded-3xl before:w-4 text-center before:h-4
+      before:absolute before:rotate-45 ${classes} ${sideClass}`}
+    >
       {children}
     </div>
   );
 };
 
- type P = {
-    children : any ;
-
-};
-
-Infoalert.defaultProps = {
-
-};
-
-export default Infoalert;
+export default InfoAlert;

@@ -5,7 +5,7 @@ import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
 import Header from "../Header/Headerr";
 import MobileManu from "../Header/Mobileheader";
 import Output from "../CodePreview/Output";
-import Shower from "./Shower";
+import Shower from "./ShowButton";
 import ColorLoader from "../../AlertAndLoader/Loder/ColorLoader";
 export type S = {
   editor: "hidden" | "block";

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { StringToCodeWord } from "../../../functions/StrToCode";
+import Infoalert from "../../../AlertAndLoader/Alert/Infoalert";
 
 interface showFolderProps {
   folders: Folder;
@@ -15,13 +16,13 @@ const showFolder: React.FC<showFolderProps> = (props) => {
 
 const navigate = useNavigate();
   const handleGoWebClick = (
-    e: React.MouseEvent<SVGElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     foldersName: string
   ) => {
     e.preventDefault();
     const url = StringToCodeWord(props.folders[foldersName].id);
 
-navigate(`/web/${url}`)
+    navigate(`/web/${url}`);
   };
 const hoverClass = "text-black hover:text-gray-500";
 
@@ -40,10 +41,19 @@ const hoverClass = "text-black hover:text-gray-500";
               }}
               className={`${hoverClass}`}
             />
-            <FaExternalLinkAlt
-              className={`${hoverClass}`}
+            <button
               onClick={(e) => handleGoWebClick(e, foldersName)}
-            />
+              disabled={!props.folders[foldersName].saved}
+              className="  relative"
+            >
+              <FaExternalLinkAlt
+                className={`${
+                  props.folders[foldersName].saved ? hoverClass : "text-gray-700 opacity-70"
+                } peer `}
+              />
+              <Infoalert mirror>{props.folders[foldersName]
+                .saved ? "you can share your code preview to others" :`please save your assignmennt to share`}</Infoalert>
+            </button>
           </div>
         </div>
       </Link>

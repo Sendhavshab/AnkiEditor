@@ -3,6 +3,7 @@ import { AlertShowerProviderHOC, FolderProvider } from "../Context";
 import { showAlertType } from "./AlertProvider";
 import { PushFolders } from "../../Api/ApiCall";
 import { generateRandomString } from "../../functions/RandomStr";
+import { json } from "react-router-dom";
 
 interface FolderInfoProviderProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ interface FolderInfoProviderProps {
 
 
 export type Folder = {
-  [key: string]: { [key: string]: string };
+  [key: string]: { id: string , saved : boolean};
 };
 
 const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
@@ -69,12 +70,12 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
    localStorage.setItem("folder" + folderId, "new")
     setFolders({
       ...folders,
-      [folderName]: { id: folderId },
+      [folderName]: { id: folderId , saved: false },
     });
 
    uploadFolder({
      ...folders,
-     [folderName]: { id: folderId },
+     [folderName]: { id: folderId, saved: false },
    });
 
   };
@@ -96,7 +97,7 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
 
  const findFolderById = (id: string) => {
 
-   Object.keys(folders).find((folderName )  => {
+  return Object.keys(folders).find((folderName )  => {
 
    return  folders[folderName].id  === id
 
@@ -104,11 +105,30 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
 
  }
 
+ const folderSaved = (folderId: string ) => {
+    
+    const savedFolder = findFolderById(folderId);
+
+    const newFolders = JSON.parse(JSON.stringify(folders))
+    newFolders[savedFolder as string].saved = true
+    setFolders(newFolders)
+console.log("upload hun " , folderId , newFolders)
+    uploadFolder(newFolders, "You can share this folder with others😃")
+ 
+ }
+
 
 
   return (
     <FolderProvider.Provider
-      value={{ createFolder, folders, DeleteFolder, findFolderById  , setFolders}}
+      value={{
+        createFolder,
+        folderSaved,
+        folders,
+        DeleteFolder,
+        findFolderById,
+        setFolders,
+      }}
     >
       {props.children}
     </FolderProvider.Provider>
