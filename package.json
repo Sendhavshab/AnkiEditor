@@ -36,7 +36,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
     "react-router-dom": "^6.22.2",
-    "react-split-pane": "^0.1.92",
     "yup": "^1.4.0"
   },
   "devDependencies": {
