@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
-import Preview from "./Preview";
+import Preview from "./CodePreview";
 
 type P = {
   jsCode: string;
@@ -27,57 +27,6 @@ class Output extends Component<P> {
     window.removeEventListener("message", this.handleMessage);
   }
 
-  // componentDidMount() {
-
-  //   window.addEventListener("message", this.handleMessage);
-
-  //   const captureMessage = (type: keyof Console, ...args: any[]) => {
-  //     const error = new Error();
-  //     const stack = error.stack;
-  //     let callerLine = "unknown line";
-  //     if (stack) {
-  //       const stackLines = stack.split("\n");
-  //       for (const line of stackLines) {
-  //         if (line.includes("at")) {
-  //           const callerInfo = line.match(/:(\d+):(\d+)/);
-  //           if (callerInfo) {
-  //             callerLine = `line ${callerInfo[1]}, col ${callerInfo[2]}`;
-  //             break;
-  //           }
-  //         }
-  //       }
-  //     }
-
-  //     this.props.setConsoleMessages((prev) => [
-  //       ...prev,
-  //       { type, message: `${args.join(" ")} (at ${callerLine})` },
-  //     ]);
-  //     if (this.originalConsole[type]) {
-  //       this.originalConsole[type]!(...args);
-  //     }
-  //   };
-
-  //   // Capture all console methods
-  //   for (const method  in console) {
-
-  //     if (typeof console[method]  === "function") {
-  //       this.originalConsole[method] =  console[method];
-  //       console[method]   = (...args: any[]) =>
-  //         captureMessage(method as keyof Console, ...args);
-  //     }
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener("message", this.handleMessage);
-
-  //   // Restore all console methods
-  //   for (const method in this.originalConsole) {
-  //     if (this.originalConsole[method]) {
-  //       console[method] = this.originalConsole[method]!;
-  //     }
-  //   }
-  // }
 
   handleMessage = (event: MessageEvent) => {
     if (event.data && event.data.type === "console") {

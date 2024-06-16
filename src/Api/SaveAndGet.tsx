@@ -16,6 +16,7 @@ const SaveToCodeYogi = ({
   className,
   showAlert,
   setShowAlert,
+  isTailwindProject,
   onlyGet,
 }: CodeWithSet) => {
   const [inputValue, setInputValue] = useState("");
@@ -39,6 +40,7 @@ const SaveToCodeYogi = ({
       cssCode,
       notSavedJs,
       link: LinkPracticeId,
+      tailwind: isTailwindProject,
     });
     code
       .then((r: any) => {
@@ -257,6 +259,7 @@ export type CodeWithSet = {
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
   showAlert: showAlertType;
   onlyGet?: boolean;
+  isTailwindProject: boolean;
 };
 
 SaveToCodeYogi.defaultProps = {};

@@ -4,7 +4,7 @@ import Console from "./Console";
 import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
 import Header from "../Header/Headerr";
 import MobileManu from "../Header/Mobileheader";
-import Output from "../Preview/Output";
+import Output from "../CodePreview/Output";
 import Shower from "./Shower";
 import ColorLoader from "../../AlertAndLoader/Loder/ColorLoader";
 export type S = {
@@ -47,6 +47,14 @@ const CodeAria: React.FC<G> = ({
 }) => {
   const [Show, setShow] = useState<S>();
 
+  const handleMounting =  () => {
+
+    // //  const themeResponse = await fetch("dark_plus_converted.json");
+    // //  const themeData = await themeResponse.json();
+
+    //  console.log("thme data" )
+    //  monaco.editor.defineTheme("vs-code-dark", (theme as any));
+  }
   const deviceWidth = window.innerWidth;
   useEffect(() => {
     if (deviceWidth < 1024) {
@@ -89,6 +97,7 @@ const CodeAria: React.FC<G> = ({
         <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
 
         <Editor
+          beforeMount={handleMounting}
           height="100vh"
           language={language}
           theme="vs-dark"
@@ -108,24 +117,22 @@ const CodeAria: React.FC<G> = ({
               ? cssCode
               : notSavedJs
           }
-          
           options={{
             lineNumbersMinChars: 1,
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,
             showUnused: true,
             formatOnPaste: true,
-            
+
             glyphMargin: deviceWidth > 1024,
             padding: {
               top: 8,
               bottom: 5,
             },
-             
+
             minimap: {
               enabled: false,
             },
-            
           }}
         />
       </div>

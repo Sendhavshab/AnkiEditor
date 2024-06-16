@@ -12,7 +12,7 @@ type P = {
   >;
 };
 
-const Preview: React.FC<P> = (props) => {
+const CodePreview: React.FC<P> = (props) => {
   const tailwindScript = props.isTailwindProject
     ? '<script src="https://cdn.tailwindcss.com"></script>'
     : "";
@@ -97,4 +97,4 @@ const Preview: React.FC<P> = (props) => {
   );
 };
 
-export default CodeContextHOC(ConsoleProviderHOC(Preview));
+export default CodeContextHOC(ConsoleProviderHOC(CodePreview));
