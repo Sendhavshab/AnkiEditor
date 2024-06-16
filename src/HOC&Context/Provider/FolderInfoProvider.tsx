@@ -3,7 +3,6 @@ import { AlertShowerProviderHOC, FolderProvider } from "../Context";
 import { showAlertType } from "./AlertProvider";
 import { PushFolders } from "../../Api/ApiCall";
 import { generateRandomString } from "../../functions/RandomStr";
-import { json } from "react-router-dom";
 
 interface FolderInfoProviderProps {
   children: ReactNode;
@@ -14,7 +13,7 @@ interface FolderInfoProviderProps {
 
 
 export type Folder = {
-  [key: string]: { id: string , saved : boolean};
+  [key: string]: { id: string , saved? : boolean};
 };
 
 const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
