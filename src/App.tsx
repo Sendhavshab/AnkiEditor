@@ -13,6 +13,8 @@ import RedirectLogin , { RedirectHomeHOC } from "./Acount/redirect";
 import DashBoard from "./Component/DashBoard/DashBoard";
 import Assignment from "./Component/Assignments/Assignment";
 import Practice from "./Component/Practice/Practice";
+import Preview from "./Component/MakeWeb/Website";
+import NotFound from "./Component/NotFound";
 
 const App = () => (
   <div className="">
@@ -24,26 +26,42 @@ const App = () => (
               <Routes>
                 <Route
                   index
-                  element={<RedirectLogin>
-                    <DashBoard />
-                  </RedirectLogin>} />
+                  element={
+                    <RedirectLogin>
+                      <DashBoard />
+                    </RedirectLogin>
+                  }
+                />
                 <Route
                   path="/assignment/c/:assiID/:didshare?"
-                  element={<Assignment></Assignment>} />
+                  element={<Assignment></Assignment>}
+                />
+                <Route path="/web/:codeid" element={<Preview></Preview>} />
                 {/* <Route path="/a" element={<Test></Test>} /> */}
                 <Route
                   path="/login"
-                  element={<RedirectHomeHOC>
-                    <LogIn></LogIn>
-                  </RedirectHomeHOC>} />
+                  element={
+                    <RedirectHomeHOC>
+                      <LogIn></LogIn>
+                    </RedirectHomeHOC>
+                  }
+                />
                 <Route
                   path="/signup"
-                  element={<RedirectHomeHOC>
-                    <SignUp></SignUp>
-                  </RedirectHomeHOC>} />
+                  element={
+                    <RedirectHomeHOC>
+                      <SignUp></SignUp>
+                    </RedirectHomeHOC>
+                  }
+                />
                 <Route
                   path="/code/a/:practiceId/:didshare?"
-                  element={<Practice></Practice>} />
+                  element={<Practice></Practice>}
+                />{" "}
+                <Route
+                  path="*"
+                  element={<NotFound></NotFound>}
+                />
               </Routes>
             </CodeProvider>
           </ConsoleValueProvide>

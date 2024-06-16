@@ -19,6 +19,7 @@ type P = {
   setCodeId: Dispatch<SetStateAction<string | undefined>>;
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
   setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>;
+  setIsTailwindProject: Dispatch<SetStateAction<boolean>>;
   setIsAuther: React.Dispatch<React.SetStateAction<boolean>>;
   findFolderById: (id: string) => void;
   htmlCode: string;
@@ -35,6 +36,7 @@ const Practice: React.FC<P> = ({
   setNotSavedJs,
   setIsAuther,
   token,
+  setIsTailwindProject,
 }) => {
   let practiceId = useParams().practiceId || "";
 
@@ -85,6 +87,7 @@ const Practice: React.FC<P> = ({
             setHtmlCode(a.html);
             setCssCode(a.css);
             setNotSavedJs(a.js);
+            setIsTailwindProject(a.tailwind || false)
           }
         });
       }

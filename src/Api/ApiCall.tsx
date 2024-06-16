@@ -22,7 +22,7 @@ const CodeYogiApiCall = (
 
 export default CodeYogiApiCall;
 
-export const saveToServerApi = (codewithID: { [key: string]: string }) => {
+export const saveToServerApi = (codewithID: { [key: string]: string | boolean }) => {
   return axios.post(
     "https://faltu-1.onrender.com/api/code/store",
     {
@@ -31,6 +31,7 @@ export const saveToServerApi = (codewithID: { [key: string]: string }) => {
         html: codewithID.htmlCode,
         css: codewithID.cssCode,
         js: codewithID.notSavedJs,
+        tailwind: codewithID.tailwind
       },
     },
     {

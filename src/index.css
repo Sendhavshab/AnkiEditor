@@ -2,9 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-.monaco-editor {
-  touch-action: manipulation;
+
+/* span.Resizer.vertical {
+    cursor: col-resize;
+    background-color: antiquewhite;
+    width: 22px;
 } */
 
 @keyframes loader {

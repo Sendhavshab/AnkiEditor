@@ -6,12 +6,16 @@ import { GetCode, storeCode } from "./CodeStore";
 
 type P = "html" | "javascript" | "css";
 export type SolutionCodeType =
-  | {
-      html: string;
-      css?: string;
-      js?: string;
-    }
-  | undefined;
+| {
+  html: string;
+  css?: string;
+  js?: string;
+}
+| undefined;
+export const defaultCssCode = `/* aap tailwind ka use kar rahe he to kosis kare
+jitna ho sake utna kam css likhe is file me aur agar aapko
+kisi bhi prakar se tailwind me problem aa rahi he
+ to https://t.me/+D0obIs02o6s0NzBl group me message kare  */`;
 const CodeProvider: React.FC<F> = ({ children }) => {
   const [codeId, setCodeId] = useState<string>();
   const [isAuther, setIsAuther] = useState(true);
@@ -26,12 +30,8 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   const [isTailwindProject, setIsTailwindProject] = useState(
     localTailwind === "true"
   );
-  const p = `/* aap tailwind ka use kar rahe he to kosis kare
- jitna ho sake utna kam css likhe is file me aur agar aapko
-  kisi bhi prakar se tailwind me problem aa rahi he
-   to https://t.me/+D0obIs02o6s0NzBl group me message kare  */`;
 
-  const cssInfo = isTailwindProject ? p : "";
+  const cssInfo = isTailwindProject ? defaultCssCode : "";
 
   const [solution, setSolution] = useState(false);
   const [solutionCode, setSolutionCode] = useState<SolutionCodeType>();
@@ -47,7 +47,7 @@ const CodeProvider: React.FC<F> = ({ children }) => {
     if (typeof codeId === "string") {
       const { code } = GetCode(codeId);
 
-      (code?.css || cssCode !== p) && setCssCode(code?.css || "");
+      (code?.css || cssCode !== defaultCssCode) && setCssCode(code?.css || "");
       setHtmlCode(code?.html || "");
       setNotSavedJs(code?.js || "");
     }
