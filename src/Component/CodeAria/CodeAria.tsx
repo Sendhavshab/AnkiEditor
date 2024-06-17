@@ -52,7 +52,6 @@ const CodeAria: React.FC<G> = ({
     // //  const themeResponse = await fetch("dark_plus_converted.json");
     // //  const themeData = await themeResponse.json();
 
-    //  console.log("thme data" )
     //  monaco.editor.defineTheme("vs-code-dark", (theme as any));
   }
   const deviceWidth = window.innerWidth;

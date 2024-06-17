@@ -13,7 +13,7 @@ interface FolderInfoProviderProps {
 
 
 export type Folder = {
-  [key: string]: { id: string , saved? : boolean};
+  [key: string]: { id: string , saved? : boolean , _id? : string};
 };
 
 const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
@@ -111,7 +111,6 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
     const newFolders = JSON.parse(JSON.stringify(folders))
     newFolders[savedFolder as string].saved = true
     setFolders(newFolders)
-console.log("upload hun " , folderId , newFolders)
     uploadFolder(newFolders, "You can share this folder with others😃")
  
  }
