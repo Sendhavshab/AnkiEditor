@@ -71,7 +71,7 @@ const UserProvider: React.FC<UserProviderProps> = ({
               ? "User created successfully"
               : "User logged in successfully",
         });
-        GetFolders(data.data.token)
+        GetFolders()
           .then((r) => {
             setFolders(r.data);
 

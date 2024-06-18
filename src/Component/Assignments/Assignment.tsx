@@ -1,7 +1,7 @@
 // import React from "react";
 
 import { useParams } from "react-router-dom";
-import CodeByLocalStorage from "../CodeAria/CodeAria";
+import CodeAria from "../CodeAria/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ApiCall from "../../Api/ApiCall";
 import Loader from "../../AlertAndLoader/Loder/Loader";
@@ -91,7 +91,7 @@ setSolutionCode(data.data.assignment.solutionCode)
     <div>
       {loading && <Loader></Loader>}
 
-      <CodeByLocalStorage></CodeByLocalStorage>
+      <CodeAria></CodeAria>
     </div>
   );
 };

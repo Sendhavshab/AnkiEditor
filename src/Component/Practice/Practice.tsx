@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import CodeByLocalStorage from "../CodeAria/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getFromServerApi } from "../../Api/ApiCall";

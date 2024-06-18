@@ -55,10 +55,10 @@ export const GetUserName = () => {
     },
   });
 };
-export const GetFolders = (token: string) => {
+export const GetFolders = () => {
   return axios.get("https://faltu-1.onrender.com/folder", {
     headers: {
-      Authorization: token,
+      Authorization: localStorage.getItem("token"),
     },
   });
 };

@@ -32,7 +32,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
 }) => {
   const hadleFolderRefresh = () => {
     setLoading(true);
-    GetFolders(localStorage.getItem("token") || "")
+    GetFolders()
       .then((newFolders) => {
         setFolders(newFolders.data);
         setLoading(false);
