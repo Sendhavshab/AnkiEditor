@@ -55,10 +55,10 @@ export const GetUserName = () => {
     },
   });
 };
-export const GetFolders = (token: string) => {
+export const GetFolders = () => {
   return axios.get("https://faltu-1.onrender.com/folder", {
     headers: {
-      Authorization: token,
+      Authorization: localStorage.getItem("token"),
     },
   });
 };
@@ -68,6 +68,16 @@ export const PushFolders = (folders: Folder) => {
       Authorization: localStorage.getItem("token"),
     },
   });
+};
+export const RemoveFolder = (folderId: string) => {
+  return axios.delete(
+    "https://faltu-1.onrender.com/api/code/delete/" + folderId,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
 };
 
 export const SignUpApi = (data: { [key: string]: string }) => {

@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Input from "./Input";
@@ -16,6 +16,8 @@ interface SignUpPageProps {
 }
 
 const SignUpPage: React.FC<SignUpPageProps> = ({ accountApiCall }) => {
+  
+  const [searchParams] = useSearchParams();
   function DataServerSender(value: any) {
     accountApiCall(value , 'signup');
   }
@@ -60,7 +62,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ accountApiCall }) => {
         <Form>
           <div className="bg-indigo-950 p-6 rounded-lg flex flex-col md:block gap-4">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white opacity-40">
-             WelCome to AnkiEditor
+              WelCome to AnkiEditor
             </h2>
 
             <Input
@@ -103,7 +105,10 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ accountApiCall }) => {
             </button>
             <p className="font-bold text-white">
               have an account
-              <Link className="text-blue-600 underline" to="/login">
+              <Link
+                className="text-blue-600 underline"
+                to={{ pathname: "/login", search: searchParams.toString() }}
+              >
                 Sign In
               </Link>
             </p>

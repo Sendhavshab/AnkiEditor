@@ -28,7 +28,6 @@ const SaveToCodeYogi = ({
   const LinkAssignmentId = useParams().assiID || "";
   let LinkPracticeId = useParams().practiceId || "";
 
-    console.log("sav");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +35,6 @@ const SaveToCodeYogi = ({
   }, [showSave]);
 
   const confirmServerSaveClick = () => {
-    console.log("save server")
     setLoading(true);
     const code: any = saveToServerApi({
       htmlCode,
@@ -47,7 +45,6 @@ const SaveToCodeYogi = ({
     });
     code
       .then((r: any) => {
-console.log(" r dekh");
 
         folderSaved(LinkPracticeId);
 
@@ -122,7 +119,7 @@ console.log(" r dekh");
 
     if (confirmOutPut) {
       if (LinkAssignmentId) {
-        ~localStorage.setItem(LinkAssignmentId, "rerun");
+        localStorage.setItem(LinkAssignmentId, "rerun");
 
         navigate(`/assignment/c/${LinkAssignmentId}`);
       } else {

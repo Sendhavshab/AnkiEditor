@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import CodeByLocalStorage from "../CodeAria/CodeAria";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getFromServerApi } from "../../Api/ApiCall";
@@ -35,7 +35,7 @@ const Practice: React.FC<P> = ({
   setCodeId,
   setNotSavedJs,
   setIsAuther,
-  token,
+  
   setIsTailwindProject,
 }) => {
   let practiceId = useParams().practiceId || "";
@@ -96,9 +96,7 @@ const Practice: React.FC<P> = ({
     }
   }, [practiceId, isEdited]);
 
-  if (!token && !IsCodeShared) {
-    return <Navigate to="/login" />;
-  }
+ 
 
   return (
     <div>

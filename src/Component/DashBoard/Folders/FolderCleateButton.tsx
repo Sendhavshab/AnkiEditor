@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { GiConfirmed } from "react-icons/gi";
 import { FolderProviderHOC } from "../../../HOC&Context/Context";
 
@@ -63,4 +63,4 @@ const FolderCleateButton: React.FC<FolderCleateButtonProps> = (props) => {
   );
 };
 
-export default FolderProviderHOC(FolderCleateButton);
+export default FolderProviderHOC(memo(FolderCleateButton));
