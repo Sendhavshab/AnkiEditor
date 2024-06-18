@@ -4,7 +4,7 @@ interface AbdProps {
   // define props here
 }
 
-const Abd: React.FC<AbdProps> = (props) => {
+const Abd: React.FC<AbdProps> = () => {
   return (
     <div>
       Abd Component
