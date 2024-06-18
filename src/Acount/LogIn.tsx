@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
 import Input from "./Input";
 import { UserAccountProviderHOC } from "../HOC&Context/Context";
@@ -15,6 +15,8 @@ interface LogInPageProps {
 }
 
 const LogInPage: React.FC<LogInPageProps> = ({ accountApiCall }) => {
+
+  const [searchParams] = useSearchParams();
   function DataServerSender(value: any) {
     accountApiCall(value, "login");
   }
@@ -75,7 +77,7 @@ const LogInPage: React.FC<LogInPageProps> = ({ accountApiCall }) => {
             </button>
             <p className="font-bold text-white">
               Don't have an account{" "}
-              <Link className="text-blue-600 underline" to="/signup">
+              <Link className="text-blue-600 underline" to={{pathname : "/signup" , search: searchParams.toString()}}>
                 Sign Up
               </Link>
             </p>

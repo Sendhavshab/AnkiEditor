@@ -56,7 +56,8 @@ const App = () => (
                 />
                 <Route
                   path="/code/a/:practiceId/:didshare?"
-                  element={<Practice></Practice>}
+                  element={
+                    <RedirectLogin><Practice></Practice></RedirectLogin>}
                 />{" "}
                 <Route
                   path="*"

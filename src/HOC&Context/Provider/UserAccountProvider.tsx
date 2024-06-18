@@ -41,7 +41,7 @@ const UserProvider: React.FC<UserProviderProps> = ({
           setLoading(false);
         })
         .catch((err) => {
-          if (err.response.data === "User not found") {
+          if ( err.response && err.response.data === "User not found") {
             setToken("");
             localStorage.removeItem("token");
             setLoading(false);
@@ -73,7 +73,6 @@ const UserProvider: React.FC<UserProviderProps> = ({
         });
         GetFolders(data.data.token)
           .then((r) => {
-            console.clear();
             setFolders(r.data);
 
             setLoading(false);

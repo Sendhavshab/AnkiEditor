@@ -35,7 +35,7 @@ const Practice: React.FC<P> = ({
   setCodeId,
   setNotSavedJs,
   setIsAuther,
-  token,
+  
   setIsTailwindProject,
 }) => {
   let practiceId = useParams().practiceId || "";
@@ -96,9 +96,7 @@ const Practice: React.FC<P> = ({
     }
   }, [practiceId, isEdited]);
 
-  if (!token && !IsCodeShared) {
-    return <Navigate to="/login" />;
-  }
+ 
 
   return (
     <div>

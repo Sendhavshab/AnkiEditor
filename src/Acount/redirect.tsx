@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import { UserAccountProviderHOC } from "../HOC&Context/Context";
 
 interface RedirectProps {
@@ -7,8 +7,25 @@ interface RedirectProps {
 }
 
 const RedirectLogin: React.FC<RedirectProps> = ({ children, token }) => {
+
+
+  
+  const IsCodeShared = useParams().didshare;
+
+  
+  if(IsCodeShared){
+    return <>{children}</>;
+  }
   if (!token) {
-    return <Navigate to="/login" />;
+    const [searchParams] = useSearchParams()
+    const params = Object.fromEntries(searchParams);
+    const pathName = window.location.pathname
+    
+    return (
+      <Navigate
+        to={`/login/?${new URLSearchParams({ ...params, next: pathName })}`}
+      />
+    );
   }
   return <>{children}</>;
 };
@@ -16,8 +33,13 @@ const RedirectLogin: React.FC<RedirectProps> = ({ children, token }) => {
 export default UserAccountProviderHOC(RedirectLogin);
 
 const RedirectHome: React.FC<RedirectProps> = ({ children, token }) => {
+
+  
   if (token) {
-    return <Navigate to="/" />;
+  
+    const [searchParams] = useSearchParams();
+    const nextPath = Object.fromEntries(searchParams).next;
+    return <Navigate to={nextPath} />;
   }
   return <>{children}</>;
 };

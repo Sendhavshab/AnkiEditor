@@ -69,6 +69,16 @@ export const PushFolders = (folders: Folder) => {
     },
   });
 };
+export const RemoveFolder = (folderId: string) => {
+  return axios.delete(
+    "https://faltu-1.onrender.com/api/code/delete/" + folderId,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+};
 
 export const SignUpApi = (data: { [key: string]: string }) => {
   return axios.post("https://faltu-1.onrender.com/api/auth/signup", {

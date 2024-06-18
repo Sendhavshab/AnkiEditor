@@ -119,7 +119,7 @@ const SaveToCodeYogi = ({
 
     if (confirmOutPut) {
       if (LinkAssignmentId) {
-        ~localStorage.setItem(LinkAssignmentId, "rerun");
+        localStorage.setItem(LinkAssignmentId, "rerun");
 
         navigate(`/assignment/c/${LinkAssignmentId}`);
       } else {

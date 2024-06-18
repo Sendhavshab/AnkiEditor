@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { AlertShowerProviderHOC, FolderProvider } from "../Context";
 import { showAlertType } from "./AlertProvider";
-import { PushFolders } from "../../Api/ApiCall";
+import { PushFolders, RemoveFolder } from "../../Api/ApiCall";
 import { generateRandomString } from "../../functions/RandomStr";
 
 interface FolderInfoProviderProps {
@@ -10,10 +10,10 @@ interface FolderInfoProviderProps {
 }
 
 
-
+export type OneFolderType = { id: string , saved? : boolean , _id? : string}
 
 export type Folder = {
-  [key: string]: { id: string , saved? : boolean , _id? : string};
+  [key: string]: OneFolderType;
 };
 
 const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
@@ -86,6 +86,7 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
 
    const newFolder = { ...folders };
    if (confirmMsg) {
+    removeFolderData(newFolder[folderName]);
 
      delete newFolder[folderName];
 
@@ -115,6 +116,23 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
  
  }
 
+const removeFolderData = (folder: OneFolderType) => {
+  const folderId = folder.id;
+
+if(folder.saved){
+  
+  RemoveFolder(folderId).catch((err: any) => {
+    props.setShowAlert({
+      value: 1,
+      type: "error",
+      message: err.data || err.message,
+    });
+  });
+}
+  localStorage.removeItem(folderId);
+  localStorage.removeItem(folderId + "code");
+  localStorage.removeItem(folderId + "auther" + folderId);
+};
 
 
   return (
