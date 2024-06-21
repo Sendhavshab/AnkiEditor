@@ -12,11 +12,12 @@ type P = {
   >;
 };
 
+
 const CodePreview: React.FC<P> = (props) => {
   const tailwindScript = props.isTailwindProject
-    ? '<script src="https://cdn.tailwindcss.com"></script>'
-    : "";
-
+  ? '<script src="https://cdn.tailwindcss.com"></script>'
+  : "";
+  
   return (
     <iframe
       title="output"
