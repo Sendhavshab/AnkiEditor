@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CodeWordToString } from '../../functions/StrToCode';
 import  { getFromServerApi } from '../../Api/ApiCall';
 import { AlertShowerProviderHOC, CodeContextHOC } from '../../HOC&Context/Context';
 import { showAlertType } from '../../HOC&Context/Provider/AlertProvider';
-import CodePreview from '../CodePreview/CodePreview';
 import Output from '../CodePreview/Output';
 import { PracticeProps } from '../Practice/Practice';
 
@@ -22,9 +21,6 @@ const Website: React.FC<PreviewProps> = ({
   setLoading,
   setShowAlert,
   setIsTailwindProject,
-  htmlCode,
-  cssCode,
-  jsCode,
   setHtmlCode,
   setCssCode,
   setJsCode,
