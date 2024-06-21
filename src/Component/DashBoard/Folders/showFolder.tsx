@@ -4,7 +4,6 @@ import { Folder } from "../../../HOC&Context/Provider/FolderInfoProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { StringToCodeWord } from "../../../functions/StrToCode";
 import Infoalert from "../../../AlertAndLoader/Alert/Infoalert";
 
 interface showFolderProps {
