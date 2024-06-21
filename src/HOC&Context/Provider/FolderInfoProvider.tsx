@@ -91,8 +91,8 @@ const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
      delete newFolder[folderName];
 
      setFolders(newFolder);
+     uploadFolder(newFolder , "folder deleted successfully");
    }
-   uploadFolder(newFolder , "folder deleted successfully");
  };
 
  const findFolderById = (id: string) => {
