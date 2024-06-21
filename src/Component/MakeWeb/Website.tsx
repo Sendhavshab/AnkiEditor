@@ -6,6 +6,7 @@ import { AlertShowerProviderHOC, CodeContextHOC } from '../../HOC&Context/Contex
 import { showAlertType } from '../../HOC&Context/Provider/AlertProvider';
 import Output from '../CodePreview/Output';
 import { PracticeProps } from '../Practice/Practice';
+import CodePreview from '../CodePreview/CodePreview';
 
 export interface PreviewProps extends PracticeProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -63,8 +64,8 @@ const Website: React.FC<PreviewProps> = ({
 
   return (
     <div className="h-screen w-screen ">
-      <Output
-      ></Output>
+      <CodePreview runJs={true}
+      ></CodePreview>
     </div>
   );
 };

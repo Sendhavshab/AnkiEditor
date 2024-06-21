@@ -60,7 +60,7 @@ class Output extends Component<OutputProps> {
   render() {
     return (
       <div className="w-full h-full">
-        <Preview />
+        <Preview  />
       </div>
     );
   }
