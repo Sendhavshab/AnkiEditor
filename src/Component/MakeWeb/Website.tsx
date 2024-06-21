@@ -4,7 +4,6 @@ import { CodeWordToString } from '../../functions/StrToCode';
 import  { getFromServerApi } from '../../Api/ApiCall';
 import { AlertShowerProviderHOC, CodeContextHOC } from '../../HOC&Context/Context';
 import { showAlertType } from '../../HOC&Context/Provider/AlertProvider';
-import Output from '../CodePreview/Output';
 import { PracticeProps } from '../Practice/Practice';
 import CodePreview from '../CodePreview/CodePreview';
 
