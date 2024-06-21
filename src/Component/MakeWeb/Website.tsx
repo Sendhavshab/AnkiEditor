@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CodeWordToString } from '../../functions/StrToCode';
-import  { getFromServerApi } from '../../Api/ApiCall';
+import  { UsernameToCode, getFromServerApi } from '../../Api/ApiCall';
 import { AlertShowerProviderHOC, CodeContextHOC } from '../../HOC&Context/Context';
 import { showAlertType } from '../../HOC&Context/Provider/AlertProvider';
 import { PracticeProps } from '../Practice/Practice';
 import CodePreview from '../CodePreview/CodePreview';
+import { AxiosResponse } from 'axios';
 
 export interface PreviewProps extends PracticeProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,12 +29,34 @@ const Website: React.FC<PreviewProps> = ({
 
 }) => {
   const codeId = CodeWordToString(useParams().codeid || "");
+  const username = useParams().username
+  const folderName = useParams().foldername
   const navigate = useNavigate();
   useEffect(() => {
+
+
+
     
         setLoading(true);
+        if (codeId) {
+// bad me ye hatana he aur vah backend me se bhi replace mathod abhi he kyoki bahut logo ne link bana li he 
+          ApiCall(getFromServerApi , [codeId]);
+          
+        } else {
+         
+          console.log("folder name" , folderName)
+          ApiCall(UsernameToCode, [folderName! , username!]);
+
+        }
         
-    const code: any = getFromServerApi(codeId)
+    
+  }, []);
+
+  const ApiCall = (
+    apiFuction: (...arg : string[]) => Promise<AxiosResponse<any, any>>,
+    apiarg : string[]
+  ) => {
+    const code: any = apiFuction(...apiarg)
       ?.then((data) => {
         setLoading(false);
 
@@ -56,10 +79,10 @@ const Website: React.FC<PreviewProps> = ({
         setHtmlCode(a.html);
         setCssCode(a.css);
         setJsCode(a.js);
-        setIsTailwindProject(a.tailwind || false)
+        setIsTailwindProject(a.tailwind || false);
       }
     });
-  }, []);
+  };
 
   return (
     <div className="h-screen w-screen ">

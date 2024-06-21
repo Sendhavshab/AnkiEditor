@@ -62,6 +62,11 @@ export const GetFolders = () => {
     },
   });
 };
+export const UsernameToCode = (folderName: string , username : string) => {
+  return axios.get(
+    "https://faltu-1.onrender.com/" + username + "/" + folderName
+  );
+};
 export const PushFolders = (folders: Folder) => {
   return axios.post("https://faltu-1.onrender.com/folder", folders, {
     headers: {
