@@ -27,7 +27,8 @@ const CodePreview: React.FC<P> = (props) => {
             ${tailwindScript}
           </head>
           <body>
-            <div>${props.htmlCode}</div>
+          
+            <div>  ${props.htmlCode}</div>
             <script>
               (function() {
                 const captureMessage = (type, ...args) => {

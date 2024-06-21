@@ -2,7 +2,7 @@ import { Component } from "react";
 import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
 import Preview from "./CodePreview";
 
-type P = {
+export type OutputProps = {
   jsCode: string;
   cssCode: string;
   htmlCode: string;
@@ -12,10 +12,10 @@ type P = {
   >;
 };
 
-class Output extends Component<P> {
+class Output extends Component<OutputProps> {
   originalConsole: Partial<Console> | any;
 
-  constructor(props: P) {
+  constructor(props: OutputProps) {
     super(props);
     this.originalConsole = {};
   }
@@ -26,7 +26,6 @@ class Output extends Component<P> {
   componentWillUnmount(): void {
     window.removeEventListener("message", this.handleMessage);
   }
-
 
   handleMessage = (event: MessageEvent) => {
     if (event.data && event.data.type === "console") {
