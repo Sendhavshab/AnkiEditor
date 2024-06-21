@@ -5,10 +5,15 @@ import  { getFromServerApi } from '../../Api/ApiCall';
 import { AlertShowerProviderHOC, CodeContextHOC } from '../../HOC&Context/Context';
 import { showAlertType } from '../../HOC&Context/Provider/AlertProvider';
 import CodePreview from '../CodePreview/CodePreview';
+import Output from '../CodePreview/Output';
+import { PracticeProps } from '../Practice/Practice';
 
-interface PreviewProps {
+export interface PreviewProps extends PracticeProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+
+  jsCode: string;
+  setJsCode: React.Dispatch<React.SetStateAction<string>>;
   isTailwindProject: boolean;
   setIsTailwindProject: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -17,15 +22,21 @@ const Website: React.FC<PreviewProps> = ({
   setLoading,
   setShowAlert,
   setIsTailwindProject,
+  htmlCode,
+  cssCode,
+  jsCode,
+  setHtmlCode,
+  setCssCode,
+  setJsCode,
+
+
 }) => {
   const codeId = CodeWordToString(useParams().codeid || "");
-  const [htmlCode, setHtmlCode] = useState("");
-  const [jsCode, setJsCode] = useState("");
-  const [cssCode, setCssCode] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     
         setLoading(true);
+        
     const code: any = getFromServerApi(codeId)
       ?.then((data) => {
         setLoading(false);
@@ -55,11 +66,10 @@ const Website: React.FC<PreviewProps> = ({
   }, []);
 
   return (
-    <CodePreview
-      htmlCode={htmlCode}
-      cssCode={cssCode}
-      jsCode={jsCode}
-    ></CodePreview>
+    <div className="h-screen w-screen ">
+      <Output
+      ></Output>
+    </div>
   );
 };
 

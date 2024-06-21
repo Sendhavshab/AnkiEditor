@@ -12,7 +12,7 @@ import {
 import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
 import { CodeWordToString } from "../../functions/StrToCode";
 
-type P = {
+export type PracticeProps = {
   setHtmlCode: Dispatch<SetStateAction<string>>;
   setCssCode: Dispatch<SetStateAction<string>>;
   setNotSavedJs: Dispatch<SetStateAction<string>>;
@@ -28,14 +28,14 @@ type P = {
   notSavedJs: string;
 };
 
-const Practice: React.FC<P> = ({
+const Practice: React.FC<PracticeProps> = ({
   setHtmlCode,
   setCssCode,
   setShowAlert,
   setCodeId,
   setNotSavedJs,
   setIsAuther,
-  
+
   setIsTailwindProject,
 }) => {
   let practiceId = useParams().practiceId || "";
@@ -87,7 +87,7 @@ const Practice: React.FC<P> = ({
             setHtmlCode(a.html);
             setCssCode(a.css);
             setNotSavedJs(a.js);
-            setIsTailwindProject(a.tailwind || false)
+            setIsTailwindProject(a.tailwind || false);
           }
         });
       }
@@ -95,8 +95,6 @@ const Practice: React.FC<P> = ({
       localStorage.removeItem("folder" + practiceId);
     }
   }, [practiceId, isEdited]);
-
- 
 
   return (
     <div>
