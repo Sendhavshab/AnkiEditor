@@ -37,6 +37,7 @@ const App = () => (
                   element={<Assignment></Assignment>}
                 />
                 <Route path="/web/:codeid" element={<Preview></Preview>} />
+                <Route path="/:username/:foldername" element={<Preview></Preview>} />
                 {/* <Route path="/a" element={<Test></Test>} /> */}
                 <Route
                   path="/login"
@@ -57,12 +58,12 @@ const App = () => (
                 <Route
                   path="/code/a/:practiceId/:didshare?"
                   element={
-                    <RedirectLogin><Practice></Practice></RedirectLogin>}
+                    <RedirectLogin>
+                      <Practice></Practice>
+                    </RedirectLogin>
+                  }
                 />{" "}
-                <Route
-                  path="*"
-                  element={<NotFound></NotFound>}
-                />
+                <Route path="*" element={<NotFound></NotFound>} />
               </Routes>
             </CodeProvider>
           </ConsoleValueProvide>

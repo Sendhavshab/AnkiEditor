@@ -51,7 +51,9 @@ const FolderCleateButton: React.FC<FolderCleateButtonProps> = (props) => {
             ref={inputRef}
             className="flex-grow  border-2 p-1 m-2 rounded-lg "
             value={createFolderInputValue}
-            onChange={(e) => setCreateFolderInputValue(e.target.value)}
+            onChange={(e) =>
+              setCreateFolderInputValue(e.target.value.replace(/\s+/g, ""))
+            }
           />
           <GiConfirmed
             onClick={newFolderCreate}

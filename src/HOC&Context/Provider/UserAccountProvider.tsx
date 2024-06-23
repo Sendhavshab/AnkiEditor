@@ -39,6 +39,7 @@ const UserProvider: React.FC<UserProviderProps> = ({
         .then((response) => {
           setUser(response.data.name);
           setLoading(false);
+          localStorage.setItem("username" , response.data.username);
         })
         .catch((err) => {
           if ( err.response && err.response.data === "User not found") {
