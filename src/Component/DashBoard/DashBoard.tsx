@@ -46,6 +46,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
       });
   };
 
+
   return (
     <div className="">
       <h1 className="text-3xl myfont text-center m-2 p-2 font-black">
