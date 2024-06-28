@@ -63,7 +63,6 @@ const UserProvider: React.FC<UserProviderProps> = ({
     (type === "signup" ? SignUpApi(data) : LogInApi(data))
       .then((data) => {
         setToken(data.data.token);
-
         setShowAlert({
           value: showAlert.value + 1,
           type: "success",
@@ -72,9 +71,10 @@ const UserProvider: React.FC<UserProviderProps> = ({
               ? "User created successfully"
               : "User logged in successfully",
         });
-        GetFolders()
+        GetFolders(data.data.token)
           .then((r) => {
             setFolders(r.data);
+
 
             setLoading(false);
           })

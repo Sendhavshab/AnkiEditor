@@ -44,7 +44,6 @@ const Website: React.FC<PreviewProps> = ({
           
         } else {
          
-          console.log("folder name" , folderName)
           ApiCall(UsernameToCode, [folderName! , username!]);
 
         }
