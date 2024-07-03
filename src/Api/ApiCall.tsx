@@ -9,7 +9,7 @@ const CodeYogiApiCall = (
   jsCode?: string
 ) => {
   return axios[mathod](
-    "https://8o1qvwk6u4.execute-api.us-east-1.amazonaws.com/assignments/" + id,
+    "https://8hci695lxa.execute-api.us-east-1.amazonaws.com/assignments/" + id,
     {
       code: {
         html: htmlCode,
