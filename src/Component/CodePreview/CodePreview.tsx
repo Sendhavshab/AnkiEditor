@@ -13,7 +13,7 @@ type P = {
 };
 
 
-const CodePreview: React.FC<P> = (props) => {
+const CodePreview = (props: P) => {
   const tailwindScript = props.isTailwindProject
   ? '<script src="https://cdn.tailwindcss.com"></script>'
   : "";
@@ -94,7 +94,7 @@ const CodePreview: React.FC<P> = (props) => {
       `}
       width="100%"
       height="100%"
-      sandbox="allow-scripts allow-modals"
+      sandbox="allow-scripts allow-modals allow-same-origin allow-forms allow-popups allow-top-navigation allow-pointer-lock allow-orientation-lock allow-presentation allow-fullscreen allow-pointer-lock allow-orientation-lock allow-presentation allow-fullscreen"
     ></iframe>
   );
 };
