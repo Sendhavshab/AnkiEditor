@@ -27,9 +27,9 @@ const App = () => (
                 <Route
                   index
                   element={
-                    <RedirectLogin>
+                    // <RedirectLogin>
                       <DashBoard />
-                    </RedirectLogin>
+                    // </RedirectLogin>
                   }
                 />
                 <Route
@@ -58,9 +58,9 @@ const App = () => (
                 <Route
                   path="/code/a/:practiceId/:didshare?"
                   element={
-                    <RedirectLogin>
+                    // <RedirectLogin>
                       <Practice></Practice>
-                    </RedirectLogin>
+                    // </RedirectLogin>
                   }
                 />{" "}
                 <Route path="*" element={<NotFound></NotFound>} />
