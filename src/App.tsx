@@ -10,6 +10,7 @@ import UserAccountProvider from "./HOC&Context/Provider/UserAccountProvider";
 import LogIn from "./Acount/LogIn";
 import SignUp from "./Acount/SignUp";
 import { RedirectHomeHOC } from "./Acount/redirect";
+import RedirectLogin from "./Acount/redirect";
 import DashBoard from "./Component/DashBoard/DashBoard";
 import Assignment from "./Component/Assignments/Assignment";
 import Practice from "./Component/Practice/Practice";
@@ -27,9 +28,9 @@ const App = () => (
                 <Route
                   index
                   element={
-                    // <RedirectLogin>
+                    <RedirectLogin>
                       <DashBoard />
-                    // </RedirectLogin>
+                     </RedirectLogin>
                   }
                 />
                 <Route
@@ -58,9 +59,9 @@ const App = () => (
                 <Route
                   path="/code/a/:practiceId/:didshare?"
                   element={
-                    // <RedirectLogin>
+                    <RedirectLogin>
                       <Practice></Practice>
-                    // </RedirectLogin>
+                     </RedirectLogin>
                   }
                 />{" "}
                 <Route path="*" element={<NotFound></NotFound>} />

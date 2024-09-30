@@ -11,12 +11,12 @@ const RedirectLogin: React.FC<RedirectProps> = ({ children, token }) => {
 
   
   const IsCodeShared = useParams().didshare;
+  const [searchParams] = useSearchParams()
 
   
   if(IsCodeShared){
     return <>{children}</>;
   }
-  const [searchParams] = useSearchParams()
   if (!token) {
     const params = Object.fromEntries(searchParams);
     const pathName = window.location.pathname
