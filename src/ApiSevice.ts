@@ -13,7 +13,7 @@ export class ApiService {
   }
 
   private BASE_URL = import.meta.env.API_URL;
-  private BASE_URL2 = import.meta.env.API_URL2;
+  // private BASE_URL2 = import.meta.env.API_URL2;
 
   private async request<T>(
     urlSuffix: string,

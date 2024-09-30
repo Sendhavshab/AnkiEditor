@@ -9,7 +9,7 @@ import FolderInfoProvider from "./HOC&Context/Provider/FolderInfoProvider";
 import UserAccountProvider from "./HOC&Context/Provider/UserAccountProvider";
 import LogIn from "./Acount/LogIn";
 import SignUp from "./Acount/SignUp";
-import RedirectLogin , { RedirectHomeHOC } from "./Acount/redirect";
+import { RedirectHomeHOC } from "./Acount/redirect";
 import DashBoard from "./Component/DashBoard/DashBoard";
 import Assignment from "./Component/Assignments/Assignment";
 import Practice from "./Component/Practice/Practice";
