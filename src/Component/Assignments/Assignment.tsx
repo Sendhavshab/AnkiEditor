@@ -1,28 +1,23 @@
-// import React from "react";
-
-import { useParams } from "react-router-dom";
-import CodeAria from "../CodeAria/CodeAria";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ApiCall from "../../Api/ApiCall";
-import Loader from "../../AlertAndLoader/Loder/Loader";
-import {
-  AlertShowerProviderHOC,
-  CodeContextHOC,
-} from "../../HOC&Context/Context";
-import { CodeWordToString } from "../../functions/StrToCode";
-import { showAlertType } from "../../HOC&Context/Provider/AlertProvider";
-import { SolutionCodeType } from "../../HOC&Context/Provider/CodeProvider";
+import { useParams } from 'react-router-dom'
+import CodeAria from '../CodeAria/CodeAria'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import ApiCall from '../../Api/ApiCall'
+import Loader from '../../AlertAndLoader/Loder/Loader'
+import { CodeContextHOC } from '../../HOC&Context/Context'
+import { CodeWordToString } from '../../functions/StrToCode'
+import { SolutionCodeType } from '../../HOC&Context/Provider/CodeProvider'
+import { toast } from 'react-toastify'
 
 type P = {
-  setHtmlCode: Dispatch<SetStateAction<string>>;
-  setCssCode: Dispatch<SetStateAction<string>>;
-  setNotSavedJs: Dispatch<SetStateAction<string>>;
-  setCodeId: Dispatch<SetStateAction<string | undefined>>;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
-  setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>;
-  setSolution: Dispatch<SetStateAction<boolean>>;
-  setSolutionCode: Dispatch<SetStateAction<SolutionCodeType>>;
-};
+  setHtmlCode: Dispatch<SetStateAction<string>>
+  setCssCode: Dispatch<SetStateAction<string>>
+  setNotSavedJs: Dispatch<SetStateAction<string>>
+  setCodeId: Dispatch<SetStateAction<string | undefined>>
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>
+  setIsNotJsInassignment: Dispatch<SetStateAction<boolean>>
+  setSolution: Dispatch<SetStateAction<boolean>>
+  setSolutionCode: Dispatch<SetStateAction<SolutionCodeType>>
+}
 
 const Assignment: React.FC<P> = ({
   setHtmlCode,
@@ -34,58 +29,55 @@ const Assignment: React.FC<P> = ({
   setSolution,
   setSolutionCode,
 }) => {
-  let assignmentId = useParams().assiID || "";
+  let assignmentId = useParams().assiID || ''
 
-  const isEdited = localStorage.getItem(assignmentId);
+  const isEdited = localStorage.getItem(assignmentId)
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const IsAssignmentShared = useParams().didshare;
+  const IsAssignmentShared = useParams().didshare
 
   useEffect(() => {
-    setCodeId(assignmentId);
+    setCodeId(assignmentId)
 
-    if (isEdited === "rerun" || !isEdited) {
-      setLoading(true);
+    if (isEdited === 'rerun' || !isEdited) {
+      setLoading(true)
 
       if (IsAssignmentShared) {
-        assignmentId = CodeWordToString(assignmentId);
+        assignmentId = CodeWordToString(assignmentId)
       }
-      const code: any = ApiCall("get", assignmentId)
+      const code: any = ApiCall('get', assignmentId)
         ?.then((data) => {
-          setLoading(false);
+          setLoading(false)
           if (data.data.assignment.solutionCode) {
-            setSolution(true);
-setSolutionCode(data.data.assignment.solutionCode)
+            setSolution(true)
+            setSolutionCode(data.data.assignment.solutionCode)
           }
           if (data.data.code) {
-            return data.data.code;
+            return data.data.code
           }
-          return data.data.assignment.initCode;
+          return data.data.assignment.initCode
         })
         .catch((err) => {
-          setLoading(false);
-          setShowAlert({
-            value: 1,
-            type: "error",
-            message: err.message,
-          });
-        });
+          setLoading(false)
+          toast.error(err.message)
+        })
 
       code.then((a: any) => {
-        localStorage.setItem(assignmentId, "edited");
-          if(a){
-        setHtmlCode(a.html);
-        setCssCode(a.css);
-        if (a.js) {
-          setNotSavedJs(a.js);
-          setIsNotJsInassignment(false);
-        } else {
-          setIsNotJsInassignment(true);
+        localStorage.setItem(assignmentId, 'edited')
+        if (a) {
+          setHtmlCode(a.html)
+          setCssCode(a.css)
+          if (a.js) {
+            setNotSavedJs(a.js)
+            setIsNotJsInassignment(false)
+          } else {
+            setIsNotJsInassignment(true)
+          }
         }
-     } });
+      })
     }
-  }, [assignmentId, isEdited]);
+  }, [assignmentId, isEdited])
 
   return (
     <div>
@@ -93,7 +85,7 @@ setSolutionCode(data.data.assignment.solutionCode)
 
       <CodeAria></CodeAria>
     </div>
-  );
-};
+  )
+}
 
-export default CodeContextHOC(AlertShowerProviderHOC(Assignment));
+export default CodeContextHOC(Assignment)

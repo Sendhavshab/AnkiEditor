@@ -53,6 +53,7 @@ const Alert: React.FC<AlertProps> = ({ type, children, setAlertShow }) => {
         }}
         className="opacity-60 absolute right-1 top-1 text-xl transition hover:scale-125 hover:opacity-100 cursor-pointer"
       />
+
     </div>
   );
 };

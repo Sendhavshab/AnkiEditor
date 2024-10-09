@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Folder } from "../HOC&Context/Provider/FolderInfoProvider";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const CodeYogiApiCall = (
   mathod: "get" | "post",
   id: string,
@@ -24,7 +26,7 @@ export default CodeYogiApiCall;
 
 export const saveToServerApi = (codewithID: { [key: string]: string | boolean }) => {
   return axios.post(
-    "https://faltu-1.onrender.com/api/code/store",
+    `${API_BASE_URL}/api/code/store`,
     {
       code: {
         link: codewithID.link,
@@ -42,21 +44,21 @@ export const saveToServerApi = (codewithID: { [key: string]: string | boolean })
   );
 };
 export const getFromServerApi = (id: string) => {
-  return axios.get("https://faltu-1.onrender.com/api/code/retrieve/" + id, {
+  return axios.get(`${API_BASE_URL}/api/code/retrieve/${id}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
 };
 export const GetUserName = () => {
-  return axios.get("https://faltu-1.onrender.com/token", {
+  return axios.get(`${API_BASE_URL}/token`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
 };
 export const GetFolders = (token? : string) => {
-  return axios.get("https://faltu-1.onrender.com/folder", {
+  return axios.get(`${API_BASE_URL}/folder`, {
     headers: {
       Authorization: token || localStorage.getItem("token"),
     },
@@ -64,11 +66,11 @@ export const GetFolders = (token? : string) => {
 };
 export const UsernameToCode = (folderName: string , username : string) => {
   return axios.get(
-    "https://faltu-1.onrender.com/" + username + "/" + folderName
+    `${API_BASE_URL}/${username}/${folderName}`
   );
 };
 export const PushFolders = (folders: Folder) => {
-  return axios.post("https://faltu-1.onrender.com/folder", folders, {
+  return axios.post(`${API_BASE_URL}/folder`, folders, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -76,7 +78,7 @@ export const PushFolders = (folders: Folder) => {
 };
 export const RemoveFolder = (folderId: string) => {
   return axios.delete(
-    "https://faltu-1.onrender.com/api/code/delete/" + folderId,
+    `${API_BASE_URL}/api/code/delete/${folderId}`,
     {
       headers: {
         Authorization: localStorage.getItem("token"),
@@ -86,14 +88,14 @@ export const RemoveFolder = (folderId: string) => {
 };
 
 export const SignUpApi = (data: { [key: string]: string }) => {
-  return axios.post("https://faltu-1.onrender.com/api/auth/signup", {
+  return axios.post(`${API_BASE_URL}/api/auth/signup`, {
     name: data.name,
     password: data.password,
     username: data.username,
   });
 };
 export const LogInApi = (data: { [key: string]: string }) => {
-  return axios.post("https://faltu-1.onrender.com/api/auth/login", {
+  return axios.post(`${API_BASE_URL}/api/auth/login`, {
     password: data.password,
     username: data.username,
   });

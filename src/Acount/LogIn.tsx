@@ -15,7 +15,7 @@ interface LogInPageProps {
 }
 
 const LogInPage: React.FC<LogInPageProps> = ({ accountApiCall }) => {
-
+console.log("loginpage")
   const [searchParams] = useSearchParams();
   function DataServerSender(value: any) {
     accountApiCall(value, "login");

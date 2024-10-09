@@ -1,21 +1,13 @@
-import React, { useEffect, useState, ReactNode } from "react";
-import {
-  AlertShowerProviderHOC,
-  FolderProviderHOC,
-  UserAccountProvider,
-} from "../Context";
-import { GetFolders, GetUserName, LogInApi, SignUpApi } from "../../Api/ApiCall";
-import { Folder } from "./FolderInfoProvider";
-import { generateRandomString } from "../../functions/RandomStr";
+import React, { useEffect, useState, ReactNode } from 'react';
+import { AlertShowerProviderHOC, FolderProviderHOC, UserAccountProvider } from '../Context';
+import { GetFolders, GetUserName, LogInApi, SignUpApi } from '../../Api/ApiCall';
+import { Folder } from './FolderInfoProvider';
+import { generateRandomString } from '../../functions/RandomStr';
 
 interface UserProviderProps {
   children: ReactNode;
   setLoading: (loading: boolean) => void;
-  setShowAlert: (alert: {
-    value: number;
-    type: string;
-    message: string;
-  }) => void;
+  setShowAlert: (alert: { value: number; type: string; message: string }) => void;
   showAlert: { value: number; type: string; message: string };
   setFolders: React.Dispatch<React.SetStateAction<Folder>>;
 }
@@ -27,103 +19,92 @@ const UserProvider: React.FC<UserProviderProps> = ({
   setFolders,
   showAlert,
 }) => {
-  const sttoken = localStorage.getItem("token") || "";
+  const sttoken = localStorage.getItem('token') || '';
 
   const [token, setToken] = useState(sttoken);
   const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
-    token !== "" && localStorage.setItem("token", token);
-    if (token) {
-      GetUserName()
-        .then((response) => {
-          setUser(response.data.name);
-          setLoading(false);
-          localStorage.setItem("username" , response.data.username);
-        })
-        .catch((err) => {
-          if ( err.response && err.response.data === "User not found") {
-            setToken("");
-            localStorage.removeItem("token");
-            setLoading(false);
-          } else if (err.message === "Network Error") {
-            setLoading(false);
-          }
-        });
-    } else {
+    token !== '' && localStorage.setItem('token', token);
+
+    if (!token || user) {
       setLoading(false);
     }
+
+    GetUserName()
+      .then(response => {
+        setUser(response.data.name);
+        setLoading(false);
+        localStorage.setItem('username', response.data.username);
+      })
+      .catch(err => {
+        if (err.response && err.response.data === 'User not found') {
+          setToken('');
+          localStorage.removeItem('token');
+          setLoading(false);
+        } else if (err.message === 'Network Error') {
+          setLoading(false);
+        }
+      });
   }, [token, setLoading]);
 
-  const accountApiCall = (
-    data: { [key: string]: string },
-    type: "signup" | "login"
-  ) => {
+  const accountApiCall = (data: { [key: string]: string }, type: 'signup' | 'login') => {
     setLoading(true);
-    (type === "signup" ? SignUpApi(data) : LogInApi(data))
-      .then((data) => {
+    (type === 'signup' ? SignUpApi(data) : LogInApi(data))
+      .then(data => {
         setToken(data.data.token);
         setShowAlert({
           value: showAlert.value + 1,
-          type: "success",
-          message:
-            type === "signup"
-              ? "User created successfully"
-              : "User logged in successfully",
+          type: 'success',
+          message: type === 'signup' ? 'User created successfully' : 'User logged in successfully',
         });
         GetFolders(data.data.token)
-          .then((r) => {
+          .then(r => {
             setFolders(r.data);
-
 
             setLoading(false);
           })
-          .catch((e) => {
-            if (e.message === "Request failed with status code 404") {
+          .catch(e => {
+            if (e.message === 'Request failed with status code 404') {
               const folderId = generateRandomString(19);
 
-              localStorage.setItem("folder" + folderId, "new");
+              localStorage.setItem('folder' + folderId, 'new');
               setFolders({
-                "example folder": {
+                'example folder': {
                   id: folderId,
                 },
               });
             }
             setShowAlert({
               value: showAlert.value + 1,
-              type: "error",
+              type: 'error',
               message: e.message || e.data,
             });
           });
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
-        if (err.data === "User already exists") {
+        if (err.data === 'User already exists') {
           setShowAlert({
             value: showAlert.value + 1,
-            type: "error",
-            message: "User already exists",
+            type: 'error',
+            message: 'User already exists',
           });
           return;
         }
-        if (err.message === "Request failed with status code 400") {
-          err.message =
-            type == "login"
-              ? " email or password is incorrect"
-              : "User already exists";
+        if (err.message === 'Request failed with status code 400') {
+          err.message = type == 'login' ? ' email or password is incorrect' : 'User already exists';
         }
         setShowAlert({
           value: showAlert.value + 1,
-          type: "error",
+          type: 'error',
           message: err.message || err.data,
         });
       });
   };
 
   return (
-    <UserAccountProvider.Provider
-      value={{ accountApiCall, user, setUser, setLoading, token }}
-    >
+    <UserAccountProvider.Provider value={{ accountApiCall, user, setUser, setLoading, token }}>
       {children}
     </UserAccountProvider.Provider>
   );

@@ -1,139 +1,104 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { AlertShowerProviderHOC, FolderProvider } from "../Context";
-import { showAlertType } from "./AlertProvider";
-import { PushFolders, RemoveFolder } from "../../Api/ApiCall";
-import { generateRandomString } from "../../functions/RandomStr";
+import React, { ReactNode, useEffect, useState } from 'react'
+import { FolderProvider } from '../Context'
+import { PushFolders, RemoveFolder } from '../../Api/ApiCall'
+import { generateRandomString } from '../../functions/RandomStr'
+import { toast } from 'react-toastify'
 
 interface FolderInfoProviderProps {
-  children: ReactNode;
-  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>;
+  children: ReactNode
+  setShowAlert: React.Dispatch<React.SetStateAction<showAlertType>>
 }
 
-
-export type OneFolderType = { id: string , saved? : boolean , _id? : string}
+export type OneFolderType = { id: string; saved?: boolean; _id?: string }
 
 export type Folder = {
-  [key: string]: OneFolderType;
-};
+  [key: string]: OneFolderType
+}
 
 const FolderInfoProvider: React.FC<FolderInfoProviderProps> = (props) => {
-  const folderLocalst = JSON.parse(localStorage.getItem("folders") || "{}");
+  const folderLocalst = JSON.parse(localStorage.getItem('folders') || '{}')
 
-
-          // localStorage.setItem(practiceId + "auther" + practiceId, a.author);
-
-  const [folders, setFolders] = useState<Folder>(folderLocalst);
+  const [folders, setFolders] = useState<Folder>(folderLocalst)
 
   useEffect(() => {
-    localStorage.setItem("folders", JSON.stringify(folders));
-  }, [folders]);
+    localStorage.setItem('folders', JSON.stringify(folders))
+  }, [folders])
 
-
-  const uploadFolder = (newFolder : Folder , message? : string) => {
-
-     PushFolders(newFolder)
-       .then((m : any) => {
-         props.setShowAlert({
-           value: 1,
-           type: "success",
-           message: message || m.message || m.data ,
-         });
-       })
-       .catch((e) => {
-         props.setShowAlert({
-           value: 1,
-           type: "error",
-           message: e.message || e.data,
-         });
-       });
+  const uploadFolder = (newFolder: Folder, message?: string) => {
+    PushFolders(newFolder)
+      .then((m: any) => {
+        toast.success(message || m.message || m.data)
+      })
+      .catch((e) => {
+        toast.error(e.message || e.data)
+      })
   }
 
-
-
   const createFolder = (folderName: string) => {
-    folderName = folderName.trim();
+    folderName = folderName.trim()
     if (folders[folderName]) {
-      props.setShowAlert({
-        value: 1,
-        type: "error",
-        message: "folder already exist",
-      });
-      return;
+      toast.error('Folder already exists')
+      return
     }
-      if (folderName !== '0' && +folderName === 0) {
-       
-        return;
-      }
-     const folderId = generateRandomString(19)
+    if (folderName !== '0' && +folderName === 0) {
+      return
+    }
+    const folderId = generateRandomString(19)
 
-   localStorage.setItem("folder" + folderId, "new")
+    localStorage.setItem('folder' + folderId, 'new')
     setFolders({
       ...folders,
-      [folderName]: { id: folderId , saved: false },
-    });
+      [folderName]: { id: folderId, saved: false },
+    })
 
-   uploadFolder({
-     ...folders,
-     [folderName]: { id: folderId, saved: false },
-   });
+    uploadFolder({
+      ...folders,
+      [folderName]: { id: folderId, saved: false },
+    })
+  }
 
-  };
+  const DeleteFolder = (folderName: string) => {
+    const confirmMsg = confirm(`Are you sure you want to delete ${folderName} folder?`)
 
- const DeleteFolder = (folderName: string) => {
-   const confirmMsg = confirm(
-     `Are you sure you want to delete ${folderName} folder?`
-   );
+    const newFolder = { ...folders }
+    if (confirmMsg) {
+      removeFolderData(newFolder[folderName])
 
-   const newFolder = { ...folders };
-   if (confirmMsg) {
-    removeFolderData(newFolder[folderName]);
+      delete newFolder[folderName]
 
-     delete newFolder[folderName];
+      setFolders(newFolder)
+      uploadFolder(newFolder, 'folder deleted successfully')
+    }
+  }
 
-     setFolders(newFolder);
-     uploadFolder(newFolder , "folder deleted successfully");
-   }
- };
+  const findFolderById = (id: string) => {
+    return Object.keys(folders).find((folderName) => {
+      return folders[folderName].id === id
+    })
+  }
 
- const findFolderById = (id: string) => {
-
-  return Object.keys(folders).find((folderName )  => {
-
-   return  folders[folderName].id  === id
-
-   })
-
- }
-
- const folderSaved = (folderId: string ) => {
-    
-    const savedFolder = findFolderById(folderId);
+  const folderSaved = (folderId: string) => {
+    const savedFolder = findFolderById(folderId)
 
     const newFolders = JSON.parse(JSON.stringify(folders))
+
     newFolders[savedFolder as string].saved = true
     setFolders(newFolders)
-    uploadFolder(newFolders, "You can share this folder with others😃")
- 
- }
+    uploadFolder(newFolders, 'You can share this folder with others😃')
+  }
 
-const removeFolderData = (folder: OneFolderType) => {
-  const folderId = folder.id;
+  const removeFolderData = (folder: OneFolderType) => {
+    const folderId = folder.id
 
-if(folder.saved){
-  
-  RemoveFolder(folderId).catch((err: any) => {
-    props.setShowAlert({
-      value: 1,
-      type: "error",
-      message: err.data || err.message,
-    });
-  });
-}
-  localStorage.removeItem(folderId);
-  localStorage.removeItem(folderId + "code");
-  localStorage.removeItem(folderId + "auther" + folderId);
-};
-
+    if (folder.saved) {
+      RemoveFolder(folderId).catch((err: any) => {
+        toast.error(err.message)
+      })
+    }
+    localStorage.removeItem(folderId)
+    localStorage.removeItem(folderId + 'code')
+    localStorage.removeItem(folderId + 'auther' + folderId)
+  }
 
   return (
     <FolderProvider.Provider
@@ -148,7 +113,7 @@ if(folder.saved){
     >
       {props.children}
     </FolderProvider.Provider>
-  );
-};
+  )
+}
 
-export default AlertShowerProviderHOC(FolderInfoProvider);
+export default FolderInfoProvider
