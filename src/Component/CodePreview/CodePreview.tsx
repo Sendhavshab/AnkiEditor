@@ -1,23 +1,18 @@
-import React from "react";
-import { CodeContextHOC, ConsoleProviderHOC } from "../../HOC&Context/Context";
+import React from 'react'
+import { CodeContextHOC, ConsoleProviderHOC } from '../../HOC&Context/Context'
 
 type P = {
-  jsCode: string;
-  cssCode: string;
-  htmlCode: string;
-  runJs: boolean;
-  isTailwindProject: boolean;
-  setConsoleMessages: React.Dispatch<
-    React.SetStateAction<{ type: string; message: string }[]>
-  >;
-};
-
+  jsCode: string
+  cssCode: string
+  htmlCode: string
+  runJs: boolean
+  isTailwindProject: boolean
+  setConsoleMessages: React.Dispatch<React.SetStateAction<{ type: string; message: string }[]>>
+}
 
 const CodePreview = (props: P) => {
-  const tailwindScript = props.isTailwindProject
-  ? '<script src="https://cdn.tailwindcss.com"></script>'
-  : "";
-  
+  const tailwindScript = props.isTailwindProject ? '<script src="https://cdn.tailwindcss.com"></script>' : ''
+
   return (
     <iframe
       title="output"
@@ -36,6 +31,7 @@ const CodePreview = (props: P) => {
                   const error = new Error();
                   const stack = error.stack;
                   let callerLine = "";
+
                   if (stack) {
                     const stackLines = stack.split("\\n");
                     for (const line of stackLines) {
@@ -87,7 +83,7 @@ const CodePreview = (props: P) => {
                 });
               })();
 
-              ${props.runJs ? props.jsCode : ""}
+              ${props.runJs ? props.jsCode : ''}
             </script>
           </body>
         </html>
@@ -96,7 +92,7 @@ const CodePreview = (props: P) => {
       height="100%"
       sandbox="allow-scripts allow-modals allow-same-origin allow-forms allow-popups allow-top-navigation allow-pointer-lock allow-orientation-lock allow-presentation allow-fullscreen allow-pointer-lock allow-orientation-lock allow-presentation allow-fullscreen"
     ></iframe>
-  );
-};
+  )
+}
 
-export default CodeContextHOC(ConsoleProviderHOC(CodePreview));
+export default CodeContextHOC(ConsoleProviderHOC(CodePreview))
