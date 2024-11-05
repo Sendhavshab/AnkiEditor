@@ -7,24 +7,26 @@ interface RedirectProps {
 }
 
 const RedirectLogin: React.FC<RedirectProps> = ({ children, token }) => {
-
-
-  
   const IsCodeShared = useParams().didshare;
+  const [searchParams] = useSearchParams();
 
-  
-  if(IsCodeShared){
+  console.log(token);
+
+  if (IsCodeShared) {
     return <>{children}</>;
   }
-  const [searchParams] = useSearchParams()
   if (!token) {
     const params = Object.fromEntries(searchParams);
-    const pathName = window.location.pathname
+    const pathName = window.location.pathname;
 
-    return(
-      <Navigate to={{pathname:"/login",search:new URLSearchParams({ ...params, next: pathName }).toString()}} />
-    )
-    
+    return (
+      <Navigate
+        to={{
+          pathname: "/login",
+          search: new URLSearchParams({ ...params, next: pathName }).toString(),
+        }}
+      />
+    );
   }
   return <>{children}</>;
 };
@@ -32,11 +34,8 @@ const RedirectLogin: React.FC<RedirectProps> = ({ children, token }) => {
 export default UserAccountProviderHOC(RedirectLogin);
 
 const RedirectHome: React.FC<RedirectProps> = ({ children, token }) => {
-
-  
   const [searchParams] = useSearchParams();
   if (token) {
-  
     const nextPath = Object.fromEntries(searchParams).next;
     return <Navigate to={nextPath} />;
   }
