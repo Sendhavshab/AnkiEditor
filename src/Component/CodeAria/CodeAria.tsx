@@ -47,13 +47,11 @@ const CodeAria: React.FC<G> = ({
 }) => {
   const [Show, setShow] = useState<S>();
 
-  const handleMounting =  () => {
-
+  const handleMounting = () => {
     // //  const themeResponse = await fetch("dark_plus_converted.json");
     // //  const themeData = await themeResponse.json();
-
     //  monaco.editor.defineTheme("vs-code-dark", (theme as any));
-  }
+  };
   const deviceWidth = window.innerWidth;
   useEffect(() => {
     if (deviceWidth < 1024) {
@@ -63,8 +61,6 @@ const CodeAria: React.FC<G> = ({
       });
     }
   }, [deviceWidth]);
-
- 
 
   const runJsFunc = () => {
     setConsoleMessages([]);
@@ -104,8 +100,8 @@ const CodeAria: React.FC<G> = ({
             language === "html"
               ? handleHtmlChange
               : language === "css"
-              ? handleCssChange
-              : handleJsChange
+                ? handleCssChange
+                : handleJsChange
           }
           width="100%"
           loading={<ColorLoader />}
@@ -113,11 +109,13 @@ const CodeAria: React.FC<G> = ({
             language === "html"
               ? htmlCode
               : language === "css"
-              ? cssCode
-              : notSavedJs
+                ? cssCode
+                : notSavedJs
           }
           options={{
             lineNumbersMinChars: 1,
+            contextmenu: false,
+            wordWrap: "on",
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,
             showUnused: true,
