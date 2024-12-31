@@ -114,7 +114,6 @@ const CodeAria: React.FC<G> = ({
           }
           options={{
             lineNumbersMinChars: 1,
-            contextmenu: false,
             wordWrap: "on",
             renderValidationDecorations: "on",
             acceptSuggestionOnCommitCharacter: true,
