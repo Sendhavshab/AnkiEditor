@@ -40,7 +40,6 @@ const CodeAria: React.FC<G> = ({
   setNotSavedJs,
   runJs,
   notSavedJs,
-
   language,
   setRunJs,
   setConsoleMessages,
@@ -77,7 +76,6 @@ const CodeAria: React.FC<G> = ({
 
   const handleCssChange = (newValue: any) => {
     setRunJs(false);
-
     setCssCode(newValue);
   };
 
@@ -106,6 +104,24 @@ const CodeAria: React.FC<G> = ({
     setEditorWidth(`${newWidth}px`);
   };
 
+  const editors = [
+    {
+      language: "html",
+      value: htmlCode,
+      onChange: handleHtmlChange,
+    },
+    {
+      language: "css",
+      value: cssCode,
+      onChange: handleCssChange,
+    },
+    {
+      language: "javascript",
+      value: notSavedJs,
+      onChange: handleJsChange,
+    },
+  ];
+
   return (
     <div
       onMouseMove={onMouseMove}
@@ -122,46 +138,39 @@ const CodeAria: React.FC<G> = ({
         </div>
         <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
 
-        <Editor
-          beforeMount={handleMounting}
-          height="100vh"
-          language={language}
-          theme="vs-dark"
-          onChange={
-            language === "html"
-              ? handleHtmlChange
-              : language === "css"
-              ? handleCssChange
-              : handleJsChange
-          }
-          width="100%"
-          loading={<ColorLoader />}
-          value={
-            language === "html"
-              ? htmlCode
-              : language === "css"
-              ? cssCode
-              : notSavedJs
-          }
-          options={{
-            lineNumbersMinChars: 1,
-            wordWrap: "on",
-            renderValidationDecorations: "on",
-            acceptSuggestionOnCommitCharacter: true,
-            showUnused: true,
-            formatOnPaste: true,
-
-            glyphMargin: deviceWidth > 1024,
-            padding: {
-              top: 8,
-              bottom: 5,
-            },
-
-            minimap: {
-              enabled: false,
-            },
-          }}
-        />
+        {editors.map((editor, index) => (
+          <div
+            key={index}
+            style={{ display: language === editor.language ? "block" : "none" }}
+          >
+            <Editor
+              beforeMount={handleMounting}
+              height="100vh"
+              language={editor.language}
+              theme="vs-dark"
+              onChange={editor.onChange}
+              width="100%"
+              loading={<ColorLoader />}
+              value={editor.value}
+              options={{
+                lineNumbersMinChars: 1,
+                wordWrap: "on",
+                renderValidationDecorations: "on",
+                acceptSuggestionOnCommitCharacter: true,
+                showUnused: true,
+                formatOnPaste: true,
+                glyphMargin: deviceWidth > 1024,
+                padding: {
+                  top: 8,
+                  bottom: 5,
+                },
+                minimap: {
+                  enabled: false,
+                },
+              }}
+            />
+          </div>
+        ))}
       </div>
       {window.innerWidth > 1024 && (
         <div
@@ -183,8 +192,6 @@ const CodeAria: React.FC<G> = ({
               : "100%",
         }}
       >
-        {/* transparent div on frame */}
-
         {isResizing && (
           <div className="w-full z-50 h-full bg-transparent absolute top-0 left-0"></div>
         )}
