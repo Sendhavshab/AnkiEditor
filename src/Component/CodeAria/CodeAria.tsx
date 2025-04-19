@@ -46,6 +46,8 @@ const CodeAria: React.FC<G> = ({
   setConsoleMessages,
 }) => {
   const [Show, setShow] = useState<S>();
+  const [isResizing, setIsResizing] = useState(false);
+  const [editorWidth, setEditorWidth] = useState("50%");
 
   const handleMounting = () => {
     // //  const themeResponse = await fetch("dark_plus_converted.json");
@@ -84,11 +86,40 @@ const CodeAria: React.FC<G> = ({
     setNotSavedJs(newValue);
   };
 
+  const onMouseUp = () => {
+    console.log("mouse up");
+    setIsResizing(false);
+  };
+
+  const onDoubleClick = () => {
+    console.log("double clicked");
+    setIsResizing(true);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    console.log("mouse move");
+    if (!isResizing) return;
+
+    const newWidth = e.clientX;
+
+    console.log("new width", newWidth);
+    setEditorWidth(`${newWidth}px`);
+  };
+
   return (
-    <div className="w-screen h-screen lg:flex  overflow-hidden  bg-black  ">
+    <div
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      className="w-screen h-screen lg:flex  overflow-hidden  bg-black  "
+    >
       <Shower Show={Show} setShow={setShow}></Shower>
-      <div className={` lg:w-1/2 w-full  ${Show?.editor}`}>
-        <Header runJsFunc={runJsFunc} runJs={runJs} />
+      <div
+        className={` w-full  ${Show?.editor}`}
+        style={{ width: window.innerWidth > 1024 ? editorWidth : "100%" }}
+      >
+        <div className="overflow-hidden">
+          <Header runJsFunc={runJsFunc} runJs={runJs} />
+        </div>
         <MobileManu runJsFunc={runJsFunc} runJs={runJs} />
 
         <Editor
@@ -100,8 +131,8 @@ const CodeAria: React.FC<G> = ({
             language === "html"
               ? handleHtmlChange
               : language === "css"
-                ? handleCssChange
-                : handleJsChange
+              ? handleCssChange
+              : handleJsChange
           }
           width="100%"
           loading={<ColorLoader />}
@@ -109,8 +140,8 @@ const CodeAria: React.FC<G> = ({
             language === "html"
               ? htmlCode
               : language === "css"
-                ? cssCode
-                : notSavedJs
+              ? cssCode
+              : notSavedJs
           }
           options={{
             lineNumbersMinChars: 1,
@@ -132,7 +163,31 @@ const CodeAria: React.FC<G> = ({
           }}
         />
       </div>
-      <div className={`lg:w-1/2 w-full h-full bg-white ${Show?.shower}`}>
+      {window.innerWidth > 1024 && (
+        <div
+          className={`px-2.5 -mx-2.5  z-10 items-center cursor-col-resize self-stretch hidden md:flex`}
+          onMouseDown={onDoubleClick}
+        >
+          <div
+            className={`bg-blue-500 w-2 h-full`}
+            style={{ filter: "blur(3px)" }}
+          ></div>
+        </div>
+      )}
+      <div
+        className={`h-full bg-white ${Show?.shower}`}
+        style={{
+          width:
+            window.innerWidth > 1024
+              ? `calc(100% - ${editorWidth} - 4px)`
+              : "100%",
+        }}
+      >
+        {/* transparent div on frame */}
+
+        {isResizing && (
+          <div className="w-full z-50 h-full bg-transparent absolute top-0 left-0"></div>
+        )}
         <Output></Output>
       </div>
       <Console></Console>
