@@ -47,6 +47,7 @@ const CodeAria: React.FC<G> = ({
   const [Show, setShow] = useState<S>();
   const [isResizing, setIsResizing] = useState(false);
   const [editorWidth, setEditorWidth] = useState("50%");
+  const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
 
   const handleMounting = () => {
     // //  const themeResponse = await fetch("dark_plus_converted.json");
@@ -95,12 +96,16 @@ const CodeAria: React.FC<G> = ({
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
-    console.log("mouse move");
     if (!isResizing) return;
 
     const newWidth = e.clientX;
+    const previewWidth = window.innerWidth - newWidth - 4;
+    const previewHeight = window.innerHeight;
 
-    console.log("new width", newWidth);
+    setPreviewSize({
+      width: previewWidth,
+      height: previewHeight,
+    });
     setEditorWidth(`${newWidth}px`);
   };
 
@@ -184,7 +189,7 @@ const CodeAria: React.FC<G> = ({
         </div>
       )}
       <div
-        className={`h-full bg-white ${Show?.shower}`}
+        className={`h-full bg-white ${Show?.shower} relative`}
         style={{
           width:
             window.innerWidth > 1024
@@ -193,8 +198,21 @@ const CodeAria: React.FC<G> = ({
         }}
       >
         {isResizing && (
-          <div className="w-full z-50 h-full bg-transparent absolute top-0 left-0"></div>
+          <div className="w-full z-50 h-full bg-transparent absolute top-0 left-0">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg z-50">
+              <div className="flex items-center space-x-2">
+                <span>
+                  Width: {Math.round(Math.max(previewSize.width, 0))}px
+                </span>
+                <span>|</span>
+                <span>
+                  Height: {Math.round(Math.max(previewSize.height, 0))}px
+                </span>
+              </div>
+            </div>
+          </div>
         )}
+
         <Output></Output>
       </div>
       <Console></Console>
