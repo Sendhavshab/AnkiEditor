@@ -9,15 +9,17 @@ import FolderInfoProvider from "./HOC&Context/Provider/FolderInfoProvider";
 import UserAccountProvider from "./HOC&Context/Provider/UserAccountProvider";
 import LogIn from "./Acount/LogIn";
 import SignUp from "./Acount/SignUp";
-import RedirectLogin , { RedirectHomeHOC } from "./Acount/redirect";
+import RedirectLogin, { RedirectHomeHOC } from "./Acount/redirect";
 import DashBoard from "./Component/DashBoard/DashBoard";
 import Assignment from "./Component/Assignments/Assignment";
 import Practice from "./Component/Practice/Practice";
 import Preview from "./Component/MakeWeb/Website";
 import NotFound from "./Component/NotFound";
+import AppDownloadBanner from "./Component/AppDownloadBanner/AppDownloadBanner";
 
 const App = () => (
   <div className="">
+    <AppDownloadBanner />
     <AlertProvider>
       <FolderInfoProvider>
         <UserAccountProvider>
@@ -37,7 +39,10 @@ const App = () => (
                   element={<Assignment></Assignment>}
                 />
                 <Route path="/web/:codeid" element={<Preview></Preview>} />
-                <Route path="/:username/:foldername" element={<Preview></Preview>} />
+                <Route
+                  path="/:username/:foldername"
+                  element={<Preview></Preview>}
+                />
                 {/* <Route path="/a" element={<Test></Test>} /> */}
                 <Route
                   path="/login"

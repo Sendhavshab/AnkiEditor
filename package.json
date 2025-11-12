@@ -23,6 +23,7 @@
     "consolejs": "github:IonicaBizau/console.js",
     "estraverse": "^5.3.0",
     "formik": "^2.4.6",
+    "jszip": "^3.10.1",
     "monaco-editor": "^0.48.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "monaco-languageclient": "^8.3.1",
