@@ -6,7 +6,11 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Infoalert from "../AlertAndLoader/Alert/Infoalert";
 import Loader from "../AlertAndLoader/Loder/Loader";
 import ApiCall, { saveToServerApi } from "./ApiCall";
-import { AlertShowerProviderHOC, CodeContextHOC, FolderProviderHOC } from "../HOC&Context/Context";
+import {
+  AlertShowerProviderHOC,
+  CodeContextHOC,
+  FolderProviderHOC,
+} from "../HOC&Context/Context";
 import { showAlertType } from "../HOC&Context/Provider/AlertProvider";
 
 const SaveToCodeYogi = ({
@@ -45,7 +49,6 @@ const SaveToCodeYogi = ({
     });
     code
       .then((r: any) => {
-
         folderSaved(LinkPracticeId);
 
         setShowAlert({
@@ -155,14 +158,6 @@ const SaveToCodeYogi = ({
   return (
     <div className={`${className}`}>
       {loading && <Loader></Loader>}
-      {onlyGet && (
-        <button
-          onClick={() => setShowSave(2)}
-          className="px-4 m-2 py-2 font-bold bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none"
-        >
-          Do CodeYogi assignment
-        </button>
-      )}
       {onlyGet || (
         <>
           {!!LinkPracticeId || (
@@ -269,4 +264,6 @@ export type CodeWithSet = {
 
 SaveToCodeYogi.defaultProps = {};
 
-export default CodeContextHOC(AlertShowerProviderHOC(FolderProviderHOC(SaveToCodeYogi)));
+export default CodeContextHOC(
+  AlertShowerProviderHOC(FolderProviderHOC(SaveToCodeYogi))
+);
