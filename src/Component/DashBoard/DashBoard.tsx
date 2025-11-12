@@ -47,7 +47,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
         });
         setLoading(false);
       });
-  }, [setFolders, setLoading, setShowAlert, showAlert.value]);
+  }, [setFolders, setLoading, setShowAlert, showAlert?.value]);
 
   const handleDownloadAllProjects = useCallback(async () => {
     const folderKeys = Object.keys(folders);
