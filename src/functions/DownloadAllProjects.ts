@@ -126,7 +126,7 @@ export const downloadAllProjects = async (
         name: project.name,
         created_at: project.createdAt || new Date().toISOString(),
         updated_at: project.updatedAt || new Date().toISOString(),
-        is_published: project.isPublished || false,
+        is_published: false,
       })),
     };
 
