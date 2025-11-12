@@ -2,7 +2,6 @@ import JSZip from "jszip";
 import { getFromServerApi } from "../Api/ApiCall";
 import { Folder } from "../HOC&Context/Provider/FolderInfoProvider";
 import { GetCode } from "../HOC&Context/Provider/CodeStore";
-import { generateRandomString } from "./RandomStr";
 
 export interface ProjectData {
   id: string;
@@ -133,8 +132,7 @@ export const downloadAllProjects = async (
     zip.file("ck.json", JSON.stringify(ckData, null, 2));
 
     for (const project of projects) {
-      const randomId = generateRandomString(19);
-      const projectFolder = zip.folder(randomId);
+      const projectFolder = zip.folder(project.id);
 
       if (projectFolder) {
         const cssPath = "style.css";
