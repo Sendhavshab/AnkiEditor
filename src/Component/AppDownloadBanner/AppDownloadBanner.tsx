@@ -6,6 +6,18 @@ const AppDownloadBanner: React.FC = () => {
 
   useEffect(() => {
     const bannerDismissed = localStorage.getItem("appDownloadBannerDismissed");
+    // Disable banner if on preview or shared practice route
+    const pathname = window.location.pathname;
+    // Check for preview routes
+    if (
+      /^\/web\/[^/]+$/.test(pathname) || // matches /web/:codeid
+      /^\/[^/]+\/[^/]+$/.test(pathname) || // matches /:username/:foldername
+      // practice with share: /code/a/:practiceId/:didshare? (didshare is optional, but has value in "shared" case)
+      /^\/code\/a\/[^/]+\/[^/]+$/.test(pathname)
+    ) {
+      return;
+    }
+
     if (!bannerDismissed) {
       setIsVisible(true);
     }

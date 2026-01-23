@@ -6,12 +6,12 @@ import { GetCode, storeCode } from "./CodeStore";
 
 type P = "html" | "javascript" | "css";
 export type SolutionCodeType =
-| {
-  html: string;
-  css?: string;
-  js?: string;
-}
-| undefined;
+  | {
+      html: string;
+      css?: string;
+      js?: string;
+    }
+  | undefined;
 export const defaultCssCode = `/* aap tailwind ka use kar rahe he to kosis kare
 jitna ho sake utna kam css likhe is file me aur agar aapko
 kisi bhi prakar se tailwind me problem aa rahi he
@@ -29,6 +29,11 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   const localTailwind = localStorage.getItem("localTailwind") || "";
   const [isTailwindProject, setIsTailwindProject] = useState(
     localTailwind === "true"
+  );
+
+  const localAutocomplete = localStorage.getItem("autocompleteEnabled") || "";
+  const [autocompleteEnabled, setAutocompleteEnabled] = useState(
+    localAutocomplete === "" ? true : localAutocomplete === "true"
   );
 
   const cssInfo = isTailwindProject ? defaultCssCode : "";
@@ -55,9 +60,9 @@ const CodeProvider: React.FC<F> = ({ children }) => {
 
   function seeSolution() {
     if (solutionCode) {
-      setSolution(false)
+      setSolution(false);
       setCssCode(solutionCode.css || "");
-      setHtmlCode(solutionCode.html );
+      setHtmlCode(solutionCode.html);
       setNotSavedJs(solutionCode.js || "");
     }
   }
@@ -78,6 +83,10 @@ const CodeProvider: React.FC<F> = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("localTailwind", isTailwindProject + "");
   }, [isTailwindProject]);
+
+  useEffect(() => {
+    localStorage.setItem("autocompleteEnabled", autocompleteEnabled + "");
+  }, [autocompleteEnabled]);
 
   return (
     <CodeContext.Provider
@@ -108,6 +117,8 @@ const CodeProvider: React.FC<F> = ({ children }) => {
         setSolutionCode,
         solutionCode,
         isNotJsInassignment,
+        autocompleteEnabled,
+        setAutocompleteEnabled,
       }}
     >
       {children}

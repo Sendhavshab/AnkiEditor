@@ -1,4 +1,4 @@
-import { FaCopy, FaShareAlt, FaWrench } from "react-icons/fa";
+import { FaCopy, FaShareAlt, FaWrench, FaLightbulb } from "react-icons/fa";
 import Infoalert from "../../AlertAndLoader/Alert/Infoalert";
 import SaveToCodeYogi from "../../Api/SaveAndGet";
 import {
@@ -75,6 +75,15 @@ const Header = (prop: HeaderProps) => {
           className={`object-cover  ${prop.isTailwindProject || "opacity-40"} `}
           src="/Images/tailwindbright.jpg"
         />
+      </div>
+      <div className="relative">
+        <FaLightbulb
+          onClick={() => prop.setAutocompleteEnabled(!prop.autocompleteEnabled)}
+          className={`text-4xl peer bg-yellow-500 p-2 rounded-full text-white cursor-pointer ${
+            !prop.autocompleteEnabled && "opacity-40"
+          }`}
+        />
+        <Infoalert>autocomplete</Infoalert>
       </div>
       {prop.notSavedJs !== prop.jsCode && !prop.isNotJsInassignment && (
         <button

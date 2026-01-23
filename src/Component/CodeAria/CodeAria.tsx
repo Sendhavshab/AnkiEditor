@@ -29,6 +29,7 @@ type G = {
   language: "html" | "css" | "javascript";
   setRunJs: React.Dispatch<React.SetStateAction<boolean>>;
   runJs: boolean;
+  autocompleteEnabled: boolean;
 };
 
 const CodeAria: React.FC<G> = ({
@@ -43,6 +44,7 @@ const CodeAria: React.FC<G> = ({
   language,
   setRunJs,
   setConsoleMessages,
+  autocompleteEnabled,
 }) => {
   const [Show, setShow] = useState<S>();
   const [isResizing, setIsResizing] = useState(false);
@@ -161,7 +163,7 @@ const CodeAria: React.FC<G> = ({
                 lineNumbersMinChars: 1,
                 wordWrap: "on",
                 renderValidationDecorations: "on",
-                acceptSuggestionOnCommitCharacter: true,
+                acceptSuggestionOnCommitCharacter: autocompleteEnabled,
                 showUnused: true,
                 formatOnPaste: true,
                 glyphMargin: deviceWidth > 1024,
@@ -171,6 +173,40 @@ const CodeAria: React.FC<G> = ({
                 },
                 minimap: {
                   enabled: false,
+                },
+                quickSuggestions: autocompleteEnabled,
+                suggestOnTriggerCharacters: autocompleteEnabled,
+                acceptSuggestionOnEnter: autocompleteEnabled ? "on" : "off",
+                wordBasedSuggestions: autocompleteEnabled ? "matchingDocuments" : "off",
+                parameterHints: {
+                  enabled: autocompleteEnabled,
+                },
+                suggest: {
+                  showMethods: autocompleteEnabled,
+                  showFunctions: autocompleteEnabled,
+                  showConstructors: autocompleteEnabled,
+                  showFields: autocompleteEnabled,
+                  showVariables: autocompleteEnabled,
+                  showClasses: autocompleteEnabled,
+                  showStructs: autocompleteEnabled,
+                  showInterfaces: autocompleteEnabled,
+                  showModules: autocompleteEnabled,
+                  showProperties: autocompleteEnabled,
+                  showEvents: autocompleteEnabled,
+                  showOperators: autocompleteEnabled,
+                  showUnits: autocompleteEnabled,
+                  showValues: autocompleteEnabled,
+                  showConstants: autocompleteEnabled,
+                  showEnums: autocompleteEnabled,
+                  showEnumMembers: autocompleteEnabled,
+                  showKeywords: autocompleteEnabled,
+                  showWords: autocompleteEnabled,
+                  showColors: autocompleteEnabled,
+                  showFiles: autocompleteEnabled,
+                  showReferences: autocompleteEnabled,
+                  showFolders: autocompleteEnabled,
+                  showTypeParameters: autocompleteEnabled,
+                  showSnippets: autocompleteEnabled,
                 },
               }}
             />

@@ -2,8 +2,6 @@ import { createContext } from "react";
 import HocCreater from "./HocCreater";
 import { SolutionCodeType } from "./Provider/CodeProvider";
 
-
-
 interface P {
   jsCode: string;
   solution: boolean;
@@ -31,6 +29,8 @@ interface P {
   setIsNotJsInassignment: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAuther: React.Dispatch<React.SetStateAction<boolean>>;
   isNotJsInassignment: boolean;
+  autocompleteEnabled: boolean;
+  setAutocompleteEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultValues: P = {
@@ -60,12 +60,13 @@ const defaultValues: P = {
   htmlCode: "",
   setIsNotJsInassignment: () => {},
   isNotJsInassignment: false,
+  autocompleteEnabled: true,
+  setAutocompleteEnabled: () => {},
 };
 
 export const CodeContext = createContext<P>(defaultValues);
 
 export const CodeContextHOC = HocCreater(CodeContext);
-
 
 export const AlertShowerContext = createContext({});
 
